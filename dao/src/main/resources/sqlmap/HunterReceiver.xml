@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+    <!-- wm_order 所有查询列 -->
+    <sql id="ALL_COLUMNS">
+        <![CDATA[
+        id,`hunter`,receiver,status,`create`,`update`,yn
+        ]]>
+    </sql>
+    <sql id="TABLE_NAME">
+        <![CDATA[
+        `hunter_receiver`
+        ]]>
+    </sql>
+
+    <!-- where字段 -->
+    <sql id="WHERE_CLAUSE">
+        <where>
+            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id},]]></if>
+            <if test="hunter != null and hunter &gt; 0 " ><![CDATA[AND `hunter` = #{hunter},]]></if>
+            <if test="receiver != null and receiver &gt; 0 " ><![CDATA[AND `receiver` = #{receiver},]]></if>
+            <if test="update != null and update &gt; 0 " ><![CDATA[AND `update` = #{update},]]></if>
+            <if test="status != null and status &gt; 0 " ><![CDATA[AND `status` = #{status},]]></if>
+        </where>
+    </sql>
+
+
+    <!-- update字段 -->
+    <sql id="UPDATE_SET">
+        <set>
+            <if test="hunter != null and hunter &gt; 0  " ><![CDATA[`hunter` = #{hunter},]]></if>
+            <if test="receiver != null and receiver &gt; 0  " ><![CDATA[`receiver` = #{receiver},]]></if>
+            <if test="status != null and status &gt; 0  " ><![CDATA[`status` = #{status},]]></if>
+            <if test="create != null and create &gt; 0  " ><![CDATA[`create` = #{create},]]></if>
+            <if test="update != null and update &gt; 0  " ><![CDATA[`update` = #{update},]]></if>
+            <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
+        </set>
+    </sql>
+
+    <!-- 整体新增 -->
+    <insert id="add" parameterType="HunterReceiver">
+
+        <![CDATA[
+         INSERT INTO
+        ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         (`hunter`,receiver,status,`create`,`update`,yn)  VALUES
+         (#{hunter},#{receiver},#{status},#{create},#{update},#{yn})
+        ]]>
+    </insert>
+
+    <!-- 根据ID查询单个 -->
+    <select id="getById" parameterType="long" resultType="HunterReceiver">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[WHERE id = #{pk}]]>
+    </select>
+
+    <!-- 条件查询-->
+    <select id="getByWhere" parameterType="HunterReceiver" resultType="HunterReceiver">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 查询列表-->
+    <select id="get" parameterType="HunterReceiver" resultType="HunterReceiver">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 查询列表-->
+    <update id="updateStatusByReceivers" parameterType="Map" >
+        <![CDATA[UPDATE ]]>
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[ SET status= #{status}, `update`=#{update} WHERE receiver IN ]]>
+        <foreach collection="uids"  item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 更新状态-->
+    <update id="updateStatusByReceiver" parameterType="Map" >
+        <![CDATA[UPDATE status FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[ SET status= #{status}, `update`=#{update} WHERE receiver=#{receiver} ]]>
+    </update>
+
+    <!-- 更新状态-->
+    <update id="updateStatusByHunterAndReceiver" parameterType="Map" >
+        <![CDATA[UPDATE status FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[ SET status= #{status}, `update`=#{update} WHERE hunter=#{hunter} AND receiver=#{receiver} ]]>
+    </update>
+
+
+</mapper>

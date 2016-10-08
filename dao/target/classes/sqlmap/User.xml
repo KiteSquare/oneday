@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper>
+    <!-- wm_order 所有查询列 -->
+    <sql id="ALL_COLUMNS">
+        <![CDATA[
+        id,`name`,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,`create`,`update`,yn
+        ]]>
+    </sql>
+    <sql id="TABLE_NAME">
+        <![CDATA[
+        `user`
+        ]]>
+    </sql>
+
+    <!-- where字段 -->
+    <sql id="WHERE_CLAUSE">
+        <where>
+            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id},]]></if>
+            <if test="name != null " ><![CDATA[AND `name` = #{name},]]></if>
+            <if test="phone != null " ><![CDATA[AND `phone` = #{phone},]]></if>
+            <if test="sex != null " ><![CDATA[AND `sex` = #{sex},]]></if>
+        </where>
+    </sql>
+
+
+    <!-- update字段 -->
+    <sql id="UPDATE_SET">
+        <set>
+            <if test="name != null " ><![CDATA[`name` = #{name},]]></if>
+            <if test="phone != null " ><![CDATA[`phone` = #{phone},]]></if>
+            <if test="sex != null " ><![CDATA[`sex` = #{sex},]]></if>
+            <if test="birth != null " ><![CDATA[`birth` = #{birth},]]></if>
+            <if test="idcard != null " ><![CDATA[`idcard` = #{idcard},]]></if>
+            <if test="signature != null " ><![CDATA[`signature` = #{signature},]]></if>
+            <if test="city != null " ><![CDATA[`city` = #{city},]]></if>
+            <if test="lon != null " ><![CDATA[`lon` = #{lon},]]></if>
+            <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
+            <if test="head != null " ><![CDATA[`head` = #{head},]]></if>
+            <if test="detail != null " ><![CDATA[`detail` = #{detail},]]></if>
+            <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
+            <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
+            <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
+        </set>
+    </sql>
+
+    <!-- 整体新增 -->
+    <insert id="add" parameterType="User">
+        INSERT INTO
+        <include refid="TABLE_NAME" />
+        (<include refid="ALL_COLUMNS" />)
+        VALUES
+        <![CDATA[
+        (#{id},#{name},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{create}
+        ,#{update},#{yn})
+        ]]>
+    </insert>
+
+    <!-- 根据ID查询单个 -->
+    <select id="getById" parameterType="long" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[WHERE id = #{pk}]]>
+    </select>
+
+    <!-- 条件查询-->
+    <select id="getByWhere" parameterType="User" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 查询-->
+    <select id="getByIds" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[ WHERE id IN ]]>
+        <foreach collection="Set"  item="id" index="index" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 查询列表-->
+    <select id="get" parameterType="User" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 查询列表-->
+    <update id="update" parameterType="User" >
+        <![CDATA[UPDATE ]]>
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="UPDATE_SET" />
+        <![CDATA[ WHERE id=#{id}]]>
+    </update>
+    <!-- 批量更新 -->
+    <update id="batchUpdate"  parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            <![CDATA[UPDATE FROM ]]>
+            <include refid="TABLE_NAME" />
+            <set>
+                <if test="name != null " ><![CDATA[`name` = #{item.name},]]></if>
+                <if test="phone != null " ><![CDATA[`phone` = #{item.phone},]]></if>
+                <if test="sex != null " ><![CDATA[`sex` = #{item.sex},]]></if>
+                <if test="birth != null " ><![CDATA[`birth` = #{item.birth},]]></if>
+                <if test="idcard != null " ><![CDATA[`idcard` = #{item.idcard},]]></if>
+                <if test="signature != null " ><![CDATA[`signature` = #{item.signature},]]></if>
+                <if test="city != null " ><![CDATA[`city` = #{item.city},]]></if>
+                <if test="lon != null " ><![CDATA[`lon` = #{item.lon},]]></if>
+                <if test="lat != null " ><![CDATA[`lat` = #{item.lat},]]></if>
+                <if test="head != null " ><![CDATA[`head` = #{item.head},]]></if>
+                <if test="detail != null " ><![CDATA[`detail` = #{item.detail},]]></if>
+                <if test="create != null " ><![CDATA[`create` = #{item.create},]]></if>
+                <if test="update != null " ><![CDATA[`update` = #{item.update},]]></if>
+                <if test="yn != null " ><![CDATA[`yn` = #{item.yn},]]></if>
+            </set>
+            <![CDATA[ WHERE id=#{item.id}]]>
+        </foreach>
+
+    </update>
+
+</mapper>
