@@ -5,9 +5,11 @@ import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.domain.User;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,14 +24,15 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/oneday/user")
 public class UserController {
-    Logger logger = Logger.getLogger(UserController.class);
+    private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     UserService userService;
     @RequestMapping(value = "", method = {RequestMethod.POST })
-    public Result regist(User user) {
+    @ResponseBody
+    public  Result regist(@RequestBody User user) {
         Result result = new Result();
         try {
-            int num = userService.add(user);
+            int num = userService.regist(user);
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());

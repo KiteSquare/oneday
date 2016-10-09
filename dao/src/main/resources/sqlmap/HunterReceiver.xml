@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper namespace="com.oneday.dao.HunterReceiverDao">
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[

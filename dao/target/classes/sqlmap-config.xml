@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
@@ -11,15 +11,15 @@
 		<!-- 数据库超过25000秒仍未响应则超时 -->
 		<setting name="defaultStatementTimeout" value="25000" />
 	</settings>
-	
+
 	<!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径 -->
 	<typeAliases>
 		<typeAlias type="com.oneday.domain.User" alias="User"/>
 		<typeAlias type="com.oneday.domain.HunterReceiver" alias="HunterReceiver"/>
 	</typeAliases>
 	<!-- 映射文件路径 -->
-	<mappers>
+<!--	<mappers>
 		<mapper resource="sqlmap/User.xml" />
 		<mapper resource="sqlmap/HunterReceiver.xml" />
-	</mappers>
+	</mappers>-->
 </configuration>

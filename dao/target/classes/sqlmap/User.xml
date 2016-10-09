@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
+<mapper  namespace="com.oneday.dao.UserDao">
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,`name`,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,`create`,`update`,yn
+        id,`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -30,6 +30,7 @@
     <sql id="UPDATE_SET">
         <set>
             <if test="name != null " ><![CDATA[`name` = #{name},]]></if>
+            <if test="password != null " ><![CDATA[`password` = #{password},]]></if>
             <if test="phone != null " ><![CDATA[`phone` = #{phone},]]></if>
             <if test="sex != null " ><![CDATA[`sex` = #{sex},]]></if>
             <if test="birth != null " ><![CDATA[`birth` = #{birth},]]></if>
@@ -53,7 +54,7 @@
         (<include refid="ALL_COLUMNS" />)
         VALUES
         <![CDATA[
-        (#{id},#{name},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{create}
+        (#{id},#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{create}
         ,#{update},#{yn})
         ]]>
     </insert>
@@ -112,6 +113,7 @@
             <include refid="TABLE_NAME" />
             <set>
                 <if test="name != null " ><![CDATA[`name` = #{item.name},]]></if>
+                <if test="password != null " ><![CDATA[`password` = #{item.password},]]></if>
                 <if test="phone != null " ><![CDATA[`phone` = #{item.phone},]]></if>
                 <if test="sex != null " ><![CDATA[`sex` = #{item.sex},]]></if>
                 <if test="birth != null " ><![CDATA[`birth` = #{item.birth},]]></if>

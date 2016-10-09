@@ -13,5 +13,6 @@
 	default-autowire="byName">
 
 	<import resource="spring/spring-config-servlet.xml" />
+	<import resource="spring/spring-config-dao.xml" />
 
 </beans>

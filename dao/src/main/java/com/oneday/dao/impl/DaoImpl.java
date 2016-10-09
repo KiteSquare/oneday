@@ -36,44 +36,45 @@ abstract class DaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
 
 
     public int add(T po) {
-        return sqlSessionTemplate.insert(STATEMENT_ADD, po);
+        return sqlSessionTemplate.insert(getNameSpace(STATEMENT_ADD), po);
     }
 
     public T get(PK id) {
-        return  sqlSessionTemplate.selectOne(STATEMENT_GET_BY_ID, id);
+        return  sqlSessionTemplate.selectOne(getNameSpace(STATEMENT_GET_BY_ID), id);
     }
 
     public List<T> get(T po) {
-        return  sqlSessionTemplate.selectOne(STATEMENT_GET_BY_WHERE, po);
+        return  sqlSessionTemplate.selectOne(getNameSpace(STATEMENT_GET_BY_WHERE), po);
     }
 
     public List<T> list(T po) {
-        return sqlSessionTemplate.selectList(STATEMENT_GET, po);
+        return sqlSessionTemplate.selectList(getNameSpace(STATEMENT_GET), po);
 
     }
 
     public int update(T po) {
-        return sqlSessionTemplate.update(STATEMENT_UPDATE, po);
+        return sqlSessionTemplate.update(getNameSpace(STATEMENT_UPDATE), po);
     }
 
     public int del(PK id) {
-        return sqlSessionTemplate.delete(STATEMENT_DELETE_BY_ID, id);
+        return sqlSessionTemplate.delete(getNameSpace(STATEMENT_DELETE_BY_ID), id);
     }
 
     public int del(T po) {
-        return sqlSessionTemplate.delete(STATEMENT_DELETE, po);
+        return sqlSessionTemplate.delete(getNameSpace(STATEMENT_DELETE), po);
     }
 
     public int execute(String sql) {
-        return sqlSessionTemplate.update(STATEMENT_EXECUTE, sql);
+        return sqlSessionTemplate.update(getNameSpace(STATEMENT_EXECUTE), sql);
     }
 
     public long count(T po) {
-        return sqlSessionTemplate.selectOne(STATEMENT_COUNT, po);
+        return sqlSessionTemplate.selectOne(getNameSpace(STATEMENT_COUNT), po);
     }
 
     public long size() {
-        return sqlSessionTemplate.selectOne(STATEMENT_SIZE);
+        return sqlSessionTemplate.selectOne(getNameSpace(STATEMENT_SIZE));
     }
 
+    public abstract String getNameSpace(String var1);
 }
