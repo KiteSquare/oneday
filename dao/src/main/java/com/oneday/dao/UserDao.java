@@ -13,7 +13,13 @@ import java.util.Set;
  */
 public interface UserDao extends Dao<User, Long> {
     Map<Long, User> getMapByIds(Set<Long> uids);
+    Map<Long, User> getMapByIds(List<Long> uids);
+
     Map<Long, User> getMapByIds(Long... uids);
 
+    User getByPhone(String phone);
+
     int batchUpdate(List<User> users);
+
+    int updateByPhone(User user);
 }

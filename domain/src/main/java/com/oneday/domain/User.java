@@ -46,6 +46,11 @@ public class User {
      */
     protected String phone;
     /**
+     * 身份证号码
+     */
+    protected String idcard;
+
+    /**
      * 性别，0 男， 1 女
      */
     protected Integer sex;
@@ -94,6 +99,7 @@ public class User {
      * 更新时间
      */
     protected Date update;
+
     protected Integer yn;
 
     public Long getId() {
@@ -238,5 +244,13 @@ public class User {
 
     public boolean isFemale() {
         return SexEnum.FEMALE.getSex().equals(sex);
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 }

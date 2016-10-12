@@ -18,8 +18,8 @@
 		<typeAlias type="com.oneday.domain.HunterReceiver" alias="HunterReceiver"/>
 	</typeAliases>
 	<!-- 映射文件路径 -->
-<!--	<mappers>
+	<mappers>
 		<mapper resource="sqlmap/User.xml" />
 		<mapper resource="sqlmap/HunterReceiver.xml" />
-	</mappers>-->
+	</mappers>
 </configuration>

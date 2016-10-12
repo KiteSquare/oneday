@@ -51,7 +51,6 @@
 	<bean id="wmSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="datasource" />
 		<property name="configLocation" value="classpath:sqlmap-config.xml" />
-		<property name="mapperLocations" value="classpath:sqlmap/*.xml"/>
 	</bean>
 
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

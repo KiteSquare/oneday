@@ -32,4 +32,8 @@ public enum SexEnum {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+    public static boolean isAvailable(Integer sex) {
+        return  sex == 0 || sex == 1;
+    }
 }

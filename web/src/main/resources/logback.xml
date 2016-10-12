@@ -15,10 +15,10 @@
 
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<Encoding>UTF-8</Encoding>
-		<file>${dynamic.log.path}/orderapi.log</file>
+		<file>${dynamic.log.path}/controller.log</file>
 		<prudent>false</prudent>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${dynamic.log.path}/orderapi.log.%d{yyyy-MM-dd}
+			<fileNamePattern>${dynamic.log.path}/controller.log.%d{yyyy-MM-dd}
 			</fileNamePattern>
 			<maxHistory>${maxHistory}</maxHistory>
 		</rollingPolicy>
@@ -26,8 +26,17 @@
 			<pattern>${outPattern}</pattern>
 		</encoder>
 	</appender>
+
+	<logger name="com.oneday" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
 	<!-- 日志级别 -->
 	<root level="${log.level}">
+		<level value="error" />
+		<level value="info" />
 		<if condition='"${devMode}".equals("true")'>
 			<then>
 				<appender-ref ref="CONSOLE" />

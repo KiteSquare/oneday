@@ -6,7 +6,7 @@
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,`create`,`update`,yn
+        id,`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,status,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -41,6 +41,7 @@
             <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
             <if test="head != null " ><![CDATA[`head` = #{head},]]></if>
             <if test="detail != null " ><![CDATA[`detail` = #{detail},]]></if>
+            <if test="status != null " ><![CDATA[`status` = #{status},]]></if>
             <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
             <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
             <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
@@ -48,7 +49,7 @@
     </sql>
 
     <!-- 整体新增 -->
-    <insert id="add" parameterType="User">
+    <insert id="insertItem" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
         (<include refid="ALL_COLUMNS" />)
@@ -84,9 +85,19 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[ WHERE id IN ]]>
-        <foreach collection="Set"  item="id" index="index" separator="," open="(" close=")">
+        <foreach collection="list"  item="id" index="index" separator="," open="(" close=")">
             #{id}
         </foreach>
+    </select>
+
+
+    <!-- 查询-->
+    <select id="getByPhone" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[ WHERE phone= #{phone} ]]>
     </select>
 
     <!-- 查询列表-->
@@ -101,15 +112,24 @@
     <!-- 查询列表-->
     <update id="update" parameterType="User" >
         <![CDATA[UPDATE ]]>
-        <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <include refid="UPDATE_SET" />
         <![CDATA[ WHERE id=#{id}]]>
     </update>
+
+
+    <!-- 通过手机号更新-->
+    <update id="updateByPhone" parameterType="User" >
+        <![CDATA[UPDATE ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="UPDATE_SET" />
+        <![CDATA[ WHERE phone=#{phone}]]>
+    </update>
+
     <!-- 批量更新 -->
     <update id="batchUpdate"  parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" open="" close="" separator=";">
-            <![CDATA[UPDATE FROM ]]>
+            <![CDATA[UPDATE ]]>
             <include refid="TABLE_NAME" />
             <set>
                 <if test="name != null " ><![CDATA[`name` = #{item.name},]]></if>

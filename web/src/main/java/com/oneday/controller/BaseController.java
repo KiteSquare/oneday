@@ -1,7 +1,7 @@
 package com.oneday.controller;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0 2016/9/13 17:08
  */
 public abstract class BaseController {
-    Logger LOGGER = Logger.getLogger(BaseController.class);
+    Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
     protected HttpServletRequest getRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request;

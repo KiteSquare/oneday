@@ -9,7 +9,8 @@ import com.oneday.domain.User;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
 import com.oneday.service.state.Machine;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ import java.util.*;
  */
 @Service("associateService")
 public class AssociateServiceImpl implements AssociateService{
-    private static final Logger logger = Logger.getLogger(AssociateServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AssociateServiceImpl.class);
     @Resource
     UserDao userDao;
     @Resource
@@ -48,6 +49,7 @@ public class AssociateServiceImpl implements AssociateService{
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("User id [%s] not found.", targetUserId));
         }
         this._checkIsMale(user);
+        this._checkStatus(user);
         this._checkIsFemale(targetUser);
         user.setStatus(machine.hunterSend(user.getStatus()));
         targetUser.setStatus(machine.receiverReceive(targetUser.getStatus()));
@@ -199,7 +201,7 @@ public class AssociateServiceImpl implements AssociateService{
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User is null.");
         }
-        if (user.isMale()) {
+        if (!user.isMale()) {
             throw new OndayException(ErrorCodeEnum.USER_SEX_INVALID.getCode(), "User is not male.");
         }
     }
@@ -212,8 +214,21 @@ public class AssociateServiceImpl implements AssociateService{
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User is null.");
         }
-        if (user.isFemale()) {
+        if (!user.isFemale()) {
             throw new OndayException(ErrorCodeEnum.USER_SEX_INVALID.getCode(), "User is not female.");
+        }
+    }
+
+    /**
+     *
+     * @param user
+     */
+    protected void _checkStatus(User user) {
+        if (user == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User is null.");
+        }
+        if (user.getStatus() <= 0) {
+            throw new OndayException(ErrorCodeEnum.USER_HUNTER_INVALID.getCode(), "Status invalid.");
         }
     }
 }

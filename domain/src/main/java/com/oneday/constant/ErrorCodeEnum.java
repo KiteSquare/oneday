@@ -9,8 +9,10 @@ public enum ErrorCodeEnum {
     SYSTEM_EXCEPTION("-2", "系统异常"),
     SUCCESS("0000", "成功"),
     NULL_PARAM("0001", "参数为空"),
+    INVALID_PARAM("0002", "参数不合法"),
 
     USER_NOT_FOUND("0011", "用户不存在"),
+
     USER_SEX_INVALID("0012", "用户性别不合法"),
     USER_HUNTER_INVALID("0013", "追求者不合法"),
 

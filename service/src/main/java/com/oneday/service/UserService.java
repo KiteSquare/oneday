@@ -24,6 +24,20 @@ public interface UserService {
     Integer regist(User user);
 
     /**
+     * 验证码注册
+     * @param user
+     * @return
+     */
+    Integer registWithCode(User user, String code);
+
+    /**
+     * 发送验证码
+     * @param user
+     * @return
+     */
+    Integer sendCode(User user);
+
+    /**
      *
      * @param userId
      * @return

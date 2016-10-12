@@ -15,7 +15,7 @@ import java.util.*;
 public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
     private final static String NAMESPACE = "com.oneday.dao.UserDao.";
     @Override
-    public Map<Long, User> getMapByIds(Set<Long> uids) {
+    public Map<Long, User> getMapByIds(List<Long> uids) {
         List<User> res = sqlSessionTemplate.selectList(getNameSpace("getByIds"), uids);
         Map<Long, User> map = new HashMap<Long, User>();
         if (res != null) {
@@ -27,12 +27,19 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
     }
 
     @Override
+    public Map<Long, User> getMapByIds(Set<Long> uids) {
+        List<Long> uidlist = new ArrayList<>();
+        uidlist.addAll(uids);
+        return getMapByIds(uidlist);
+    }
+
+    @Override
     public Map<Long, User> getMapByIds(Long... uids) {
-        Set<Long> uidset = new HashSet<Long>();
+        List<Long> uidlist = new ArrayList<>();
         for (Long id: uids) {
-            uidset.add(id);
+            uidlist.add(id);
         }
-        return getMapByIds(uidset);
+        return getMapByIds(uidlist);
     }
 
     @Override
@@ -43,5 +50,15 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
     @Override
     public String getNameSpace(String name) {
         return NAMESPACE + name;
+    }
+
+    @Override
+    public int updateByPhone(User user) {
+        return sqlSessionTemplate.update(getNameSpace("updateByPhone"), user);
+    }
+
+    @Override
+    public User getByPhone(String phone) {
+        return sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
     }
 }
