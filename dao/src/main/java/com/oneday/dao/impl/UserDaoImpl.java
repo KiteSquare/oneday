@@ -1,7 +1,7 @@
 package com.oneday.dao.impl;
 
 import com.oneday.dao.UserDao;
-import com.oneday.domain.User;
+import com.oneday.domain.po.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;

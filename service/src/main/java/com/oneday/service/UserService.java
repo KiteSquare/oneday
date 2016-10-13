@@ -1,6 +1,6 @@
 package com.oneday.service;
 
-import com.oneday.domain.User;
+import com.oneday.domain.po.User;
 
 import java.util.List;
 

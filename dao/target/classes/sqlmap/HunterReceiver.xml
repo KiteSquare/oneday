@@ -18,11 +18,11 @@
     <!-- where字段 -->
     <sql id="WHERE_CLAUSE">
         <where>
-            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id},]]></if>
-            <if test="hunter != null and hunter &gt; 0 " ><![CDATA[AND `hunter` = #{hunter},]]></if>
-            <if test="receiver != null and receiver &gt; 0 " ><![CDATA[AND `receiver` = #{receiver},]]></if>
-            <if test="update != null and update &gt; 0 " ><![CDATA[AND `update` = #{update},]]></if>
-            <if test="status != null and status &gt; 0 " ><![CDATA[AND `status` = #{status},]]></if>
+            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id}]]></if>
+            <if test="hunter != null and hunter &gt; 0 " ><![CDATA[AND `hunter` = #{hunter}]]></if>
+            <if test="receiver != null and receiver &gt; 0 " ><![CDATA[AND `receiver` = #{receiver}]]></if>
+            <if test="update != null and update &gt; 0 " ><![CDATA[AND `update` = #{update}]]></if>
+            <if test="status != null and status &gt; 0 " ><![CDATA[AND `status` = #{status}]]></if>
         </where>
     </sql>
 
@@ -68,6 +68,37 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 分页查询receiver列表 -->
+    <select id="getReceiverList" parameterType="Map" resultType="HunterReceiver">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         WHERE hunter=#{hunter} ORDER BY status LIMIT #{index},#{count}
+        ]]>
+    </select>
+
+    <!-- 分页查询hunter列表 -->
+    <select id="getHunterList" parameterType="Map" resultType="HunterReceiver">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         WHERE receiver=#{receiver} ORDER BY status LIMIT #{index},#{count}
+        ]]>
+    </select>
+
+    <!-- 总数查询,通过条件 -->
+    <select id="selectCount" parameterType="HunterReceiver" resultType="int">
+        <![CDATA[SELECT COUNT(id) AS total ]]>
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+
     </select>
 
     <!-- 查询列表-->

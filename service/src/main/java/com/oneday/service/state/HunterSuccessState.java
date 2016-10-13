@@ -15,7 +15,7 @@ public class HunterSuccessState implements HunterState {
      */
     @Override
     public Integer send() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success candStatus");
     }
 
     /**
@@ -24,7 +24,7 @@ public class HunterSuccessState implements HunterState {
      */
     @Override
     public Integer reject() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success candStatus");
     }
 
     /**
@@ -33,7 +33,7 @@ public class HunterSuccessState implements HunterState {
      */
     @Override
     public Integer accept() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success candStatus");
     }
 
     /**
@@ -42,6 +42,6 @@ public class HunterSuccessState implements HunterState {
      */
     @Override
     public Integer admit() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on success candStatus");
     }
 }

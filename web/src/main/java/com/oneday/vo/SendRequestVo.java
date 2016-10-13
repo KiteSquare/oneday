@@ -5,7 +5,7 @@ package com.oneday.vo;
  * @version 1.0
  *          2016/10/12 18:11
  */
-public class SendRequest {
+public class SendRequestVo {
     protected Long senderId;
     protected Long receiverId;
 

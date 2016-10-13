@@ -16,7 +16,7 @@ public class HunterWaitingState implements HunterState {
      */
     @Override
     public Integer send() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on waiting status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on waiting candStatus");
 
     }
 
@@ -44,6 +44,6 @@ public class HunterWaitingState implements HunterState {
      */
     @Override
     public Integer admit() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not admit on waiting status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not admit on waiting candStatus");
     }
 }

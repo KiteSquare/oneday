@@ -1,14 +1,18 @@
 package com.oneday.service.impl;
 
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.constant.SexEnum;
 import com.oneday.constant.StateEnum;
 import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
-import com.oneday.domain.HunterReceiver;
-import com.oneday.domain.User;
+import com.oneday.domain.po.HunterReceiver;
+import com.oneday.domain.po.User;
+import com.oneday.domain.vo.Candidate;
+import com.oneday.domain.vo.Page;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
 import com.oneday.service.state.Machine;
+import com.oneday.service.utils.VoConvertor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -49,7 +53,6 @@ public class AssociateServiceImpl implements AssociateService{
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("User id [%s] not found.", targetUserId));
         }
         this._checkIsMale(user);
-        this._checkStatus(user);
         this._checkIsFemale(targetUser);
         user.setStatus(machine.hunterSend(user.getStatus()));
         targetUser.setStatus(machine.receiverReceive(targetUser.getStatus()));
@@ -58,7 +61,7 @@ public class AssociateServiceImpl implements AssociateService{
         hunterReceiver.setStatus(StateEnum.SEND.getStatus());
         hunterReceiver.setHunter(userId);
         hunterReceiver.setReceiver(targetUserId);
-        Long time = System.currentTimeMillis();
+        Long time = (System.currentTimeMillis()/1000);
         hunterReceiver.setCreate(time);
         hunterReceiver.setUpdate(time);
         int res = hunterReceiverDao.add(hunterReceiver);
@@ -194,6 +197,83 @@ public class AssociateServiceImpl implements AssociateService{
     }
 
     /**
+     * 用户关系信息
+     *
+     * @param userId
+     * @return
+     */
+    public Page<Candidate> candidates(Long userId, Integer sex , Integer index, Integer count) {
+        if (userId == null || userId <= 0) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is invalid");
+        }
+        if (sex == null || sex < 0) {
+            User user = userDao.get(userId);
+            if (user == null) {
+                throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("User id [%s] not found.",
+                        userId));
+            }
+            sex = user.getSex();
+        }
+        Page<Candidate> res = new Page<>();
+        res.setCount(count);
+        res.setIndex(index);
+        List<Candidate> candidatesList = new ArrayList<>();
+        res.setData(candidatesList);
+
+        HunterReceiver param = new HunterReceiver();
+        List<HunterReceiver> data = null;
+        Map<Long, User> candidateUserMap = null;
+
+        if (sex.equals(SexEnum.MAN.getSex())) {
+            param.setHunter(userId);
+            res.setTotal(hunterReceiverDao.candidateCount(param));
+            data = hunterReceiverDao.getReceiverList(userId, index, count);
+
+            if (data != null) {
+                List<Long> ids = new ArrayList<>();
+                for (HunterReceiver hr: data) {
+                    ids.add(hr.getReceiver());
+                }
+                if (ids.size() > 0) {
+                    candidateUserMap = userDao.getMapByIds(ids);
+                    for (HunterReceiver hr: data) {
+                        User u = candidateUserMap.get(hr.getReceiver());
+                        if (u == null ) {
+                            logger.warn(String.format("candidate receiver %s is not found in user db", hr.getReceiver()));
+                            continue;
+                        }
+                        candidatesList.add(VoConvertor.convert(u, hr));
+                    }
+                }
+            }
+        } else if (sex.equals(SexEnum.FEMALE.getSex())) {
+            param.setReceiver(userId);
+            res.setTotal(hunterReceiverDao.candidateCount(param));
+            data = hunterReceiverDao.getSenderList(userId, index, count);
+            if (data != null) {
+                List<Long> ids = new ArrayList<>();
+                for (HunterReceiver hr: data) {
+                    ids.add(hr.getHunter());
+                }
+                if (ids.size() > 0) {
+                    candidateUserMap = userDao.getMapByIds(ids);
+                    for (HunterReceiver hr: data) {
+                        User u = candidateUserMap.get(hr.getHunter());
+                        if (u == null ) {
+                            logger.warn(String.format("candidate hunter %s is not found in user db", hr.getHunter()));
+                            continue;
+                        }
+                        candidatesList.add(VoConvertor.convert(u, hr));
+                    }
+                }
+
+            }
+        }
+
+        return res;
+    }
+
+    /**
      *
      * @param user
      */
@@ -219,16 +299,4 @@ public class AssociateServiceImpl implements AssociateService{
         }
     }
 
-    /**
-     *
-     * @param user
-     */
-    protected void _checkStatus(User user) {
-        if (user == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User is null.");
-        }
-        if (user.getStatus() <= 0) {
-            throw new OndayException(ErrorCodeEnum.USER_HUNTER_INVALID.getCode(), "Status invalid.");
-        }
-    }
 }

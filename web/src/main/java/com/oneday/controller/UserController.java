@@ -2,18 +2,14 @@ package com.oneday.controller;
 
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ErrorCodeEnum;
-import com.oneday.domain.User;
+import com.oneday.domain.po.User;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
 import com.oneday.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -66,9 +62,12 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "", method = {RequestMethod.PUT })
-    public Result update() {
+    @RequestMapping(value = "/{id}", method = {RequestMethod.GET, RequestMethod.POST })
+    public Result info(@PathVariable int id) {
         Result result = new Result();
+
+
+
         return result;
     }
 

@@ -1,6 +1,6 @@
 package com.oneday.dao;
 
-import com.oneday.domain.User;
+import com.oneday.domain.po.User;
 
 import java.util.List;
 import java.util.Map;

@@ -1,5 +1,11 @@
 package com.oneday.service;
 
+import com.oneday.domain.vo.Candidate;
+import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.UserInfo;
+
+import java.util.List;
+
 /**
  *
  * @author fanyongpeng [15104723@qq.com]
@@ -34,4 +40,14 @@ public interface AssociateService {
      * @param userId
      */
     void admit(Long userId);
+
+    /**
+     * 候选人列表
+     * @param userId 用户id
+     * @param sex  性别
+     * @param index  开始行数
+     * @param count  每页数量
+     * @return
+     */
+    Page<Candidate> candidates(Long userId,Integer sex , Integer index, Integer count);
 }

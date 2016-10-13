@@ -49,7 +49,7 @@
     </sql>
 
     <!-- 整体新增 -->
-    <insert id="insertItem" parameterType="User" >
+    <insert id="add" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
         (<include refid="ALL_COLUMNS" />)

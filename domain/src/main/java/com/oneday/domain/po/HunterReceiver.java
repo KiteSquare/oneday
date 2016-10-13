@@ -1,4 +1,4 @@
-package com.oneday.domain;
+package com.oneday.domain.po;
 
 /**
  * 追求者-接受者关系
@@ -12,7 +12,7 @@ public class HunterReceiver {
     protected Integer status;
     protected Long create;
     protected Long update;
-    protected Integer yn;
+    protected Integer yn = 0;
     public Long getId() {
         return id;
     }

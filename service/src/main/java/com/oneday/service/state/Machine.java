@@ -1,14 +1,16 @@
 package com.oneday.service.state;
 
+import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.constant.HunterEnum;
 import com.oneday.constant.ReceiverEnum;
+import com.oneday.exceptions.OndayStateException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 状态机的机器
+ * 状态机
  * @author fanyongpeng [15104723@qq.com]
  * @version 1.0  2016/9/7 16:01
  */
@@ -52,7 +54,7 @@ public class Machine {
         if (s != null) {
             return s.send();
         }
-        throw new RuntimeException("Hunter status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Hunter candStatus " + status + " not found in machine");
     }
     /**
      *
@@ -64,7 +66,7 @@ public class Machine {
         if (s != null) {
             return s.reject();
         }
-        throw new RuntimeException("Hunter status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Hunter candStatus " + status + " not found in machine");
     }
     /**
      *
@@ -76,7 +78,7 @@ public class Machine {
         if (s != null) {
             return s.accept();
         }
-        throw new RuntimeException("Hunter status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Hunter candStatus " + status + " not found in machine");
     }
     /**
      *
@@ -88,7 +90,7 @@ public class Machine {
         if (s != null) {
             return s.admit();
         }
-        throw new RuntimeException("Hunter status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Hunter candStatus " + status + " not found in machine");
     }
 
     /**
@@ -101,7 +103,7 @@ public class Machine {
         if (s != null) {
             return s.receive();
         }
-        throw new RuntimeException("Receiver status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Receiver candStatus " + status + " not found in machine");
     }
 
     /**
@@ -114,7 +116,7 @@ public class Machine {
         if (s != null) {
             return s.accept();
         }
-        throw new RuntimeException("Receiver status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Receiver candStatus " + status + " not found in machine");
     }
 
     /**
@@ -127,6 +129,6 @@ public class Machine {
         if (s != null) {
             return s.admit();
         }
-        throw new RuntimeException("Receiver status " + status + " not found in machine");
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Receiver candStatus " + status + " not found in machine");
     }
 }

@@ -4,19 +4,14 @@ import com.oneday.common.util.MD5Util;
 import com.oneday.common.util.Validator;
 import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.constant.SexEnum;
-import com.oneday.constant.StateEnum;
-import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
-import com.oneday.domain.User;
-import com.oneday.domain.HunterReceiver;
+import com.oneday.domain.po.User;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
-import com.oneday.service.state.Machine;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -124,6 +119,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> get(User user) {
+
+
         return null;
     }
 

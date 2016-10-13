@@ -1,4 +1,4 @@
-package com.oneday.domain;
+package com.oneday.domain.po;
 
 /**
  * 用户域
@@ -100,7 +100,7 @@ public class User {
      */
     protected Date update;
 
-    protected Integer yn;
+    protected Integer yn = 0;
 
     public Long getId() {
         return id;

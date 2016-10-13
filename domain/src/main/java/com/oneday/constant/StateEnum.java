@@ -6,10 +6,11 @@ package com.oneday.constant;
  * @version 1.0 2016/9/7 14:52
  */
 public enum StateEnum {
-    SEND(0,"发送"),
-    REJECT(1,"拒绝"),
+
+    REJECT(8,"拒绝"),
+    SEND(4,"发送"),
     ACCEPT(2,"接受"),
-    ADMIT(3,"承认");
+    ADMIT(1,"承认");
 
     private Integer status;
     private String desc;

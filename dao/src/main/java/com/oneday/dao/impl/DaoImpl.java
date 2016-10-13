@@ -14,7 +14,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 abstract class DaoImpl<T, PK extends Serializable> implements Dao<T, PK> {
 
-    public static final String STATEMENT_ADD = "insertItem";
+    public static final String STATEMENT_ADD = "add";
     public static final String STATEMENT_GET_BY_ID = "getById";
     public static final String STATEMENT_GET_BY_WHERE = "getByWhere";
     public static final String STATEMENT_GET = "get";

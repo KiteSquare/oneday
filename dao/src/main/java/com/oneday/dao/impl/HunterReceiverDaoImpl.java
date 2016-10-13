@@ -1,7 +1,7 @@
 package com.oneday.dao.impl;
 
 import com.oneday.dao.HunterReceiverDao;
-import com.oneday.domain.HunterReceiver;
+import com.oneday.domain.po.HunterReceiver;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     @Override
     public int updateStatusByReceivers(Integer status, Set<Long> uids) {
         Map<String, Object> params = new HashMap<String, Object>(2);
-        params.put("status", status);
+        params.put("candStatus", status);
         params.put("uids", uids);
         params.put("update", System.currentTimeMillis());
         return sqlSessionTemplate.update(getNameSpace("updateStatusByReceivers"), params);
@@ -40,7 +40,7 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     @Override
     public int updateStatusByReceiver(Integer status, Long uid) {
         Map<String, Object> params = new HashMap<String, Object>(2);
-        params.put("status", status);
+        params.put("candStatus", status);
         params.put("receiver", uid);
         params.put("update", System.currentTimeMillis());
         return sqlSessionTemplate.update(getNameSpace("updateStatusByReceiver"), params);
@@ -48,8 +48,8 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
 
     @Override
     public int updateStatusByHunterAndReceiver(Integer status, Long hunter, Long receiver) {
-        Map<String, Object> params = new HashMap<String, Object>(2);
-        params.put("status", status);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("candStatus", status);
         params.put("hunter", hunter);
         params.put("receiver", receiver);
         params.put("update", System.currentTimeMillis());
@@ -58,5 +58,25 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
 
     public String getNameSpace(String name) {
         return NAMESPACE + name;
+    }
+
+    public List<HunterReceiver> getReceiverList(Long senderId, Integer index, Integer count) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("hunter", senderId);
+        params.put("index", index);
+        params.put("count", count);
+        return sqlSessionTemplate.selectList(getNameSpace("getReceiverList"), params);
+    }
+
+    public int candidateCount(HunterReceiver param) {
+        return sqlSessionTemplate.selectOne(getNameSpace("selectCount"), param);
+    }
+
+    public List<HunterReceiver> getSenderList(Long receiver, Integer index, Integer count) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("receiver", receiver);
+        params.put("index", index);
+        params.put("count", count);
+        return sqlSessionTemplate.selectList(getNameSpace("receiver"), params);
     }
 }

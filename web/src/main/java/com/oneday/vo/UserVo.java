@@ -1,6 +1,6 @@
 package com.oneday.vo;
 
-import com.oneday.domain.User;
+import com.oneday.domain.po.User;
 
 /**
  * @author fanyongpeng [15104723@qq.com]

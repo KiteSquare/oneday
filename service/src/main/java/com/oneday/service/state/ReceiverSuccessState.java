@@ -23,7 +23,7 @@ public class ReceiverSuccessState implements ReceiverState {
      */
     @Override
     public Integer accept() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not accept on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not accept on success candStatus");
     }
 
     /**
@@ -31,6 +31,6 @@ public class ReceiverSuccessState implements ReceiverState {
      */
     @Override
     public Integer admit() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on success status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on success candStatus");
     }
 }

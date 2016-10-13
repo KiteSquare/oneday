@@ -15,7 +15,7 @@ public class HunterHoldState implements HunterState {
      */
     @Override
     public Integer send() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on hold status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not send on hold candStatus");
     }
 
     /**
@@ -23,7 +23,7 @@ public class HunterHoldState implements HunterState {
      */
     @Override
     public Integer reject() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not reject on hold status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not reject on hold candStatus");
     }
 
     /**
@@ -31,7 +31,7 @@ public class HunterHoldState implements HunterState {
      */
     @Override
     public Integer accept() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not accept on hold status");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not accept on hold candStatus");
     }
 
     /**
