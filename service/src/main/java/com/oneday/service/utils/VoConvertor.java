@@ -31,6 +31,8 @@ public class VoConvertor {
         candidate.setLat(user.getLat());
         candidate.setLon(user.getLon());
         candidate.setName(user.getName());
+        candidate.setPhone(user.getPhone());
+        candidate.setStatus(user.getStatus());
         return candidate;
     }
 

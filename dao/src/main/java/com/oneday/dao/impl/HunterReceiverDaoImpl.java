@@ -18,11 +18,35 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     private final static String NAMESPACE = "com.oneday.dao.HunterReceiverDao.";
     @Override
     public Map<Long, HunterReceiver> getMap(HunterReceiver param) {
-        List<HunterReceiver> list = this.get(param);
+        List<HunterReceiver> list = this.list(param);
         Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
         if (list != null) {
             for (HunterReceiver hunterReceiver: list) {
                 map.put(hunterReceiver.getId(), hunterReceiver);
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public Map<Long, HunterReceiver> getHunterMap(HunterReceiver param) {
+        List<HunterReceiver> list = this.list(param);
+        Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
+        if (list != null) {
+            for (HunterReceiver hunterReceiver: list) {
+                map.put(hunterReceiver.getHunter(), hunterReceiver);
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public Map<Long, HunterReceiver> getReceiverMap(HunterReceiver param) {
+        List<HunterReceiver> list = this.list(param);
+        Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
+        if (list != null) {
+            for (HunterReceiver hunterReceiver: list) {
+                map.put(hunterReceiver.getReceiver(), hunterReceiver);
             }
         }
         return map;

@@ -13,6 +13,8 @@ import java.util.Set;
  */
 public interface HunterReceiverDao extends Dao<HunterReceiver, Long> {
     Map<Long, HunterReceiver> getMap(HunterReceiver param);
+    Map<Long, HunterReceiver> getHunterMap(HunterReceiver param);
+    Map<Long, HunterReceiver> getReceiverMap(HunterReceiver param);
     int updateStatusByReceivers(Integer status, Set<Long> uids);
     int updateStatusByReceiver(Integer status, Long uid);
     int updateStatusByHunterAndReceiver(Integer status, Long hunter, Long receiver);

@@ -4,9 +4,11 @@ import com.oneday.common.domain.Result;
 import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
+import com.oneday.vo.AcceptRequestVo;
 import com.oneday.vo.SendRequestVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,12 @@ public class WillowController {
     private static Logger logger = LoggerFactory.getLogger(WillowController.class);
     @Resource
     AssociateService associateService;
+
+    /**
+     *
+     * @param sendRequest
+     * @return
+     */
     @RequestMapping(value = "/send", method = {RequestMethod.POST })
     @ResponseBody
     public  Result send(@RequestBody SendRequestVo sendRequest) {
@@ -35,7 +43,36 @@ public class WillowController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        } catch (DuplicateKeyException e) {
+            result.setCode(ErrorCodeEnum.STATE_ERROR.getCode());
+            result.setMessage("已经发送过啦~~");
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Exception e) {
+            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
+            result.setMessage("操作失败");
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @param acceptRequestVo
+     * @return
+     */
+    @RequestMapping(value = "/accept", method = {RequestMethod.POST })
+    @ResponseBody
+    public  Result accept(@RequestBody AcceptRequestVo acceptRequestVo) {
+        Result result = new Result();
+        try {
+            _validateRequest(acceptRequestVo);
+            associateService.accept(acceptRequestVo.getUserId(),acceptRequestVo.getTargetUserId());
+
+        } catch (OndayException e) {
+            result.setCode(e.getCode());
+            result.setMessage(e.getMessage());
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        }  catch (Exception e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
@@ -60,7 +97,6 @@ public class WillowController {
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
         }
 
-
         return result;
     }
 
@@ -74,6 +110,18 @@ public class WillowController {
         }
         if (sendRequest.getReceiverId() == null || sendRequest.getReceiverId() < 0) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "receiver is invalid");
+        }
+    }
+
+    protected void _validateRequest(AcceptRequestVo requestVo) {
+        if (requestVo == null) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
+        }
+        if (requestVo.getUserId() == null || requestVo.getUserId() < 0) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is not found or invalid");
+        }
+        if (requestVo.getTargetUserId() == null || requestVo.getTargetUserId() < 0) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "target user id is not found or invalid");
         }
     }
 

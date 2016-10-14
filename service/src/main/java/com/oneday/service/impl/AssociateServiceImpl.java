@@ -95,7 +95,11 @@ public class AssociateServiceImpl implements AssociateService{
         this._checkIsMale(targetUser);
         HunterReceiver param = new HunterReceiver();
         param.setReceiver(userId);
-        Map<Long, HunterReceiver> hunters = hunterReceiverDao.getMap(param);
+        param.setStatus(StateEnum.SEND.getStatus());
+
+
+
+        Map<Long, HunterReceiver> hunters = hunterReceiverDao.getHunterMap(param);
         if (! hunters.containsKey(targetUserId)) {
             throw new OndayException(ErrorCodeEnum.USER_HUNTER_INVALID.getCode(),
                     String.format("User id [%s] is not the hunter of user id[%s] yet.", targetUserId, userId));

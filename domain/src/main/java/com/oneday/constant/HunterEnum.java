@@ -7,10 +7,10 @@ package com.oneday.constant;
  */
 public enum HunterEnum {
     NOTHING(0,"无状态"),
-    SINGLE(1,"单身"),
-    WAITING(2,"等待"),
-    HOLD(3,"暂定"),
-    SUCCESS(4,"确定");
+    SINGLE(8,"单身"),
+    WAITING(4,"等待"),
+    HOLD(2,"暂定"),
+    SUCCESS(1,"确定");
 
     private Integer status;
     private String desc;
