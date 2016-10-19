@@ -132,21 +132,21 @@
             <![CDATA[UPDATE ]]>
             <include refid="TABLE_NAME" />
             <set>
-                <if test="name != null " ><![CDATA[`name` = #{item.name},]]></if>
-                <if test="password != null " ><![CDATA[`password` = #{item.password},]]></if>
-                <if test="phone != null " ><![CDATA[`phone` = #{item.phone},]]></if>
-                <if test="sex != null " ><![CDATA[`sex` = #{item.sex},]]></if>
-                <if test="birth != null " ><![CDATA[`birth` = #{item.birth},]]></if>
-                <if test="idcard != null " ><![CDATA[`idcard` = #{item.idcard},]]></if>
-                <if test="signature != null " ><![CDATA[`signature` = #{item.signature},]]></if>
-                <if test="city != null " ><![CDATA[`city` = #{item.city},]]></if>
-                <if test="lon != null " ><![CDATA[`lon` = #{item.lon},]]></if>
-                <if test="lat != null " ><![CDATA[`lat` = #{item.lat},]]></if>
-                <if test="head != null " ><![CDATA[`head` = #{item.head},]]></if>
-                <if test="detail != null " ><![CDATA[`detail` = #{item.detail},]]></if>
-                <if test="create != null " ><![CDATA[`create` = #{item.create},]]></if>
-                <if test="update != null " ><![CDATA[`update` = #{item.update},]]></if>
-                <if test="yn != null " ><![CDATA[`yn` = #{item.yn},]]></if>
+                <if test="item.name != null " ><![CDATA[`name` = #{item.name},]]></if>
+                <if test="item.password != null " ><![CDATA[`password` = #{item.password},]]></if>
+                <if test="item.phone != null " ><![CDATA[`phone` = #{item.phone},]]></if>
+                <if test="item.sex != null " ><![CDATA[`sex` = #{item.sex},]]></if>
+                <if test="item.birth != null " ><![CDATA[`birth` = #{item.birth},]]></if>
+                <if test="item.idcard != null " ><![CDATA[`idcard` = #{item.idcard},]]></if>
+                <if test="item.signature != null " ><![CDATA[`signature` = #{item.signature},]]></if>
+                <if test="item.city != null " ><![CDATA[`city` = #{item.city},]]></if>
+                <if test="item.lon != null " ><![CDATA[`lon` = #{item.lon},]]></if>
+                <if test="item.lat != null " ><![CDATA[`lat` = #{item.lat},]]></if>
+                <if test="item.head != null " ><![CDATA[`head` = #{item.head},]]></if>
+                <if test="item.detail != null " ><![CDATA[`detail` = #{item.detail},]]></if>
+                <if test="item.create != null " ><![CDATA[`create` = #{item.create},]]></if>
+                <if test="item.update != null " ><![CDATA[`update` = #{item.update},]]></if>
+                <if test="item.yn != null " ><![CDATA[`yn` = #{item.yn},]]></if>
             </set>
             <![CDATA[ WHERE id=#{item.id}]]>
         </foreach>

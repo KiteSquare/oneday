@@ -8,6 +8,7 @@ import com.oneday.dao.UserDao;
 import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.po.User;
 import com.oneday.domain.vo.Candidate;
+import com.oneday.domain.vo.HunterReceiverParam;
 import com.oneday.domain.vo.Page;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
@@ -93,10 +94,10 @@ public class AssociateServiceImpl implements AssociateService{
         }
         this._checkIsFemale(user);
         this._checkIsMale(targetUser);
-        HunterReceiver param = new HunterReceiver();
+        HunterReceiverParam param = new HunterReceiverParam();
         param.setReceiver(userId);
-        param.setStatus(StateEnum.SEND.getStatus());
-
+        param.setLessStatus(StateEnum.ADMIT.getStatus());
+        param.setMaxStatus(StateEnum.REJECT.getStatus());
 
 
         Map<Long, HunterReceiver> hunters = hunterReceiverDao.getHunterMap(param);
@@ -107,7 +108,9 @@ public class AssociateServiceImpl implements AssociateService{
         // 查出所有追求者的用户信息
         Set<Long> hunterSet = hunters.keySet();
         hunterSet.remove(targetUserId);
-        relateUserMap.putAll(userDao.getMapByIds(hunterSet));
+        if (!hunters.isEmpty()) {
+            relateUserMap.putAll(userDao.getMapByIds(hunterSet));
+        }
         // 更新所有状态
         _acceptOneAndRejectOthers(hunters, relateUserMap, user, targetUser);
 
@@ -126,12 +129,15 @@ public class AssociateServiceImpl implements AssociateService{
         Set<Long> rejectUids = new HashSet<Long>();
         List<User> updateUsers = new ArrayList<User>();
         // 设置用户状态
-        user.setStatus(machine.receiverAccept(user.getStatus()));
-        targetUser.setStatus(machine.hunterAccept(targetUser.getStatus()));
-        updateUsers.add(user);
-        updateUsers.add(targetUser);
-
         Date update = new Date();
+        user.setStatus(machine.receiverAccept(user.getStatus()));
+        user.setUpdate(update);
+        targetUser.setStatus(machine.hunterAccept(targetUser.getStatus()));
+        targetUser.setUpdate(update);
+        updateUsers.add(_buildUpdateUserPo(user));
+        updateUsers.add(_buildUpdateUserPo(targetUser));
+
+
 
         for (Long uid: hunters.keySet()) {
             if (uid.equals(targetUser.getId())) {
@@ -144,14 +150,28 @@ public class AssociateServiceImpl implements AssociateService{
             // 其他用户都需要拒绝, ^_^
             rejectUids.add(uid);
             user1.setStatus(machine.hunterReject(user1.getStatus()));
-            updateUsers.add(user1);
+            updateUsers.add(_buildUpdateUserPo(user1));
         }
 
 
         // 更新数据库关系状态
         int num1 = hunterReceiverDao.updateStatusByReceiver(StateEnum.ACCEPT.getStatus(), targetUser.getId());
-        int num2 = hunterReceiverDao.updateStatusByReceivers(StateEnum.REJECT.getStatus(),rejectUids);
-        int num3 = userDao.batchUpdate(updateUsers);
+        if (! rejectUids.isEmpty()) {
+            int num2 = hunterReceiverDao.updateStatusByReceivers(StateEnum.REJECT.getStatus(),rejectUids);
+        }
+
+        for (User u: updateUsers) {
+            int num3 = userDao.update(u);
+        }
+
+    }
+
+    private User _buildUpdateUserPo(User user) {
+        User po = new User();
+        po.setId(user.getId());
+        po.setStatus(user.getStatus());
+        po.setUpdate(user.getUpdate());
+        return po;
     }
 
     /**
@@ -224,7 +244,7 @@ public class AssociateServiceImpl implements AssociateService{
         List<Candidate> candidatesList = new ArrayList<>();
         res.setData(candidatesList);
 
-        HunterReceiver param = new HunterReceiver();
+        HunterReceiverParam param = new HunterReceiverParam();
         List<HunterReceiver> data = null;
         Map<Long, User> candidateUserMap = null;
 

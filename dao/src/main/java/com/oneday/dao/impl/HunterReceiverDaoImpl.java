@@ -2,6 +2,7 @@ package com.oneday.dao.impl;
 
 import com.oneday.dao.HunterReceiverDao;
 import com.oneday.domain.po.HunterReceiver;
+import com.oneday.domain.vo.HunterReceiverParam;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implements HunterReceiverDao {
     private final static String NAMESPACE = "com.oneday.dao.HunterReceiverDao.";
     @Override
-    public Map<Long, HunterReceiver> getMap(HunterReceiver param) {
+    public Map<Long, HunterReceiver> getMap(HunterReceiverParam param) {
         List<HunterReceiver> list = this.list(param);
         Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
         if (list != null) {
@@ -28,8 +29,12 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
         return map;
     }
 
+    public List<HunterReceiver> list(HunterReceiverParam po) {
+        return sqlSessionTemplate.selectList(getNameSpace(STATEMENT_GET), po);
+    }
+
     @Override
-    public Map<Long, HunterReceiver> getHunterMap(HunterReceiver param) {
+    public Map<Long, HunterReceiver> getHunterMap(HunterReceiverParam param) {
         List<HunterReceiver> list = this.list(param);
         Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
         if (list != null) {
@@ -41,7 +46,7 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     }
 
     @Override
-    public Map<Long, HunterReceiver> getReceiverMap(HunterReceiver param) {
+    public Map<Long, HunterReceiver> getReceiverMap(HunterReceiverParam param) {
         List<HunterReceiver> list = this.list(param);
         Map<Long, HunterReceiver> map = new HashMap<Long, HunterReceiver>();
         if (list != null) {
@@ -92,7 +97,7 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
         return sqlSessionTemplate.selectList(getNameSpace("getReceiverList"), params);
     }
 
-    public int candidateCount(HunterReceiver param) {
+    public int candidateCount(HunterReceiverParam param) {
         return sqlSessionTemplate.selectOne(getNameSpace("selectCount"), param);
     }
 
@@ -101,6 +106,6 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
         params.put("receiver", receiver);
         params.put("index", index);
         params.put("count", count);
-        return sqlSessionTemplate.selectList(getNameSpace("receiver"), params);
+        return sqlSessionTemplate.selectList(getNameSpace("getHunterList"), params);
     }
 }
