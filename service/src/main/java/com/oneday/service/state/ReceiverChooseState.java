@@ -35,6 +35,6 @@ public class ReceiverChooseState implements ReceiverState {
      */
     @Override
     public Integer admit() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on single candStatus");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on single status");
     }
 }

@@ -26,7 +26,7 @@ public class ReceiverSingleState implements ReceiverState {
      */
     @Override
     public Integer accept() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not accept on single candStatus");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not accept on single status");
     }
 
     /**
@@ -35,6 +35,6 @@ public class ReceiverSingleState implements ReceiverState {
      */
     @Override
     public Integer admit() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on single candStatus");
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not admit on single status");
     }
 }
