@@ -123,6 +123,15 @@
                 <version>1.0.2</version>
             </dependency>
 
+            <!--  阿里大于JAR-->
+            <dependency>
+                <groupId>taobao</groupId>
+                <artifactId>taobao-sdk-sms</artifactId>
+                <version>1.0</version>
+                <scope>system</scope>
+                <systemPath>${project.basedir}/web/src/main/webapp/WEB-INF/lib/taobao-sdk-java-auto_1455552377940-20160607.jar</systemPath>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

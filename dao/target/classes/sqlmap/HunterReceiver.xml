@@ -80,7 +80,7 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[
-         WHERE hunter=#{hunter} ORDER BY status LIMIT #{index},#{count}
+         WHERE hunter=#{hunter} ORDER BY status,`update` DESC  LIMIT #{index},#{count}
         ]]>
     </select>
 
@@ -91,7 +91,7 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[
-         WHERE receiver=#{receiver} ORDER BY status LIMIT #{index},#{count}
+         WHERE receiver=#{receiver} ORDER BY status,`update` DESC LIMIT #{index},#{count}
         ]]>
     </select>
 
@@ -136,6 +136,5 @@
         <include refid="TABLE_NAME" />
         <![CDATA[ SET status= #{status}, `update`=#{update} WHERE hunter=#{hunter} AND receiver=#{receiver} ]]>
     </update>
-
 
 </mapper>

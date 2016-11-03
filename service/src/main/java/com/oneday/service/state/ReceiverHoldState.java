@@ -19,6 +19,16 @@ public class ReceiverHoldState implements ReceiverState {
     }
 
     /**
+     * 拒绝
+     *
+     * @return
+     */
+    @Override
+    public Integer reject() {
+        return ReceiverEnum.HOLD.getStatus();
+    }
+
+    /**
      * 接受
      * @return
      */

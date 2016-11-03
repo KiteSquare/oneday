@@ -21,14 +21,14 @@ public interface UserService {
      * @param user
      * @return
      */
-    Integer regist(User user);
+    User regist(User user);
 
     /**
      * 验证码注册
      * @param user
      * @return
      */
-    Integer registWithCode(User user, String code);
+    User verifyRegistCode(User user, String code);
 
     /**
      * 发送验证码
@@ -43,6 +43,13 @@ public interface UserService {
      * @return
      */
     User getById(Long userId);
+
+    /**
+     * 获取接受的用户
+     * @param receiverId
+     * @return
+     */
+    User getAcceptedUser(Long receiverId);
 
     /**
      *

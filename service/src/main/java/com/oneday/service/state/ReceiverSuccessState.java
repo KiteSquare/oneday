@@ -1,6 +1,7 @@
 package com.oneday.service.state;
 
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.constant.ReceiverEnum;
 import com.oneday.exceptions.OndayException;
 
 /**
@@ -16,6 +17,16 @@ public class ReceiverSuccessState implements ReceiverState {
     @Override
     public Integer receive() {
         throw new OndayException(ErrorCodeEnum.STATE_ALREADY_SUCCESS.getCode(), "Receiver already success");
+    }
+
+    /**
+     * 拒绝
+     *
+     * @return
+     */
+    @Override
+    public Integer reject() {
+        return ReceiverEnum.SUCCESS.getStatus();
     }
 
     /**

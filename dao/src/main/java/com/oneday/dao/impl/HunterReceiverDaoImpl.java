@@ -58,30 +58,35 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     }
 
     @Override
+    public List<HunterReceiver> getByWhere(HunterReceiverParam param) {
+        return sqlSessionTemplate.selectList(getNameSpace("getByWhere"), param);
+    }
+
+    @Override
     public int updateStatusByReceivers(Integer status, Set<Long> uids) {
         Map<String, Object> params = new HashMap<String, Object>(2);
-        params.put("candStatus", status);
+        params.put("status", status);
         params.put("uids", uids);
-        params.put("update", System.currentTimeMillis());
+        params.put("update", System.currentTimeMillis()/1000);
         return sqlSessionTemplate.update(getNameSpace("updateStatusByReceivers"), params);
     }
 
     @Override
     public int updateStatusByReceiver(Integer status, Long uid) {
         Map<String, Object> params = new HashMap<String, Object>(2);
-        params.put("candStatus", status);
+        params.put("status", status);
         params.put("receiver", uid);
-        params.put("update", System.currentTimeMillis());
+        params.put("update", System.currentTimeMillis()/1000);
         return sqlSessionTemplate.update(getNameSpace("updateStatusByReceiver"), params);
     }
 
     @Override
     public int updateStatusByHunterAndReceiver(Integer status, Long hunter, Long receiver) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("candStatus", status);
+        params.put("status", status);
         params.put("hunter", hunter);
         params.put("receiver", receiver);
-        params.put("update", System.currentTimeMillis());
+        params.put("update", System.currentTimeMillis()/1000);
         return sqlSessionTemplate.update(getNameSpace("updateStatusByHunterAndReceiver"), params);
     }
 

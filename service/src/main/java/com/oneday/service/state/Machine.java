@@ -111,6 +111,19 @@ public class Machine {
      * @param status 当前状态
      * @return 目标状态
      */
+    public Integer receiverReject(Integer status) {
+        ReceiverState s = receiverStateMap.get(status);
+        if (s != null) {
+            return s.reject();
+        }
+        throw new OndayStateException(ErrorCodeEnum.STATE_ERROR.getCode(),"Receiver candStatus " + status + " not found in machine");
+    }
+
+    /**
+     *
+     * @param status 当前状态
+     * @return 目标状态
+     */
     public Integer receiverAccept(Integer status) {
         ReceiverState s = receiverStateMap.get(status);
         if (s != null) {

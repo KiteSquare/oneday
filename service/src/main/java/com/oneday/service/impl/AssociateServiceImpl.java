@@ -12,10 +12,12 @@ import com.oneday.domain.vo.HunterReceiverParam;
 import com.oneday.domain.vo.Page;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
+import com.oneday.service.UserService;
 import com.oneday.service.state.Machine;
 import com.oneday.service.utils.VoConvertor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,8 @@ public class AssociateServiceImpl implements AssociateService{
     UserDao userDao;
     @Resource
     HunterReceiverDao hunterReceiverDao;
+    @Resource
+    UserService userService;
     @Resource
     Machine machine;
     /**
@@ -65,8 +69,20 @@ public class AssociateServiceImpl implements AssociateService{
         Long time = (System.currentTimeMillis()/1000);
         hunterReceiver.setCreate(time);
         hunterReceiver.setUpdate(time);
-        int res = hunterReceiverDao.add(hunterReceiver);
-        // 保存
+        try {
+            int res = hunterReceiverDao.add(hunterReceiver);
+            if (res <= 0) {
+                throw new RuntimeException(String.format("Insert db fail sender %s, receiver %s, status %s", userId, targetUserId, hunterReceiver.getStatus()));
+            }
+        } catch (DuplicateKeyException  e) {
+            logger.info(String.format("send fail, user[%s] duplicated sending to user[%s]", userId, targetUserId), e);
+            throw new OndayException(ErrorCodeEnum.STATE_SEND_DUPLICATE_ERROR.getCode(), ErrorCodeEnum.STATE_SEND_DUPLICATE_ERROR.getValue());
+        }
+
+        // 更新用户状态
+        Date now = new Date();
+        user.setUpdate(now);
+        targetUser.setUpdate(now);
         userDao.update(user);
         userDao.update(targetUser);
         // TODO 推送接收消息通知
@@ -155,7 +171,11 @@ public class AssociateServiceImpl implements AssociateService{
 
 
         // 更新数据库关系状态
-        int num1 = hunterReceiverDao.updateStatusByReceiver(StateEnum.ACCEPT.getStatus(), targetUser.getId());
+
+        // 更新与接受者的状态
+        int num1 = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.ACCEPT.getStatus(), targetUser.getId(), user.getId());
+
+        // 更新其他人的拒绝信息
         if (! rejectUids.isEmpty()) {
             int num2 = hunterReceiverDao.updateStatusByReceivers(StateEnum.REJECT.getStatus(),rejectUids);
         }
@@ -195,18 +215,29 @@ public class AssociateServiceImpl implements AssociateService{
         }
         this._checkIsFemale(user);
         this._checkIsMale(targetUser);
-        user.setStatus(machine.hunterReject(user.getStatus()));
+
+        user.setStatus(machine.receiverReject(user.getStatus()));
         targetUser.setStatus(machine.hunterReject(targetUser.getStatus()));
-        HunterReceiver param = new HunterReceiver();
+        HunterReceiverParam param = new HunterReceiverParam();
         param.setReceiver(userId);
         param.setHunter(targetUserId);
-        List<HunterReceiver> hunterReceivers = hunterReceiverDao.get(param);
-        if (hunterReceivers == null || hunterReceivers.isEmpty()) {
+        param.setStatus(StateEnum.SEND.getStatus());
+
+        int sendNum = hunterReceiverDao.candidateCount(param);
+        if (sendNum == 0) {
             throw new OndayException(ErrorCodeEnum.USER_HUNTER_INVALID.getCode(),
                     String.format("User id [%s] is not the hunter of user id[%s] yet.", targetUserId, userId));
+        } else if (sendNum == 1) {
+            throw new OndayException(ErrorCodeEnum.STATE_RECEIVER_CANT_REJECT_ERROR.getCode(),
+                    String.format("User id [%s] is the only hunter of user id[%s]. It can not be rejected now", targetUserId, userId));
         }
-        // 更新状态
+
+        // 更新拒绝状态
         int num = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.REJECT.getStatus(), userId, targetUserId);
+        if (num <= 0) {
+            throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(),
+                    String.format("User id [%s] has been rejected by user id[%s].", targetUserId, userId));
+        }
         // TODO 推送拒绝消息通知
     }
 
@@ -217,7 +248,31 @@ public class AssociateServiceImpl implements AssociateService{
      */
     @Transactional
     public void admit(Long userId) {
-
+        if (userId == null) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "user id can not be null");
+        }
+        User user = userDao.get(userId);
+        if (user == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("User id [%s] not found.",
+                    userId));
+        }
+        User hunter = userService.getAcceptedUser(userId);
+        if (hunter == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("The accepted hunter of user[%s] not found.",
+                    userId));
+        }
+        user.setStatus(machine.receiverAdmit(user.getStatus()));
+        hunter.setStatus(machine.hunterAdmit(hunter.getStatus()));
+        // 更新承认状态
+        // 更新拒绝状态
+        int num = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.ADMIT.getStatus(), hunter.getId(), userId);
+        // 更新用户状态
+        Date now = new Date();
+        user.setUpdate(now);
+        hunter.setUpdate(now);
+        int num1 = userDao.update(user);
+        int num2 = userDao.update(hunter);
+        // TODO 推送承认消息
     }
 
     /**
@@ -226,7 +281,7 @@ public class AssociateServiceImpl implements AssociateService{
      * @param userId
      * @return
      */
-    public Page<Candidate> candidates(Long userId, Integer sex , Integer index, Integer count) {
+    public Page<Candidate> candidates(Long userId, Integer sex , Integer currentPage, Integer count) {
         if (userId == null || userId <= 0) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is invalid");
         }
@@ -238,11 +293,9 @@ public class AssociateServiceImpl implements AssociateService{
             }
             sex = user.getSex();
         }
-        Page<Candidate> res = new Page<>();
-        res.setCount(count);
-        res.setIndex(index);
+        Page<Candidate> page = new Page<>(currentPage, count);
         List<Candidate> candidatesList = new ArrayList<>();
-        res.setData(candidatesList);
+        page.setData(candidatesList);
 
         HunterReceiverParam param = new HunterReceiverParam();
         List<HunterReceiver> data = null;
@@ -250,8 +303,8 @@ public class AssociateServiceImpl implements AssociateService{
 
         if (sex.equals(SexEnum.MAN.getSex())) {
             param.setHunter(userId);
-            res.setTotal(hunterReceiverDao.candidateCount(param));
-            data = hunterReceiverDao.getReceiverList(userId, index, count);
+            page.setTotal(hunterReceiverDao.candidateCount(param));
+            data = hunterReceiverDao.getReceiverList(userId, page.getIndex(), page.getCount());
 
             if (data != null) {
                 List<Long> ids = new ArrayList<>();
@@ -272,8 +325,8 @@ public class AssociateServiceImpl implements AssociateService{
             }
         } else if (sex.equals(SexEnum.FEMALE.getSex())) {
             param.setReceiver(userId);
-            res.setTotal(hunterReceiverDao.candidateCount(param));
-            data = hunterReceiverDao.getSenderList(userId, index, count);
+            page.setTotal(hunterReceiverDao.candidateCount(param));
+            data = hunterReceiverDao.getSenderList(userId, page.getIndex(), page.getCount());
             if (data != null) {
                 List<Long> ids = new ArrayList<>();
                 for (HunterReceiver hr: data) {
@@ -294,7 +347,7 @@ public class AssociateServiceImpl implements AssociateService{
             }
         }
 
-        return res;
+        return page;
     }
 
     /**

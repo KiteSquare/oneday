@@ -10,6 +10,16 @@ import com.oneday.domain.po.User;
 public class UserVo extends User {
     protected String code;
 
+    protected String birthStr;
+
+    public String getBirthStr() {
+        return birthStr;
+    }
+
+    public void setBirthStr(String birthStr) {
+        this.birthStr = birthStr;
+    }
+
     public String getCode() {
         return code;
     }

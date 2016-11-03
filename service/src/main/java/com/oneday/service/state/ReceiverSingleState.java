@@ -21,6 +21,16 @@ public class ReceiverSingleState implements ReceiverState {
     }
 
     /**
+     * 拒绝
+     *
+     * @return
+     */
+    @Override
+    public Integer reject() {
+        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Receiver can not reject on single status");
+    }
+
+    /**
      * 接受
      * @return
      */

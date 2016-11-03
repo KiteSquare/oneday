@@ -14,6 +14,7 @@ import java.util.Set;
  */
 public interface HunterReceiverDao extends Dao<HunterReceiver, Long> {
     Map<Long, HunterReceiver> getMap(HunterReceiverParam param);
+
     Map<Long, HunterReceiver> getHunterMap(HunterReceiverParam param);
     Map<Long, HunterReceiver> getReceiverMap(HunterReceiverParam param);
     int updateStatusByReceivers(Integer status, Set<Long> uids);
@@ -21,6 +22,7 @@ public interface HunterReceiverDao extends Dao<HunterReceiver, Long> {
     int updateStatusByHunterAndReceiver(Integer status, Long hunter, Long receiver);
 
     List<HunterReceiver> getReceiverList(Long senderId, Integer index, Integer count);
+    List<HunterReceiver> getByWhere(HunterReceiverParam param);
 
     int candidateCount(HunterReceiverParam param);
 

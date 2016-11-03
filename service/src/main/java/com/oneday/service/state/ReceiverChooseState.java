@@ -21,6 +21,16 @@ public class ReceiverChooseState implements ReceiverState {
     }
 
     /**
+     * 拒绝
+     *
+     * @return
+     */
+    @Override
+    public Integer reject() {
+        return ReceiverEnum.CHOOSE.getStatus();
+    }
+
+    /**
      * 接受
      * @return
      */

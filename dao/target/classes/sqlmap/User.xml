@@ -52,10 +52,10 @@
     <insert id="add" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
-        (<include refid="ALL_COLUMNS" />)
+        (`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,status,`create`,`update`,yn)
         VALUES
         <![CDATA[
-        (#{id},#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{create}
+        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{status},#{create}
         ,#{update},#{yn})
         ]]>
     </insert>
