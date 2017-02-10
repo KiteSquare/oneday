@@ -17,6 +17,7 @@
 		<typeAlias type="com.oneday.domain.po.User" alias="User"/>
 		<typeAlias type="com.oneday.domain.po.HunterReceiver" alias="HunterReceiver"/>
 		<typeAlias type="com.oneday.domain.vo.HunterReceiverParam" alias="HunterReceiverParam"/>
+		<typeAlias type="com.oneday.domain.vo.UserParam" alias="UserParam"/>
 	</typeAliases>
 	<!-- 映射文件路径 -->
 	<mappers>

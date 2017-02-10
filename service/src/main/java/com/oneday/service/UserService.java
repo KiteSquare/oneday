@@ -1,6 +1,7 @@
 package com.oneday.service;
 
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.UserDisplay;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    User getById(Long userId);
+    UserDisplay getUserDisplayById(Long userId);
 
     /**
      * 获取接受的用户
@@ -52,7 +53,7 @@ public interface UserService {
     User getAcceptedUser(Long receiverId);
 
     /**
-     *
+     * 获取用户展示信息
      * @param user
      * @return
      */

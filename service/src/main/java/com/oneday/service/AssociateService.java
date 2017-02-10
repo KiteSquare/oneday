@@ -50,4 +50,13 @@ public interface AssociateService {
      * @return
      */
     Page<Candidate> candidates(Long userId,Integer sex , Integer index, Integer count);
+
+    /**
+     * 获取用户信息和用户历史关系用户的信息
+     * @param userId 用户id
+     * @param currentPage 开始行数
+     * @param count 每页数量
+     * @return
+     */
+    public UserInfo getUserInfo(Long userId , Integer currentPage, Integer count);
 }

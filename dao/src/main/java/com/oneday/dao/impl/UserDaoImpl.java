@@ -2,6 +2,7 @@ package com.oneday.dao.impl;
 
 import com.oneday.dao.UserDao;
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.UserParam;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -60,5 +61,10 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
     @Override
     public User getByPhone(String phone) {
         return sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
+    }
+
+    @Override
+    public List<User> getByWhere(UserParam userParam) {
+        return sqlSessionTemplate.selectList(getNameSpace("getByWhere"), userParam);
     }
 }

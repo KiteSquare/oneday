@@ -14,10 +14,15 @@ public class UserInfo {
      * 当前用户
      */
     protected User user;
+
+    /**
+     * 接受的对象
+     */
+    protected Candidate acceptedUser;
     /**
      * 历史对象
      */
-    protected List<Candidate> history;
+    protected Page<Candidate> history;
 
     protected Integer count;
 
@@ -33,11 +38,19 @@ public class UserInfo {
         this.user = user;
     }
 
-    public List<Candidate> getHistory() {
+    public Page<Candidate>getHistory() {
         return history;
     }
 
-    public void setHistory(List<Candidate> history) {
+    public void setHistory(Page<Candidate> history) {
         this.history = history;
+    }
+
+    public Candidate getAcceptedUser() {
+        return acceptedUser;
+    }
+
+    public void setAcceptedUser(Candidate acceptedUser) {
+        this.acceptedUser = acceptedUser;
     }
 }

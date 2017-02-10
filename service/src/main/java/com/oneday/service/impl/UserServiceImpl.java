@@ -8,8 +8,10 @@ import com.oneday.dao.UserDao;
 import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.po.User;
 import com.oneday.domain.vo.HunterReceiverParam;
+import com.oneday.domain.vo.UserDisplay;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
+import com.oneday.service.utils.VoConvertor;
 import com.oneday.utils.UserUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -198,8 +200,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User getById(Long userId) {
-        return userDao.get(userId);
+    /**
+     * 获取用户展示信息
+     * @param userId
+     * @return
+     */
+    public UserDisplay getUserDisplayById(Long userId) {
+        if (userId == null) return null;
+        User user = userDao.get(userId);
+        return VoConvertor.convertUserToUserDisplay(user);
     }
 
     public List<User> get(User user) {

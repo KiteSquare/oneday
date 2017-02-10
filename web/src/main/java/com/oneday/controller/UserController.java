@@ -4,6 +4,7 @@ import com.oneday.common.domain.Result;
 import com.oneday.common.util.DateUtil;
 import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.UserDisplay;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
 import com.oneday.vo.UserVo;
@@ -47,7 +48,7 @@ public class UserController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
@@ -71,7 +72,7 @@ public class UserController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
             logger.info(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
@@ -98,7 +99,7 @@ public class UserController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
@@ -106,14 +107,29 @@ public class UserController {
         return result;
     }
 
-
-
     @RequestMapping(value = "/{id}", method = {RequestMethod.GET, RequestMethod.POST })
-    public Result info(@PathVariable int id) {
+    @ResponseBody
+    public Result info(@PathVariable Long id) {
         Result result = new Result();
 
-
-
+        try {
+            if (id == null || id <= 0) {
+                throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户id错误");
+            }
+            UserDisplay user = userService.getUserDisplayById(id);
+            if (user == null) {
+                throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户id错误");
+            }
+            result.setData(user);
+        } catch (OndayException e) {
+            result.setCode(e.getCode());
+            result.setMessage(e.getMessage());
+            logger.info(String.format("get user info failed, %s", e.getMessage()), e);
+        } catch (Throwable e) {
+            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
+            result.setMessage(e.getMessage());
+            logger.info(String.format("get user info failed, %s", e.getMessage()), e);
+        }
         return result;
     }
 

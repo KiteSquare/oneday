@@ -80,7 +80,7 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[
-         WHERE hunter=#{hunter} ORDER BY status,`update` DESC  LIMIT #{index},#{count}
+         WHERE hunter=#{hunter} ORDER BY status ASC ,`update` DESC  LIMIT #{index},#{count}
         ]]>
     </select>
 
@@ -91,7 +91,7 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[
-         WHERE receiver=#{receiver} ORDER BY status,`update` DESC LIMIT #{index},#{count}
+         WHERE receiver=#{receiver} ORDER BY status ASC,`update` DESC LIMIT #{index},#{count}
         ]]>
     </select>
 
@@ -111,6 +111,23 @@
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 关联的hunter id列表-->
+    <select id="getAllHunterUids" parameterType="java.lang.Long" resultType="java.lang.Long">
+        <![CDATA[SELECT hunter FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         WHERE receiver=#{receiver}
+        ]]>
+    </select>
+    <!-- 关联的receiver id列表-->
+    <select id="getAllReceiverUids" parameterType="java.lang.Long" resultType="java.lang.Long">
+        <![CDATA[SELECT receiver FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         WHERE hunter=#{hunter}
+        ]]>
     </select>
 
     <!-- 根据reveiver ids更新状态-->

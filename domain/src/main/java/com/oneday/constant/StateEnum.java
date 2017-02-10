@@ -10,7 +10,8 @@ public enum StateEnum {
     REJECT(8,"拒绝"),
     SEND(4,"发送"),
     ACCEPT(2,"接受"),
-    ADMIT(1,"承认");
+    ADMIT(1,"承认"),
+    NOTHING(0, "无状态");
 
     private Integer status;
     private String desc;

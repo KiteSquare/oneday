@@ -58,6 +58,19 @@ public class User {
      * 出生日期
      */
     protected Date birth;
+
+    /**
+     *
+     * 身高 cm
+     */
+    protected Integer height;
+
+    /**
+     * 婚姻状况
+     * 参考 MarriageEnum
+     */
+    protected Integer marriage;
+
     /**
      * 个人签名
      */
@@ -74,6 +87,23 @@ public class User {
      * 初始经度
      */
     protected Double lat;
+
+    /**
+     * 行业
+     */
+    protected String industry;
+
+    /**
+     * 学历 0 小学以下，1 小学， 2 初中， 3 高中，4 中专，5 大专，6 本科，7 硕士，8 博士
+     * 参见EducationEnum
+     */
+    protected Integer education;
+
+    /**
+     * 收入范围  参见IncomeEnum
+     */
+    protected Integer income;
+
     /**
      * 头像图片地址
      */
@@ -182,6 +212,38 @@ public class User {
         this.lat = lat;
     }
 
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public Integer getEducation() {
+        return education;
+    }
+
+    public void setEducation(Integer education) {
+        this.education = education;
+    }
+
+    public Integer getIncome() {
+        return income;
+    }
+
+    public void setIncome(Integer income) {
+        this.income = income;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
     public String getHead() {
         return head;
     }
@@ -252,5 +314,13 @@ public class User {
 
     public void setIdcard(String idcard) {
         this.idcard = idcard;
+    }
+
+    public Integer getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(Integer marriage) {
+        this.marriage = marriage;
     }
 }

@@ -49,7 +49,7 @@ public class WillowController {
             result.setCode(ErrorCodeEnum.STATE_ERROR.getCode());
             result.setMessage("已经发送过啦~~");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
@@ -74,7 +74,7 @@ public class WillowController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
@@ -99,7 +99,7 @@ public class WillowController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("reject failed, %s", e.getMessage()), e);
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("reject failed, %s", e.getMessage()), e);
@@ -123,7 +123,7 @@ public class WillowController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("admit failed, %s", e.getMessage()), e);
-        }  catch (Exception e) {
+        }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("admit failed, %s", e.getMessage()), e);
@@ -131,9 +131,9 @@ public class WillowController {
         return result;
     }
 
-    @RequestMapping(value = "/{id}", method = {RequestMethod.GET, RequestMethod.POST })
+    @RequestMapping(value = "/history/{id}", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Result info(@PathVariable long id) {
+    public Result history(@PathVariable long id) {
         Result result = new Result();
         try {
             result.setData(associateService.candidates(id, null, 0, 100));
@@ -142,7 +142,28 @@ public class WillowController {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
+            result.setMessage("操作失败");
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/info/{id}", method = {RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public Result all(@PathVariable long id) {
+        Result result = new Result();
+        try {
+
+            result.setData(associateService.getUserInfo(id, 0, 100));
+
+        } catch (OndayException e) {
+            result.setCode(e.getCode());
+            result.setMessage(e.getMessage());
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);

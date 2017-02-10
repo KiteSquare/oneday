@@ -1,6 +1,7 @@
 package com.oneday.dao;
 
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.UserParam;
 
 import java.util.List;
 import java.util.Map;
@@ -22,4 +23,6 @@ public interface UserDao extends Dao<User, Long> {
     int batchUpdate(List<User> users);
 
     int updateByPhone(User user);
+
+    List<User> getByWhere(UserParam userParam);
 }

@@ -15,6 +15,12 @@
 	<!--<aop:aspectj-autoproxy proxy-target-class="true" />
 	<context:annotation-config />-->
 	<mvc:annotation-driven />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*"/>
+			<bean class="com.oneday.filter.CrossInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!--<mvc:default-servlet-handler />-->
 
 </beans>

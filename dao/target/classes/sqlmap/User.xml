@@ -6,7 +6,7 @@
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,status,`create`,`update`,yn
+        id,`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,industry,education,income,height,marriage,head,detail,status,`count`,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -18,10 +18,35 @@
     <!-- where字段 -->
     <sql id="WHERE_CLAUSE">
         <where>
-            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id},]]></if>
-            <if test="name != null " ><![CDATA[AND `name` = #{name},]]></if>
-            <if test="phone != null " ><![CDATA[AND `phone` = #{phone},]]></if>
-            <if test="sex != null " ><![CDATA[AND `sex` = #{sex},]]></if>
+            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id}]]></if>
+            <if test="name != null " ><![CDATA[AND `name` = #{name}]]></if>
+            <if test="password != null " ><![CDATA[AND `password` = #{password}]]></if>
+            <if test="phone != null " ><![CDATA[AND `phone` = #{phone}]]></if>
+            <if test="sex != null " ><![CDATA[AND `sex` = #{sex}]]></if>
+            <if test="birth != null " ><![CDATA[AND `birth` = #{birth}]]></if>
+            <if test="idcard != null " ><![CDATA[AND `idcard` = #{idcard}]]></if>
+            <if test="signature != null " ><![CDATA[AND `signature` = #{signature}]]></if>
+            <if test="city != null " ><![CDATA[AND `city` = #{city}]]></if>
+            <if test="lon != null " ><![CDATA[AND `lon` = #{lon}]]></if>
+            <if test="lat != null " ><![CDATA[AND `lat` = #{lat}]]></if>
+            <if test="industry != null " ><![CDATA[AND `industry` = #{industry}]]></if>
+            <if test="education != null " ><![CDATA[AND `education` = #{education}]]></if>
+            <if test="income != null " ><![CDATA[AND `income` = #{income}]]></if>
+            <if test="height != null " ><![CDATA[AND `height` = #{height}]]></if>
+            <if test="marriage != null " ><![CDATA[AND `marriage` = #{marriage}]]></if>
+            <if test="head != null " ><![CDATA[AND `head` = #{head}]]></if>
+            <if test="detail != null " ><![CDATA[AND `detail` = #{detail}]]></if>
+            <if test="status != null " ><![CDATA[AND `status` = #{status}]]></if>
+            <if test="count != null " ><![CDATA[AND `count` = #{count}]]></if>
+            <if test="create != null " ><![CDATA[AND `create` = #{create}]]></if>
+            <if test="update != null " ><![CDATA[AND `update` = #{update}]]></if>
+            <if test="yn != null " ><![CDATA[AND `yn` = #{yn}]]></if>
+            <if test="blackIds != null " >
+                <![CDATA[AND `id` NOT IN ]]>
+                <foreach collection="blackIds"  item="id" index="index" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
         </where>
     </sql>
 
@@ -39,9 +64,15 @@
             <if test="city != null " ><![CDATA[`city` = #{city},]]></if>
             <if test="lon != null " ><![CDATA[`lon` = #{lon},]]></if>
             <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
+            <if test="industry != null " ><![CDATA[`industry` = #{industry},]]></if>
+            <if test="education != null " ><![CDATA[`education` = #{education},]]></if>
+            <if test="income != null " ><![CDATA[`income` = #{income},]]></if>
+            <if test="height != null " ><![CDATA[`height` = #{height},]]></if>
+            <if test="marriage != null " ><![CDATA[`marriage` = #{marriage},]]></if>
             <if test="head != null " ><![CDATA[`head` = #{head},]]></if>
             <if test="detail != null " ><![CDATA[`detail` = #{detail},]]></if>
             <if test="status != null " ><![CDATA[`status` = #{status},]]></if>
+            <if test="count != null " ><![CDATA[`count` = #{count},]]></if>
             <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
             <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
             <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
@@ -52,10 +83,10 @@
     <insert id="add" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
-        (`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,head,detail,status,`create`,`update`,yn)
+        (`name`,password,sex,birth,phone,idcard,signature,city,lon,lat,industry,education,income,height,marriage,head,detail,status,`count`,`create`,`update`,yn)
         VALUES
         <![CDATA[
-        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{head},#{detail},#{status},#{create}
+        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{city},#{lon},#{lat},#{industry},#{education},#{income},#{height},#{marriage},#{head},#{detail},#{status},#{count},#{create}
         ,#{update},#{yn})
         ]]>
     </insert>
@@ -70,12 +101,15 @@
     </select>
 
     <!-- 条件查询-->
-    <select id="getByWhere" parameterType="User" resultType="User">
+    <select id="getByWhere" parameterType="UserParam" resultType="User">
         <![CDATA[SELECT ]]>
         <include refid="ALL_COLUMNS" />
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <include refid="WHERE_CLAUSE" />
+        <if test="index != null " >
+            <![CDATA[ LIMIT #{index},#{count} ]]>
+        </if>
     </select>
 
     <!-- 查询-->
@@ -101,7 +135,7 @@
     </select>
 
     <!-- 查询列表-->
-    <select id="get" parameterType="User" resultType="User">
+    <select id="get" parameterType="UserParam" resultType="User">
         <![CDATA[SELECT ]]>
         <include refid="ALL_COLUMNS" />
         <![CDATA[ FROM ]]>

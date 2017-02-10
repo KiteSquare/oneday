@@ -10,6 +10,7 @@ import com.oneday.domain.po.User;
 import com.oneday.domain.vo.Candidate;
 import com.oneday.domain.vo.HunterReceiverParam;
 import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.UserInfo;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
 import com.oneday.service.UserService;
@@ -153,8 +154,6 @@ public class AssociateServiceImpl implements AssociateService{
         updateUsers.add(_buildUpdateUserPo(user));
         updateUsers.add(_buildUpdateUserPo(targetUser));
 
-
-
         for (Long uid: hunters.keySet()) {
             if (uid.equals(targetUser.getId())) {
                 // 被接受的用户
@@ -168,8 +167,6 @@ public class AssociateServiceImpl implements AssociateService{
             user1.setStatus(machine.hunterReject(user1.getStatus()));
             updateUsers.add(_buildUpdateUserPo(user1));
         }
-
-
         // 更新数据库关系状态
 
         // 更新与接受者的状态
@@ -276,7 +273,40 @@ public class AssociateServiceImpl implements AssociateService{
     }
 
     /**
-     * 用户关系信息
+     *
+     * @param userId
+     * @param currentPage
+     * @param count
+     * @return
+     */
+    public UserInfo getUserInfo(Long userId , Integer currentPage, Integer count) {
+        if (userId == null || userId <= 0) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is invalid");
+        }
+        UserInfo result = new UserInfo();
+        User user = userDao.get(userId);
+        if (user == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), String.format("User id [%s] not found.",
+                    userId));
+        }
+        result.setUser(user);
+        Page<Candidate> candidatePage = candidates(userId, user.getSex(), currentPage, count);
+        if (candidatePage.getCount()>0) {
+            for (Candidate candidate: candidatePage.getData()) {
+                if (candidate.getStatus() != StateEnum.NOTHING.getStatus() && candidate.getStatus() <= StateEnum.ACCEPT.getStatus()) {
+                    result.setAcceptedUser(candidate);
+                    break;
+                }
+            }
+        }
+        result.setHistory(candidatePage);
+        return result;
+    }
+
+
+
+    /**
+     * 用户历史关系信息
      *
      * @param userId
      * @return

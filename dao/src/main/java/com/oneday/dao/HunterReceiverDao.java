@@ -28,4 +28,11 @@ public interface HunterReceiverDao extends Dao<HunterReceiver, Long> {
 
     List<HunterReceiver> getSenderList(Long receiverId, Integer index, Integer count);
 
+    /**
+     *
+     * @param userId
+     * @param isHunter
+     * @return
+     */
+    List<Long> getAllRelatedUids(Long userId, boolean isHunter);
 }

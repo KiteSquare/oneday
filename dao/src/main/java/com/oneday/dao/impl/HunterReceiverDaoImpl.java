@@ -5,10 +5,7 @@ import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.vo.HunterReceiverParam;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -112,5 +109,30 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
         params.put("index", index);
         params.put("count", count);
         return sqlSessionTemplate.selectList(getNameSpace("getHunterList"), params);
+    }
+
+    protected List<Long> _getAllHunterUids(Long userId) {
+        return sqlSessionTemplate.selectList(getNameSpace("getAllHunterUids"), userId);
+    }
+    protected List<Long> _getAllReceiverUids(Long userId) {
+        return sqlSessionTemplate.selectList(getNameSpace("getAllReceiverUids"), userId);
+    }
+
+    /**
+     *
+     * @param userId
+     * @param isHunter
+     * @return
+     */
+    @Override
+    public List<Long> getAllRelatedUids(Long userId, boolean isHunter) {
+        if (userId == null) {
+            return new ArrayList<Long>();
+        }
+        if (isHunter) {
+            return _getAllReceiverUids(userId);
+        } else {
+            return _getAllHunterUids(userId);
+        }
     }
 }
