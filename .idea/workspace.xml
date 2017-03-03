@@ -2,33 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="69859f3e-f82f-40f8-87f0-9627047dac64" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/common/src/main/java/com/oneday/common/util/EncryptUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/constant/ConfigConstant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginResult.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginUserVo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/service/src/test/java/com/oneday/service/state/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/target/dao-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/dao/target/dao-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/target/domain-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/domain/target/domain-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/target/service-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/service/target/service-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/web_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/web_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/UserDao.java" afterPath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/UserDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/UserDaoImpl.java" afterPath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/UserDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/User.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/User.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/target/classes/sqlmap/User.xml" afterPath="$PROJECT_DIR$/dao/target/classes/sqlmap/User.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/constant/ErrorCodeEnum.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/constant/ErrorCodeEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/po/User.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/po/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/pom.xml" afterPath="$PROJECT_DIR$/service/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/service.iml" afterPath="$PROJECT_DIR$/service/service.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/UserService.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/UserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/UserServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/pom.xml" afterPath="$PROJECT_DIR$/web/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/UserController.java" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/resources/spring/spring-config-servlet.xml" afterPath="$PROJECT_DIR$/web/src/main/resources/spring/spring-config-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/web.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/target/classes/spring/spring-config-servlet.xml" afterPath="$PROJECT_DIR$/web/target/classes/spring/spring-config-servlet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/web.iml" afterPath="$PROJECT_DIR$/web/web.iml" />
     </list>
     <ignored path="oneday.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -2069,7 +2043,7 @@
       <workItem from="1485070253542" duration="7466000" />
       <workItem from="1486363461408" duration="30180000" />
       <workItem from="1487569283324" duration="9968000" />
-      <workItem from="1487671619224" duration="31650000" />
+      <workItem from="1487671619224" duration="31744000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1476009873492</created>
@@ -2127,11 +2101,18 @@
       <option name="project" value="LOCAL" />
       <updated>1486723750723</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="添加用户相关api&#10;">
+      <created>1488537648329</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1488537648329</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="316349000" />
+    <option name="totallyTimeSpent" value="316443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
