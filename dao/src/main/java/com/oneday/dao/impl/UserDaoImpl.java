@@ -21,6 +21,7 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
         Map<Long, User> map = new HashMap<Long, User>();
         if (res != null) {
             for (User user: res) {
+                _safeFilter(user);
                 map.put(user.getId(), user);
             }
         }
@@ -60,11 +61,34 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
 
     @Override
     public User getByPhone(String phone) {
-        return sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
+        User user = sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
+        _safeFilter(user);
+        return user;
     }
 
     @Override
     public List<User> getByWhere(UserParam userParam) {
-        return sqlSessionTemplate.selectList(getNameSpace("getByWhere"), userParam);
+        List<User> users = sqlSessionTemplate.selectList(getNameSpace("getByWhere"), userParam);
+        _safeFilter(users);
+        return users;
+    }
+
+    @Override
+    public User loginWithPassword(UserParam userParam) {
+        User user = sqlSessionTemplate.selectOne(getNameSpace("loginWithPassword"), userParam);
+        _safeFilter(user);
+        return user;
+    }
+
+    protected void  _safeFilter(User user) {
+        if (user != null){
+            user.setPassword(null);
+        }
+    }
+    protected void  _safeFilter(List<User> users) {
+        if (users != null){
+            for (User user: users)
+                user.setPassword(null);
+        }
     }
 }

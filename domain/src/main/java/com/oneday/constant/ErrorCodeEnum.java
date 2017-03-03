@@ -16,7 +16,10 @@ public enum ErrorCodeEnum {
     USER_SEX_INVALID("0012", "用户性别不合法"),
     USER_HUNTER_INVALID("0013", "追求者不合法"),
     USER_REGIST_DUPLICATE_ERROR("0014", "用户已经注册过了"),
-    USER_REGIST_CODE_ERROR("0015", "验证码错误"),
+    USER_REGIST_CODE_ERROR("0015", "注册验证码错误"),
+    USER_LOGIN_PASSWORD_ERROR("0016", "登录账号或者密码错误"),
+    USER_LOGIN_CODE_ERROR("0017", "登录账号或者验证码错误"),
+    USER_NOT_LOGIN_ERROR("0018", "用户未登录"),
 
     STATE_ERROR("0101", "状态转换异常"),
     STATE_SEND_DUPLICATE_ERROR("0102", "重复发送请求"),

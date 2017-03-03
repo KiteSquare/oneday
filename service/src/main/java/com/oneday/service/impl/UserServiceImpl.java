@@ -9,6 +9,7 @@ import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.po.User;
 import com.oneday.domain.vo.HunterReceiverParam;
 import com.oneday.domain.vo.UserDisplay;
+import com.oneday.domain.vo.UserParam;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
 import com.oneday.service.utils.VoConvertor;
@@ -221,7 +222,7 @@ public class UserServiceImpl implements UserService {
      * @param user
      * @return
      */
-    public Boolean login(User user) {
+    public User login(User user) {
         return null;
     }
 
@@ -230,8 +231,11 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
-    public Boolean login(String phone, String password) {
-        return null;
+    public User login(String phone, String password) {
+        UserParam userParam = new UserParam();
+        userParam.setPhone(phone);
+        userParam.setPassword(MD5Util.md5Encode32(password));
+        return userDao.loginWithPassword(userParam);
     }
 
     /**
@@ -239,7 +243,7 @@ public class UserServiceImpl implements UserService {
      * @param code
      * @return
      */
-    public Boolean loginWithCode(String phone, String code) {
+    public User loginWithCode(String phone, String code) {
         return null;
     }
 

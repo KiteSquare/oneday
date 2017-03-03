@@ -14,6 +14,7 @@
 	<context:component-scan base-package="com.oneday" />
 	<!--<aop:aspectj-autoproxy proxy-target-class="true" />
 	<context:annotation-config />-->
+	<mvc:default-servlet-handler/>
 	<mvc:annotation-driven />
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -21,6 +22,5 @@
 			<bean class="com.oneday.filter.CrossInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	<!--<mvc:default-servlet-handler />-->
 
 </beans>

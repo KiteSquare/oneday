@@ -51,6 +51,7 @@
             <element id="module-output" name="common" />
           </element>
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.1.45" />
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.2" />
           <element id="library" level="project" name="Maven: ch.qos.logback:logback-core:1.1.3" />
@@ -62,6 +63,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/web/target/oneday-web/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="web/web/Web" />
+      <element id="dir-copy" path="$PROJECT_DIR$/../client-h5" />
     </root>
   </artifact>
 </component>

@@ -100,6 +100,15 @@
         <![CDATA[WHERE id = #{pk}]]>
     </select>
 
+    <!-- 根据密码登录-->
+    <select id="loginWithPassword" parameterType="UserParam" resultType="User">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[WHERE phone = #{phone} AND  password=#{password}]]>
+    </select>
+
     <!-- 条件查询-->
     <select id="getByWhere" parameterType="UserParam" resultType="User">
         <![CDATA[SELECT ]]>

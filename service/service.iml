@@ -28,15 +28,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.2" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: taobao:taobao-sdk-sms:1.0">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../web/src/main/webapp/WEB-INF/lib/taobao-sdk-java-auto_1455552377940-20160607.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="common" />
   </component>
 </module>

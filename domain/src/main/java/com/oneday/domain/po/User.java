@@ -9,6 +9,7 @@ package com.oneday.domain.po;
 
 import com.oneday.constant.SexEnum;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -31,7 +32,8 @@ import java.util.Date;
  KEY `index_idcard` (`idcard`) USING BTREE
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
  */
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     protected Long id;
     /**
      * 昵称

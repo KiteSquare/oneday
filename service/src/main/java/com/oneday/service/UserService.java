@@ -65,7 +65,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    Boolean login(User user);
+    User login(User user);
 
     /**
      *
@@ -73,7 +73,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    Boolean login(String phone, String password);
+    User login(String phone, String password);
 
     /**
      *
@@ -81,7 +81,7 @@ public interface UserService {
      * @param code
      * @return
      */
-    Boolean loginWithCode(String phone, String code);
+    User loginWithCode(String phone, String code);
 
 
 }
