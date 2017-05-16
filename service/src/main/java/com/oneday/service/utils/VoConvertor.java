@@ -26,6 +26,7 @@ public class VoConvertor {
     public static Candidate convert(User user) {
         Candidate candidate = new Candidate();
         candidate.setId(user.getId());
+        candidate.setSex(user.getSex());
         candidate.setStatus(user.getStatus());
         candidate.setBirth(user.getBirth());
         candidate.setCity(user.getCity());
@@ -51,6 +52,7 @@ public class VoConvertor {
         userDisplay.setPhone(user.getPhone());
         userDisplay.setSex(user.getSex());
         userDisplay.setHeight(user.getHeight());
+        userDisplay.setId(user.getId());
         if (user.getBirth() == null) {
             userDisplay.setAge(0);
         } else {

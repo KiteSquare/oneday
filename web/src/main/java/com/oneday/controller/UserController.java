@@ -12,6 +12,7 @@ import com.oneday.domain.vo.LoginUserVo;
 import com.oneday.domain.vo.UserDisplay;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.UserService;
+import com.oneday.utils.ConvertUtil;
 import com.oneday.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -190,11 +191,7 @@ public class UserController {
             if (userInfo == null) {
                 throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "用户信息为空");
             }
-            LoginResult loginResult = new LoginResult();
-            loginResult.setType(user.getType());
-            loginResult.setUrl(user.getUrl());
-            loginResult.setId(userInfo.getId());
-            loginResult.setSdktoken(ConfigConstant.SDKTOKEN);
+            LoginResult loginResult = ConvertUtil.convert(user, userInfo);
             result.setData(loginResult);
             JSONObject userJo = new JSONObject();
             userJo.put("id", userInfo.getId());

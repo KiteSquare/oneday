@@ -1,7 +1,9 @@
 package com.oneday.service;
 
+import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.vo.Candidate;
 import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.Relation;
 import com.oneday.domain.vo.UserInfo;
 
 import java.util.List;
@@ -58,5 +60,13 @@ public interface AssociateService {
      * @param count 每页数量
      * @return
      */
-    public UserInfo getUserInfo(Long userId , Integer currentPage, Integer count);
+    UserInfo getUserInfo(Long userId , Integer currentPage, Integer count);
+
+    /**
+     * 查询用户之间关系
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    Relation relation(Long userId , Long targetUserId);
 }

@@ -7,10 +7,7 @@ import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
 import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.po.User;
-import com.oneday.domain.vo.Candidate;
-import com.oneday.domain.vo.HunterReceiverParam;
-import com.oneday.domain.vo.Page;
-import com.oneday.domain.vo.UserInfo;
+import com.oneday.domain.vo.*;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
 import com.oneday.service.UserService;
@@ -114,22 +111,30 @@ public class AssociateServiceImpl implements AssociateService{
         HunterReceiverParam param = new HunterReceiverParam();
         param.setReceiver(userId);
         param.setLessStatus(StateEnum.ADMIT.getStatus());
-        param.setMaxStatus(StateEnum.REJECT.getStatus());
+        param.setMaxStatus(StateEnum.ACCEPT.getStatus());
 
+        //需要拒绝的用户
+        User rejectUser = null;
 
-        Map<Long, HunterReceiver> hunters = hunterReceiverDao.getHunterMap(param);
-        if (! hunters.containsKey(targetUserId)) {
-            throw new OndayException(ErrorCodeEnum.USER_HUNTER_INVALID.getCode(),
-                    String.format("User id [%s] is not the hunter of user id[%s] yet.", targetUserId, userId));
-        }
-        // 查出所有追求者的用户信息
-        Set<Long> hunterSet = hunters.keySet();
-        hunterSet.remove(targetUserId);
-        if (!hunters.isEmpty()) {
-            relateUserMap.putAll(userDao.getMapByIds(hunterSet));
+        //查询已经接受或承认的用户
+        List<HunterReceiver> hunters = hunterReceiverDao.list(param);
+        if (hunters.size() > 1) {
+            throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), String.format("User [%s] state invalid.",
+                    userId));
+        } else if (!hunters.isEmpty()) {
+            HunterReceiver acceptedHunter = hunters.get(0);
+            if (acceptedHunter.getStatus().equals(StateEnum.ADMIT.getStatus())) {
+                throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), String.format("User already admit [%s], can not accepted other.",
+                        acceptedHunter.getHunter()));
+            }
+            if (acceptedHunter.getHunter().equals( targetUserId)) {
+                throw new OndayException(ErrorCodeEnum.STATE_SEND_DUPLICATE_ERROR.getCode(), String.format("User already accepted  [%s].",
+                        acceptedHunter.getHunter()));
+            }
+            rejectUser = userDao.get(acceptedHunter.getHunter());
         }
         // 更新所有状态
-        _acceptOneAndRejectOthers(hunters, relateUserMap, user, targetUser);
+        _acceptOneAndRejectOthers(rejectUser, user, targetUser);
 
         // TODO 推送接受和拒绝消息通知
 
@@ -137,44 +142,37 @@ public class AssociateServiceImpl implements AssociateService{
 
     /**
      *
-     * @param hunters
-     * @param userMap
+     * @param rejectUser
      * @param user
-     * @param targetUser
+     * @param acceptUser
      */
-    protected void _acceptOneAndRejectOthers(Map<Long, HunterReceiver> hunters, Map<Long, User> userMap,User user, User targetUser) {
+    protected void _acceptOneAndRejectOthers(User rejectUser, User user, User acceptUser) {
         Set<Long> rejectUids = new HashSet<Long>();
         List<User> updateUsers = new ArrayList<User>();
         // 设置用户状态
         Date update = new Date();
         user.setStatus(machine.receiverAccept(user.getStatus()));
         user.setUpdate(update);
-        targetUser.setStatus(machine.hunterAccept(targetUser.getStatus()));
-        targetUser.setUpdate(update);
+        acceptUser.setStatus(machine.hunterAccept(acceptUser.getStatus()));
+        acceptUser.setUpdate(update);
         updateUsers.add(_buildUpdateUserPo(user));
-        updateUsers.add(_buildUpdateUserPo(targetUser));
-
-        for (Long uid: hunters.keySet()) {
-            if (uid.equals(targetUser.getId())) {
-                // 被接受的用户
-                continue;
-            }
-            User user1 = userMap.get(uid);
-            user1.setUpdate(update);
-
-            // 其他用户都需要拒绝, ^_^
-            rejectUids.add(uid);
-            user1.setStatus(machine.hunterReject(user1.getStatus()));
-            updateUsers.add(_buildUpdateUserPo(user1));
+        updateUsers.add(_buildUpdateUserPo(acceptUser));
+        if (rejectUser != null) {
+            rejectUser.setStatus(machine.hunterReject(rejectUser.getStatus()));
+            rejectUids.add(rejectUser.getId());
+            rejectUser.setUpdate(update);
+            updateUsers.add(_buildUpdateUserPo(rejectUser));
         }
+
+
         // 更新数据库关系状态
 
         // 更新与接受者的状态
-        int num1 = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.ACCEPT.getStatus(), targetUser.getId(), user.getId());
+        int num1 = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.ACCEPT.getStatus(), acceptUser.getId(), user.getId());
 
         // 更新其他人的拒绝信息
         if (! rejectUids.isEmpty()) {
-            int num2 = hunterReceiverDao.updateStatusByReceivers(StateEnum.REJECT.getStatus(),rejectUids);
+            int num2 = hunterReceiverDao.updateStatusByReceivers(StateEnum.REJECT.getStatus(),user.getId(), rejectUids);
         }
 
         for (User u: updateUsers) {
@@ -217,8 +215,12 @@ public class AssociateServiceImpl implements AssociateService{
         targetUser.setStatus(machine.hunterReject(targetUser.getStatus()));
         HunterReceiverParam param = new HunterReceiverParam();
         param.setReceiver(userId);
-        param.setHunter(targetUserId);
-        param.setStatus(StateEnum.SEND.getStatus());
+//        param.setHunter(targetUserId);
+        List<Integer> instatus = new ArrayList<>(3);
+        instatus.add(StateEnum.SEND.getStatus());
+        instatus.add(StateEnum.ACCEPT.getStatus());
+        instatus.add(StateEnum.ADMIT.getStatus());
+        param.setInstatus(instatus);
 
         int sendNum = hunterReceiverDao.candidateCount(param);
         if (sendNum == 0) {
@@ -230,7 +232,7 @@ public class AssociateServiceImpl implements AssociateService{
         }
 
         // 更新拒绝状态
-        int num = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.REJECT.getStatus(), userId, targetUserId);
+        int num = hunterReceiverDao.updateStatusByHunterAndReceiver(StateEnum.REJECT.getStatus(), targetUserId, userId);
         if (num <= 0) {
             throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(),
                     String.format("User id [%s] has been rejected by user id[%s].", targetUserId, userId));
@@ -293,8 +295,9 @@ public class AssociateServiceImpl implements AssociateService{
         Page<Candidate> candidatePage = candidates(userId, user.getSex(), currentPage, count);
         if (candidatePage.getCount()>0) {
             for (Candidate candidate: candidatePage.getData()) {
-                if (candidate.getStatus() != StateEnum.NOTHING.getStatus() && candidate.getStatus() <= StateEnum.ACCEPT.getStatus()) {
+                if (candidate.getCandStatus() != StateEnum.NOTHING.getStatus() && candidate.getCandStatus() <= StateEnum.ACCEPT.getStatus()) {
                     result.setAcceptedUser(candidate);
+                    candidatePage.getData().remove(candidate);
                     break;
                 }
             }
@@ -378,6 +381,43 @@ public class AssociateServiceImpl implements AssociateService{
         }
 
         return page;
+    }
+
+    /**
+     * 查询用户之间关系
+     *
+     * @param userId
+     * @param targetUserId
+     * @return
+     */
+    @Override
+    public Relation relation(Long userId, Long targetUserId) {
+        Relation relation = new Relation();
+        if (userId == null) {
+            User targetUser = userDao.get(targetUserId);
+            relation.setTargetUser(VoConvertor.convertUserToUserDisplay(targetUser));
+        } else {
+            Map<Long, User> userMap = userDao.getMapByIds(userId,targetUserId);
+            User user = userMap.get(userId);
+            User targetUser = userMap.get(targetUserId);
+            relation.setCurrentUser(VoConvertor.convertUserToUserDisplay(user));
+            relation.setTargetUser(VoConvertor.convertUserToUserDisplay(targetUser));
+            HunterReceiverParam param = new HunterReceiverParam();
+            if (user.isMale()) {
+                param.setHunter(userId);
+                param.setReceiver(targetUserId);
+            } else {
+                param.setHunter(targetUserId);
+                param.setReceiver(userId);
+            }
+            List<HunterReceiver> res = hunterReceiverDao.getByWhere(param);
+            if (res != null && !res.isEmpty()) {
+                HunterReceiver hunterReceiver = res.get(0);
+                relation.setRelation(hunterReceiver);
+            }
+        }
+
+        return relation;
     }
 
     /**

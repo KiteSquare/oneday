@@ -1,13 +1,14 @@
 package com.oneday.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.domain.po.HunterReceiver;
+import com.oneday.domain.vo.Relation;
+import com.oneday.domain.vo.UserInfo;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
-import com.oneday.vo.AcceptRequestVo;
-import com.oneday.vo.AdmitRequestVo;
-import com.oneday.vo.RejectRequestVo;
-import com.oneday.vo.SendRequestVo;
+import com.oneday.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -156,9 +157,32 @@ public class WillowController {
     public Result all(@PathVariable long id) {
         Result result = new Result();
         try {
+            UserInfo userInfo = associateService.getUserInfo(id, 0, 100);
+            result.setData(userInfo);
+            System.out.println(String.format("/info/{id}, id %s, result : %s", id, JSONObject.toJSONString(userInfo)));
+        } catch (OndayException e) {
+            result.setCode(e.getCode());
+            result.setMessage(e.getMessage());
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        } catch (Throwable e) {
+            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
+            result.setMessage("操作失败");
+            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+        }
 
-            result.setData(associateService.getUserInfo(id, 0, 100));
+        return result;
+    }
 
+    @RequestMapping(value = "/relation", method = {RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public Result relation(@RequestBody RelationRequestVo request) {
+        Result result = new Result();
+        try {
+
+            Relation relation = associateService.relation(request.getUserId(), request.getTargetUserId());
+            result.setData(relation);
+            System.out.println(String.format("/relation, param %s, result : %s", JSONObject.toJSONString(request),
+                    JSONObject.toJSONString(result)));
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());

@@ -25,7 +25,7 @@ public class HunterSingleState implements HunterState {
      */
     @Override
     public Integer reject() {
-        throw new OndayException(ErrorCodeEnum.STATE_ERROR.getCode(), "Hunter can not reject on single state");
+        return HunterEnum.SINGLE.getStatus();
     }
 
     /**

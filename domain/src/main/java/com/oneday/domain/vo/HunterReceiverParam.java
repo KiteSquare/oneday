@@ -1,5 +1,7 @@
 package com.oneday.domain.vo;
 
+import java.util.List;
+
 /**
  * 追求者-接受者关系
  * @author fanyongpeng [15104723@qq.com]
@@ -15,6 +17,10 @@ public class HunterReceiverParam {
     protected Integer yn = 0;
     protected Integer lessStatus;
     protected Integer maxStatus;
+    protected List<Long> hunters;
+    protected List<Long> receivers;
+    protected List<Integer> instatus;
+
     public Long getId() {
         return id;
     }
@@ -85,5 +91,29 @@ public class HunterReceiverParam {
 
     public void setMaxStatus(Integer maxStatus) {
         this.maxStatus = maxStatus;
+    }
+
+    public List<Long> getHunters() {
+        return hunters;
+    }
+
+    public void setHunters(List<Long> hunters) {
+        this.hunters = hunters;
+    }
+
+    public List<Long> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<Long> receivers) {
+        this.receivers = receivers;
+    }
+
+    public List<Integer> getInstatus() {
+        return instatus;
+    }
+
+    public void setInstatus(List<Integer> instatus) {
+        this.instatus = instatus;
     }
 }

@@ -35,13 +35,13 @@ public class SearchController extends BaseController {
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result recommend(@ModelAttribute User user) {
+    public Result recommend(@RequestBody User user) {
         Result result = new Result();
         try {
-            if (user == null) {
+            if (user == null || user.getId() == null) {
                 throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request user not found");
             }
-            Page<User> page = searchService.nearBy(0, user);
+            Page<User> page = searchService.nearBy(0, user.getId());
             result.setData(page);
         } catch (OndayException e) {
             result.setCode(e.getCode());

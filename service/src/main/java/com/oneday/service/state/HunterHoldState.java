@@ -15,7 +15,7 @@ public class HunterHoldState implements HunterState {
      */
     @Override
     public Integer send() {
-        throw new OndayException(ErrorCodeEnum.STATE_HUNTER_SEND_ON_HOLD_ERROR.getCode(), ErrorCodeEnum.STATE_HUNTER_SEND_ON_HOLD_ERROR.getValue());
+        throw new OndayException(ErrorCodeEnum.STATE_HUNTER_SEND_ON_HOLD_ERROR.getCode(), "发送失败，已经有人接受你了哦");
     }
 
     /**
@@ -23,7 +23,8 @@ public class HunterHoldState implements HunterState {
      */
     @Override
     public Integer reject() {
-        throw new OndayException(ErrorCodeEnum.STATE_REJECT_ILLEGAL_ERROR.getCode(), ErrorCodeEnum.STATE_REJECT_ILLEGAL_ERROR.getValue());
+//        throw new OndayException(ErrorCodeEnum.STATE_REJECT_ILLEGAL_ERROR.getCode(), ErrorCodeEnum.STATE_REJECT_ILLEGAL_ERROR.getValue());
+        return HunterEnum.SINGLE.getStatus();
     }
 
     /**

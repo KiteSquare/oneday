@@ -14,7 +14,7 @@ public class UserParam extends User {
 
     protected Integer index;
 
-    protected Integer count;
+    protected Integer pageNum;
 
     public List<Long> getBlackIds() {
         return blackIds;
@@ -32,13 +32,11 @@ public class UserParam extends User {
         this.index = index;
     }
 
-    @Override
-    public Integer getCount() {
-        return count;
+    public Integer getPageNum() {
+        return pageNum;
     }
 
-    @Override
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
     }
 }

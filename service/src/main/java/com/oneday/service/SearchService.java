@@ -10,4 +10,5 @@ import com.oneday.domain.vo.Page;
  */
 public interface SearchService {
     Page<User> nearBy(Integer distance, User user);
+    Page<User> nearBy(Integer distance, Long userId) ;
 }

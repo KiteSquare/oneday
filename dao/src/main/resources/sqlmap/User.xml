@@ -117,7 +117,7 @@
         <include refid="TABLE_NAME" />
         <include refid="WHERE_CLAUSE" />
         <if test="index != null " >
-            <![CDATA[ LIMIT #{index},#{count} ]]>
+            <![CDATA[ LIMIT #{index},#{pageNum} ]]>
         </if>
     </select>
 

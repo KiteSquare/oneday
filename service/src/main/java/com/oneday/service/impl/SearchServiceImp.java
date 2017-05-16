@@ -1,5 +1,6 @@
 package com.oneday.service.impl;
 
+import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.constant.SexEnum;
 import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
@@ -7,6 +8,7 @@ import com.oneday.domain.po.User;
 import com.oneday.domain.vo.Location;
 import com.oneday.domain.vo.Page;
 import com.oneday.domain.vo.UserParam;
+import com.oneday.exceptions.OndayException;
 import com.oneday.service.SearchService;
 import org.springframework.stereotype.Service;
 
@@ -48,11 +50,28 @@ public class SearchServiceImp implements SearchService {
             userParam.setBlackIds(relatedUids);
         }
         userParam.setIndex(0);
-        userParam.setCount(10);
+        int pageNum = 10;
+        userParam.setPageNum(pageNum);
         List<User> users = userDao.getByWhere(userParam);
-        Page<User> res = new Page<>(1, 10);
+        Page<User> res = new Page<>(1, pageNum);
         res.setData(users);
         res.setTotal(users.size());
         return res;
+    }
+
+    /**
+     * TODO 重写方法
+     * @param distance
+     * @param userId
+     * @return
+     */
+    @Override
+    public Page<User> nearBy(Integer distance, Long userId) {
+        Location location = new Location(0d,0d);
+        if (userId == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User id  not found.");
+        }
+        User user = userDao.get(userId);
+        return nearBy(distance, user);
     }
 }

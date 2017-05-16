@@ -1,12 +1,16 @@
 package com.oneday.domain.vo;
 
+import java.io.Serializable;
+
 /**
  * 用户展示信息
  * @author fanyongpeng [15104723@qq.com]
  * @version 1.0
  *          2017/2/8 16:08
  */
-public class UserDisplay {
+public class UserDisplay implements Serializable {
+    private static final long serialVersionUID = 1L;
+    protected Long id;
     /**
      * 昵称
      */
@@ -173,5 +177,13 @@ public class UserDisplay {
 
     public void setMarriage(String marriage) {
         this.marriage = marriage;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

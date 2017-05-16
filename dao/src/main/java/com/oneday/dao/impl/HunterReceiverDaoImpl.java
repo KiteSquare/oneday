@@ -25,7 +25,7 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
         }
         return map;
     }
-
+    @Override
     public List<HunterReceiver> list(HunterReceiverParam po) {
         return sqlSessionTemplate.selectList(getNameSpace(STATEMENT_GET), po);
     }
@@ -60,9 +60,10 @@ public class HunterReceiverDaoImpl extends  DaoImpl<HunterReceiver, Long> implem
     }
 
     @Override
-    public int updateStatusByReceivers(Integer status, Set<Long> uids) {
+    public int updateStatusByReceivers(Integer status, Long receiver, Set<Long> uids) {
         Map<String, Object> params = new HashMap<String, Object>(2);
         params.put("status", status);
+        params.put("receiver", receiver);
         params.put("uids", uids);
         params.put("update", System.currentTimeMillis()/1000);
         return sqlSessionTemplate.update(getNameSpace("updateStatusByReceivers"), params);

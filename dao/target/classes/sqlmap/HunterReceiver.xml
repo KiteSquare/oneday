@@ -26,6 +26,24 @@
 
             <if test="lessStatus != null and lessStatus &gt; 0 " ><![CDATA[AND `status` >= #{lessStatus}]]></if>
             <if test="maxStatus != null and maxStatus &gt; 0 " ><![CDATA[AND `status` <= #{maxStatus}]]></if>
+            <if test="receivers != null">
+                <![CDATA[AND `receiver` IN ]]>
+                <foreach collection="receivers"  item="id" index="index" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="hunters != null">
+                <![CDATA[AND `hunter` IN ]]>
+                <foreach collection="hunters"  item="id" index="index" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="instatus != null">
+                <![CDATA[AND `status` IN ]]>
+                <foreach collection="instatus"  item="id" index="index" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
         </where>
     </sql>
 
@@ -134,7 +152,7 @@
     <update id="updateStatusByReceivers" parameterType="Map" >
         <![CDATA[UPDATE ]]>
         <include refid="TABLE_NAME" />
-        <![CDATA[ SET status= #{status}, `update`=#{update} WHERE receiver IN ]]>
+        <![CDATA[ SET status= #{status}, `update`=#{update} WHERE receiver=#{receiver} AND hunter IN ]]>
         <foreach collection="uids"  item="id" index="index" separator="," open="(" close=")">
             #{id}
         </foreach>
