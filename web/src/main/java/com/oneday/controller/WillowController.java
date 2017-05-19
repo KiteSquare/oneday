@@ -154,10 +154,19 @@ public class WillowController {
 
     @RequestMapping(value = "/info/{id}", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Result all(@PathVariable long id) {
+    public Result all(@PathVariable long id, @RequestParam(value = "currentPage", required = false)Integer currentPage,
+                      @RequestParam(value = "count", required = false)Integer count) {
         Result result = new Result();
         try {
-            UserInfo userInfo = associateService.getUserInfo(id, 0, 100);
+            if (currentPage == null || currentPage < 0) {
+                currentPage = 0;
+            }
+            if (count == null || count <0 ) {
+                count = 10;
+            } else if (count > 1000) {
+                count = 1000;
+            }
+            UserInfo userInfo = associateService.getUserInfo(id, currentPage, count);
             result.setData(userInfo);
             System.out.println(String.format("/info/{id}, id %s, result : %s", id, JSONObject.toJSONString(userInfo)));
         } catch (OndayException e) {
