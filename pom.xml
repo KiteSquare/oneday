@@ -17,7 +17,7 @@
     </modules>
     <properties>
         <!-- spring版本号 -->
-        <spring.version>3.2.4.RELEASE</spring.version>
+        <spring.version>4.2.0.RELEASE</spring.version>
         <org.aspectj.version>1.7.3</org.aspectj.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.2.4</mybatis.version>
@@ -143,29 +143,50 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>2.2.2</version>
+            </dependency>
             <!-- json数据 -->
 
             <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-mapper-asl</artifactId>
-                <version>1.9.13</version>
-            </dependency>
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.1.45</version>
+                <version>1.2.28</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
             <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>1.9.13</version>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.8.7</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.8.7</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.8.7</version>
             </dependency>
 
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
                 <version>2.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.3.2</version>
             </dependency>
 
             <dependency>
@@ -184,7 +205,11 @@
                 <artifactId>velocity-tools</artifactId>
                 <version>2.0</version>
             </dependency>
-
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.6</version>
+            </dependency>
             <!-- 日志文件管理包 -->
             <!-- log start -->
             <dependency>
@@ -210,6 +235,7 @@
                 <artifactId>logback-ext-spring</artifactId>
                 <version>0.1.1</version>
             </dependency>
+
             <!-- log end -->
         </dependencies>
     </dependencyManagement>

@@ -18,30 +18,30 @@ public interface AssociateService {
 
     /**
      * 发送
-     * @param userId
+     * @param accessToken
      * @param targetUserId
      */
-    void send(Long userId, Long targetUserId);
+    void send(String accessToken, Long targetUserId);
 
     /**
      * 接受
-     * @param userId
+     * @param accessToken
      * @param targetUserId
      */
-    void accept(Long userId, Long targetUserId);
+    void accept(String accessToken, Long targetUserId);
 
     /**
      * 拒绝
-     * @param userId
+     * @param accessToken
      * @param targetUserId
      */
-    void reject(Long userId, Long targetUserId);
+    void reject(String accessToken, Long targetUserId);
 
     /**
      * 承认
-     * @param userId
+     * @param accessToken
      */
-    void admit(Long userId);
+    void admit(String accessToken);
 
     /**
      * 候选人列表
@@ -55,18 +55,18 @@ public interface AssociateService {
 
     /**
      * 获取用户信息和用户历史关系用户的信息
-     * @param userId 用户id
+     * @param accessToken 用户accessToken
      * @param currentPage 开始行数
      * @param count 每页数量
      * @return
      */
-    UserInfo getUserInfo(Long userId , Integer currentPage, Integer count);
+    UserInfo getUserInfo(String accessToken , Integer currentPage, Integer count);
 
     /**
      * 查询用户之间关系
-     * @param userId
+     * @param accessToken
      * @param targetUserId
      * @return
      */
-    Relation relation(Long userId , Long targetUserId);
+    Relation relation(String accessToken , Long targetUserId);
 }

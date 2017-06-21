@@ -1,21 +1,14 @@
-package com.oneday.vo;
+package com.oneday.domain.vo.request;
+
+import com.oneday.domain.vo.BaseRequest;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
  * @version 1.0
  *          2016/10/12 18:11
  */
-public class SendRequestVo {
-    protected Long senderId;
+public class SendRequest extends BaseRequest{
     protected Long receiverId;
-
-    public Long getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(Long senderId) {
-        this.senderId = senderId;
-    }
 
     public Long getReceiverId() {
         return receiverId;

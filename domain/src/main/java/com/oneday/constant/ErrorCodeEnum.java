@@ -20,6 +20,12 @@ public enum ErrorCodeEnum {
     USER_LOGIN_PASSWORD_ERROR("0016", "登录账号或者密码错误"),
     USER_LOGIN_CODE_ERROR("0017", "登录账号或者验证码错误"),
     USER_NOT_LOGIN_ERROR("0018", "用户未登录"),
+    USER_REGIST_IDCARD_EXISTED("0019", "注册身份证已经存在"),
+    USER_REGIST_FAIL("0020", "注册失败"),
+    USER_LOGIN_FAIL("0021", "用户名不存在或者密码错误"),
+    USER_ACCESS_TOKEN_EXPIRED("0022", "用户accessToken失效"),
+    USER_ENCRYPT_FAIL("0023", "加密失败"),
+    USER_DECRYPT_FAIL("0024", "解密失败"),
 
     STATE_ERROR("0101", "状态转换异常"),
     STATE_SEND_DUPLICATE_ERROR("0102", "重复发送请求"),
@@ -27,7 +33,9 @@ public enum ErrorCodeEnum {
     STATE_REJECT_ILLEGAL_ERROR("0104", "已经接受，不能直接拒绝"),
     STATE_ALREADY_SUCCESS("0105", "已经是成功状态"),
     STATE_HUNTER_SEND_ON_HOLD_ERROR("0106", "追求者已经被人接受，除非被接受者拒绝，否则无法再发送请求。"),
-    STATE_ACCEPT_DUPLICATED_ERROR("0107", "重复接受。")
+    STATE_ACCEPT_DUPLICATED_ERROR("0107", "重复接受。"),
+
+    FILE_UPLOAD_FAIL("0201", "文件上传失败"),
     ;
 
     private String code;

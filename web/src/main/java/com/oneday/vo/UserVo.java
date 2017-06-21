@@ -12,6 +12,8 @@ public class UserVo extends User {
 
     protected String birthStr;
 
+    protected Integer step;
+
     public String getBirthStr() {
         return birthStr;
     }
@@ -26,5 +28,13 @@ public class UserVo extends User {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Integer getStep() {
+        return step;
+    }
+
+    public void setStep(Integer step) {
+        this.step = step;
     }
 }

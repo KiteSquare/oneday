@@ -11,7 +11,7 @@
        		http://www.springframework.org/schema/mvc
        		http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-autowire="byName">
-
+	<import resource="spring/spring-config-service.xml" />
 	<import resource="spring/spring-config-servlet.xml" />
 	<import resource="spring/spring-config-dao.xml" />
 

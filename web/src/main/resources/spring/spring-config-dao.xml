@@ -60,4 +60,14 @@
 		<constructor-arg index="0" ref="wmSqlSessionFactory" />
 		<constructor-arg index="1" value="BATCH" />
 	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.oneday.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="wmSqlSessionFactory" />
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource" />
+	</bean>
+
 </beans>

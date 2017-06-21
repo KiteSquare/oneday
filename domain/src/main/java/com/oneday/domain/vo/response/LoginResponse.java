@@ -1,6 +1,7 @@
-package com.oneday.domain.vo;
+package com.oneday.domain.vo.response;
 
-import com.oneday.domain.po.User;
+
+import java.io.Serializable;
 
 
 /**
@@ -8,12 +9,11 @@ import com.oneday.domain.po.User;
  * @version 1.0
  *          2017/2/27 17:06
  */
-public class LoginResult extends User {
+public class LoginResponse implements Serializable {
     private static final long serialVersionUID = 1L;
     private String url;
-    private Long id;
     private String sdktoken;
-    private String head;
+    private String accessToken;
     /**
      * 登录类型
      * 1 为phone+password
@@ -29,13 +29,6 @@ public class LoginResult extends User {
         this.type = type;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUrl() {
         return url;
@@ -53,11 +46,11 @@ public class LoginResult extends User {
         this.sdktoken = sdktoken;
     }
 
-    public String getHead() {
-        return head;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setHead(String head) {
-        this.head = head;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }

@@ -32,6 +32,10 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath:spring-config.xml</param-value>
         </init-param>
+        <init-param>
+            <param-name>dispatchOptionsRequest</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -44,11 +48,11 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
-
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <servlet-name>springmvc</servlet-name>
     </filter-mapping>
+
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/*</url-pattern>

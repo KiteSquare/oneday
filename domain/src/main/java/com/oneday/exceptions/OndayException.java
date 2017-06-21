@@ -12,6 +12,11 @@ public class OndayException extends RuntimeException {
         this.code = code;
     }
 
+    public OndayException(String code, String message, Throwable cause) {
+        super(message, cause);
+        this.code = code;
+    }
+
     public String getCode() {
         return code;
     }

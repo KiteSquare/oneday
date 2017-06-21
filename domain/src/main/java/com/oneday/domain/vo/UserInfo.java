@@ -13,7 +13,7 @@ public class UserInfo {
     /**
      * 当前用户
      */
-    protected User user;
+    protected UserDisplay user;
 
     /**
      * 接受的对象
@@ -30,11 +30,11 @@ public class UserInfo {
 
     protected Integer index;
 
-    public User getUser() {
+    public UserDisplay getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDisplay user) {
         this.user = user;
     }
 

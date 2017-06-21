@@ -19,7 +19,7 @@ public interface UserDao extends Dao<User, Long> {
     Map<Long, User> getMapByIds(Long... uids);
 
     User getByPhone(String phone);
-    User loginWithPassword(UserParam userParam);
+    User getImagesById(Long id);
 
     int batchUpdate(List<User> users);
 

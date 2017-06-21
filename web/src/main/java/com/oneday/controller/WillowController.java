@@ -3,12 +3,12 @@ package com.oneday.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ErrorCodeEnum;
-import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.vo.Relation;
 import com.oneday.domain.vo.UserInfo;
+import com.oneday.domain.vo.request.*;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
-import com.oneday.vo.*;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -36,11 +36,11 @@ public class WillowController {
      */
     @RequestMapping(value = "/send", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result send(@RequestBody SendRequestVo sendRequest) {
+    public  Result send(@RequestBody SendRequest sendRequest) {
         Result result = new Result();
         try {
             _validateRequest(sendRequest);
-             associateService.send(sendRequest.getSenderId(),sendRequest.getReceiverId());
+             associateService.send(sendRequest.getAccessToken(),sendRequest.getReceiverId());
 
         } catch (OndayException e) {
             result.setCode(e.getCode());
@@ -60,16 +60,16 @@ public class WillowController {
 
     /**
      *
-     * @param acceptRequestVo
+     * @param acceptRequest
      * @return
      */
     @RequestMapping(value = "/accept", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result accept(@RequestBody AcceptRequestVo acceptRequestVo) {
+    public  Result accept(@RequestBody AcceptRequest acceptRequest) {
         Result result = new Result();
         try {
-            _validateRequest(acceptRequestVo);
-            associateService.accept(acceptRequestVo.getUserId(),acceptRequestVo.getTargetUserId());
+            _validateRequest(acceptRequest);
+            associateService.accept(acceptRequest.getAccessToken(),acceptRequest.getTargetUserId());
 
         } catch (OndayException e) {
             result.setCode(e.getCode());
@@ -85,16 +85,16 @@ public class WillowController {
 
     /**
      * 拒绝
-     * @param rejectRequestVo
+     * @param rejectRequest
      * @return
      */
     @RequestMapping(value = "/reject", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result reject(@RequestBody RejectRequestVo rejectRequestVo) {
+    public  Result reject(@RequestBody RejectRequest rejectRequest) {
         Result result = new Result();
         try {
-            _validateRequest(rejectRequestVo);
-            associateService.reject(rejectRequestVo.getUserId(),rejectRequestVo.getTargetUserId());
+            _validateRequest(rejectRequest);
+            associateService.reject(rejectRequest.getAccessToken(),rejectRequest.getTargetUserId());
 
         } catch (OndayException e) {
             result.setCode(e.getCode());
@@ -110,16 +110,16 @@ public class WillowController {
 
     /**
      * 拒绝
-     * @param admitRequestVo
+     * @param admitRequest
      * @return
      */
     @RequestMapping(value = "/admit", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result admit(@RequestBody AdmitRequestVo admitRequestVo) {
+    public  Result admit(@RequestBody AdmitRequest admitRequest) {
         Result result = new Result();
         try {
-            _validateRequest(admitRequestVo);
-            associateService.admit(admitRequestVo.getUserId());
+            _validateRequest(admitRequest);
+            associateService.admit(admitRequest.getAccessToken());
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
@@ -152,12 +152,21 @@ public class WillowController {
         return result;
     }
 
-    @RequestMapping(value = "/info/{id}", method = {RequestMethod.GET, RequestMethod.POST })
+    /**
+     * 获取用户候选人数据
+     * @param request
+     * @param currentPage
+     * @param count
+     * @return
+     */
+    @RequestMapping(value = "/candidates", method = {RequestMethod.POST })
     @ResponseBody
-    public Result all(@PathVariable long id, @RequestParam(value = "currentPage", required = false)Integer currentPage,
-                      @RequestParam(value = "count", required = false)Integer count) {
+    public Result candidates(@RequestBody CandidatesRequest request, @RequestParam(value = "currentPage", required = false)Integer currentPage,
+                            @RequestParam(value = "count", required = false)Integer count) {
         Result result = new Result();
+
         try {
+            _checkCandidatesRequest(request);
             if (currentPage == null || currentPage < 0) {
                 currentPage = 0;
             }
@@ -166,9 +175,9 @@ public class WillowController {
             } else if (count > 1000) {
                 count = 1000;
             }
-            UserInfo userInfo = associateService.getUserInfo(id, currentPage, count);
+            UserInfo userInfo = associateService.getUserInfo(request.getAccessToken(), currentPage, count);
             result.setData(userInfo);
-            System.out.println(String.format("/info/{id}, id %s, result : %s", id, JSONObject.toJSONString(userInfo)));
+            System.out.println(String.format("/info/{id}, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(userInfo)));
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
@@ -178,17 +187,27 @@ public class WillowController {
             result.setMessage("操作失败");
             logger.info(String.format("regist failed, %s", e.getMessage()), e);
         }
-
+        logger.info(String.format("willow/candidates, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(result)));
         return result;
+    }
+
+    protected boolean _checkCandidatesRequest(CandidatesRequest request) {
+        if (request == null) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "请求异常");
+        }
+        if (StringUtils.isEmpty(request.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户未登录");
+        }
+        return true;
     }
 
     @RequestMapping(value = "/relation", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Result relation(@RequestBody RelationRequestVo request) {
+    public Result relation(@RequestBody RelationRequest request) {
         Result result = new Result();
         try {
 
-            Relation relation = associateService.relation(request.getUserId(), request.getTargetUserId());
+            Relation relation = associateService.relation(request.getAccessToken(), request.getTargetUserId());
             result.setData(relation);
             System.out.println(String.format("/relation, param %s, result : %s", JSONObject.toJSONString(request),
                     JSONObject.toJSONString(result)));
@@ -206,48 +225,56 @@ public class WillowController {
     }
 
 
-    protected void _validateRequest(SendRequestVo sendRequest) {
+    protected void _validateRequest(SendRequest sendRequest) {
         if (sendRequest == null) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
         }
-        if (sendRequest.getSenderId() == null || sendRequest.getSenderId() < 0) {
-            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "sender is invalid");
+        if (StringUtils.isEmpty(sendRequest.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "请登录");
         }
         if (sendRequest.getReceiverId() == null || sendRequest.getReceiverId() < 0) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "receiver is invalid");
         }
     }
 
-    protected void _validateRequest(AcceptRequestVo requestVo) {
+    protected void _validateRequest(AcceptRequest requestVo) {
         if (requestVo == null) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
         }
-        if (requestVo.getUserId() == null || requestVo.getUserId() < 0) {
-            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is not found or invalid");
+        if (StringUtils.isEmpty(requestVo.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "请登录");
         }
         if (requestVo.getTargetUserId() == null || requestVo.getTargetUserId() < 0) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "target user id is not found or invalid");
         }
     }
 
-    protected void _validateRequest(RejectRequestVo requestVo) {
+    protected void _validateRequest(RejectRequest requestVo) {
         if (requestVo == null) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
         }
-        if (requestVo.getUserId() == null || requestVo.getUserId() < 0) {
-            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is not found or invalid");
+        if (StringUtils.isEmpty(requestVo.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "请登录");
         }
         if (requestVo.getTargetUserId() == null || requestVo.getTargetUserId() < 0) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "target user id is not found or invalid");
         }
     }
 
-    protected void _validateRequest(AdmitRequestVo requestVo) {
+    protected void _validateRequest(AdmitRequest requestVo) {
         if (requestVo == null) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
         }
-        if (requestVo.getUserId() == null || requestVo.getUserId() < 0) {
-            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is not found or invalid");
+        if (StringUtils.isEmpty(requestVo.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "请登录");
+        }
+    }
+    protected void _validateRequest(RelationRequest requestVo) {
+        if (requestVo == null) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request data not found");
+        }
+        if (requestVo.getTargetUserId() == null || requestVo.getTargetUserId() < 0) {
+            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "target user id is not found or invalid");
         }
     }
 

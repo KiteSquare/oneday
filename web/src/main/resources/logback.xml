@@ -27,12 +27,76 @@
 		</encoder>
 	</appender>
 
+	<appender name="USER_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/user.log</file>
+		<prudent>false</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/user.log%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="USER" level="${log.level}" additivity="false">
+		<if condition='"${devMode}".equals("true")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		<appender-ref ref="USER_LOG_FILE" />
+	</logger>
+
+
+	<appender name="TOPIC_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/topic.log</file>
+		<prudent>false</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/topic.log%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="TOPIC" level="${log.level}" additivity="false">
+		<if condition='"${devMode}".equals("true")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		<appender-ref ref="TOPIC_LOG_FILE" />
+	</logger>
+
+	<appender name="STATIC_RESOURCE_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/sr.log</file>
+		<prudent>false</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/sr.log%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="STATIC_RESOURCE" level="${log.level}" additivity="false">
+		<if condition='"${devMode}".equals("true")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		<appender-ref ref="STATIC_RESOURCE_LOG_FILE" />
+	</logger>
+
+
 	<logger name="com.oneday" additivity="false">
 		<level value="debug" />
 		<appender-ref ref="FILE" />
 		<appender-ref ref="CONSOLE" />
 	</logger>
-
 	<!-- 日志级别 -->
 	<root level="${log.level}">
 		<level value="error" />

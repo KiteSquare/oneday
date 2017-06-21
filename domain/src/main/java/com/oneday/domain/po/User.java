@@ -68,6 +68,12 @@ public class User implements Serializable {
     protected Integer height;
 
     /**
+     *
+     * 体重 cm
+     */
+    protected Integer weight;
+
+    /**
      * 婚姻状况
      * 参考 MarriageEnum
      */
@@ -77,6 +83,18 @@ public class User implements Serializable {
      * 个人签名
      */
     protected String signature;
+    /**
+     * 省份代码
+     */
+    protected String provinceCode;
+    /**
+     * 省份名称
+     */
+    protected String province;
+    /**
+     * 城市代码
+     */
+    protected String cityCode;
     /**
      * 初始城市
      */
@@ -123,6 +141,22 @@ public class User implements Serializable {
      * 数量，当为男性时候表示发送(send)的数量，当为女性的时候表示接收(receive)的数量
      */
     protected Integer count;
+    /**
+     * 用户注册的设备id
+     */
+    protected String deviceId;
+    /**
+     * 用户图片，json字符串
+     */
+    protected String images;
+    /**
+     * 交友要求
+     */
+    protected String requirement;
+    /**
+     * 用户等级
+     */
+    protected Integer level;
     /**
      * 创建时间
      */
@@ -324,5 +358,69 @@ public class User implements Serializable {
 
     public void setMarriage(Integer marriage) {
         this.marriage = marriage;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
     }
 }

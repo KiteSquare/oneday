@@ -37,6 +37,10 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
         <!--  阿里大于短信JAR-->
     <!--    <dependency>
             <groupId>taobao</groupId>
@@ -50,6 +54,10 @@
             <groupId>com.oneday</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
         </dependency>
 
     </dependencies>

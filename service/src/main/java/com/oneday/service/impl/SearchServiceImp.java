@@ -5,11 +5,13 @@ import com.oneday.constant.SexEnum;
 import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.BaseUser;
 import com.oneday.domain.vo.Location;
 import com.oneday.domain.vo.Page;
 import com.oneday.domain.vo.UserParam;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.SearchService;
+import com.oneday.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +29,9 @@ public class SearchServiceImp implements SearchService {
     @Resource
     HunterReceiverDao hunterReceiverDao;
 
+    @Resource
+    UserService userService;
+
     /**
      * TODO 重写方法
      * @param distance
@@ -34,13 +39,13 @@ public class SearchServiceImp implements SearchService {
      * @return
      */
     @Override
-    public Page<User> nearBy(Integer distance, User user) {
+    public Page<User> nearBy(Integer distance, BaseUser user) {
         Location location = new Location(0d,0d);
         List<Long> relatedUids = null;
         UserParam userParam = new UserParam();
         if (user != null) {
-            relatedUids = hunterReceiverDao.getAllRelatedUids(user.getId(), user.isMale());
-            if (user.isMale()) {
+            relatedUids = hunterReceiverDao.getAllRelatedUids(user.getId(), SexEnum.isMale(user.getSex()));
+            if (SexEnum.isMale(user.getSex())) {
                 userParam.setSex(SexEnum.FEMALE.getSex());
             } else {
                 userParam.setSex(SexEnum.MAN.getSex());
@@ -62,16 +67,19 @@ public class SearchServiceImp implements SearchService {
     /**
      * TODO 重写方法
      * @param distance
-     * @param userId
+     * @param accessToken
      * @return
      */
     @Override
-    public Page<User> nearBy(Integer distance, Long userId) {
+    public Page<User> nearBy(Integer distance, String accessToken) {
         Location location = new Location(0d,0d);
-        if (userId == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "User id  not found.");
+        if (accessToken == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户未登录");
         }
-        User user = userDao.get(userId);
-        return nearBy(distance, user);
+        BaseUser baseUser = userService.getUser(accessToken);
+        if (baseUser == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户未登录");
+        }
+        return nearBy(distance, baseUser);
     }
 }

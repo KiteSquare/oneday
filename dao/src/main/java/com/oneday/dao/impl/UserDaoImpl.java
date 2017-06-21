@@ -61,9 +61,12 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
 
     @Override
     public User getByPhone(String phone) {
-        User user = sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
-        _safeFilter(user);
-        return user;
+        return sqlSessionTemplate.selectOne(getNameSpace("getByPhone"), phone);
+    }
+
+    @Override
+    public User getImagesById(Long id) {
+        return sqlSessionTemplate.selectOne(getNameSpace("getImagesById"), id);
     }
 
     @Override
@@ -71,13 +74,6 @@ public class UserDaoImpl extends DaoImpl<User, Long> implements UserDao {
         List<User> users = sqlSessionTemplate.selectList(getNameSpace("getByWhere"), userParam);
         _safeFilter(users);
         return users;
-    }
-
-    @Override
-    public User loginWithPassword(UserParam userParam) {
-        User user = sqlSessionTemplate.selectOne(getNameSpace("loginWithPassword"), userParam);
-        _safeFilter(user);
-        return user;
     }
 
     protected void  _safeFilter(User user) {

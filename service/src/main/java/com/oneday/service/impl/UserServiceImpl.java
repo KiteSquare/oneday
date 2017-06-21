@@ -1,27 +1,29 @@
 package com.oneday.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.util.MD5Util;
+import com.oneday.common.util.Uploader;
 import com.oneday.common.util.Validator;
 import com.oneday.constant.*;
 import com.oneday.dao.HunterReceiverDao;
 import com.oneday.dao.UserDao;
 import com.oneday.domain.po.HunterReceiver;
 import com.oneday.domain.po.User;
-import com.oneday.domain.vo.HunterReceiverParam;
-import com.oneday.domain.vo.UserDisplay;
-import com.oneday.domain.vo.UserParam;
+import com.oneday.domain.vo.*;
+import com.oneday.domain.vo.response.LoginResponse;
 import com.oneday.exceptions.OndayException;
+import com.oneday.service.StaticResourceService;
 import com.oneday.service.UserService;
-import com.oneday.service.utils.VoConvertor;
-import com.oneday.utils.UserUtil;
+import com.oneday.utils.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -29,12 +31,85 @@ import java.util.*;
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger logger = LogHelper.USER_LOG;
     @Resource
     UserDao userDao;
     @Resource
     HunterReceiverDao hunterReceiverDao;
+    @Resource
+    private StaticResourceService localStaticResourceService;
     public Integer add(User user) {
+        return null;
+    }
+
+
+    public LoginResponse regist(UserRegistVo user) {
+        switch (user.getStep()) {
+            case 1:
+                UserParam userParam = new UserParam();
+                userParam.setIdcard(user.getIdcard());
+                List<User> res = userDao.getByWhere(userParam);
+                if (res != null && res.size() > 0) {
+                    User user1 = res.get(0);
+                    if (user1.getSex() != null) {
+                        throw new OndayException(ErrorCodeEnum.USER_REGIST_IDCARD_EXISTED.getCode(), "该身份证已经注册");
+                    }
+                }
+                break;
+            case 2:
+                User u = userDao.getByPhone(user.getPhone());
+                if (u != null) {
+                    if (u.getSex() != null) {
+                        throw new OndayException(ErrorCodeEnum.USER_REGIST_DUPLICATE_ERROR.getCode(), "该手机号已经注册");
+                    } else {
+                        //完成第二步但未完成第三步
+                        break;
+                    }
+                }
+                // 检查验证码
+                _checkCode(user, user.getCode());
+                u = VoConvertor.convert(user, user.getStep());
+                Date now = new Date();
+                u.setCreate(now);
+                u.setUpdate(now);
+                u.setCount(0);
+                int addRes = userDao.add(u);
+                if (addRes <= 0) {
+                    throw new OndayException(ErrorCodeEnum.USER_REGIST_FAIL.getCode(), "注册失败");
+                }
+                break;
+            case 3:
+                User u1 = userDao.getByPhone(user.getPhone());
+                if (u1 == null ) {
+                    throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "该手机号的用户不存在");
+                }
+                if (!u1.getIdcard().equals(user.getIdcard())) {
+                    throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "该手机号的用户与身份证绑定异常");
+                }
+                Date now1 = new Date();
+                u1.setUpdate(now1);
+                u1.setSex(user.getSex());
+                u1.setName(user.getName());
+                u1.setBirth(user.getBirth());
+                u1.setProvinceCode(user.getProvinceCode());
+                u1.setProvince(user.getProvince());
+                u1.setCityCode(user.getCityCode());
+                u1.setCity(user.getCity());
+                u1.setLat(user.getLat());
+                u1.setLon(user.getLon());
+                u1.setHead(user.getHead());
+                u1.setDeviceId(user.getDeviceId());
+                int updateRes = userDao.updateByPhone(u1);
+                if (updateRes <= 0) {
+                    throw new OndayException(ErrorCodeEnum.USER_REGIST_FAIL.getCode(), "更新失败");
+                }
+                AccessToken accessToken = AccessTokenUtil.accessToken(u1);
+                LoginResponse loginResponse = new LoginResponse();
+                loginResponse.setAccessToken(accessToken.getAccessToken());
+                loginResponse.setSdktoken(ConfigConstant.SDKTOKEN);
+                return loginResponse;
+            default:
+        }
         return null;
     }
 
@@ -203,27 +278,64 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 获取用户展示信息
-     * @param userId
+     * @param accessToken
      * @return
      */
-    public UserDisplay getUserDisplayById(Long userId) {
-        if (userId == null) return null;
-        User user = userDao.get(userId);
-        return VoConvertor.convertUserToUserDisplay(user);
-    }
-
-    public List<User> get(User user) {
-
-
-        return null;
+    public BaseUser getUser(String accessToken) {
+        if (accessToken == null) return null;
+        BaseUser user = AccessTokenUtil.decryptAccessToken(accessToken);
+        return user;
     }
 
     /**
-     * @param user
+     * 获取用户详情
+     *
+     * @param accessToken
+     * @param uid
      * @return
      */
-    public User login(User user) {
-        return null;
+    @Override
+    public UserDisplay getUserDetail(String accessToken, Long uid) {
+        if (accessToken == null || uid == null) return null;
+        BaseUser user = AccessTokenUtil.decryptAccessToken(accessToken);
+        if (user == null || user.getId() == null) {
+            throw new OndayException(ErrorCodeEnum.USER_DECRYPT_FAIL.getCode(), "验证失败，请重新登录");
+        }
+        if (uid == 0) {
+            uid = user.getId();
+        }
+        User user1 = userDao.get(uid);
+        if (user1 == null) {
+            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), ErrorCodeEnum.USER_NOT_FOUND.getValue());
+        }
+        return  VoConvertor.convertUserToUserDisplay(user1);
+    }
+
+    /**
+     * 获取用户Map
+     *
+     * @param accessToken
+     * @param uid
+     * @return
+     */
+    @Override
+    public Map<Long, User> getUserMap(String accessToken, Long... uid) {
+        if (accessToken == null || uid == null) return null;
+        BaseUser user = AccessTokenUtil.decryptAccessToken(accessToken);
+        if (user == null || user.getId() == null) {
+            throw new OndayException(ErrorCodeEnum.USER_DECRYPT_FAIL.getCode(), "验证失败，请重新登录");
+        }
+
+        List<Long> uidlist = new ArrayList<>();
+        for (Long id: uid) {
+            if (id == 0) {
+                uidlist.add(user.getId());
+            } else {
+                uidlist.add(id);
+            }
+
+        }
+        return userDao.getMapByIds(uidlist);
     }
 
     /**
@@ -231,11 +343,36 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
-    public User login(String phone, String password) {
-        UserParam userParam = new UserParam();
-        userParam.setPhone(phone);
-        userParam.setPassword(MD5Util.md5Encode32(password));
-        return userDao.loginWithPassword(userParam);
+    @Override
+    public AccessToken loginForAccessToken(String phone, String password) {
+        User user = userDao.getByPhone(phone);
+        if (user == null) {
+            throw new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), ErrorCodeEnum.USER_LOGIN_FAIL.getValue());
+        }
+        try {
+            if (!MD5Util.verify(password, user.getPassword())) {
+                throw new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), ErrorCodeEnum.USER_LOGIN_FAIL.getValue());
+            }
+        } catch (Throwable e) {
+            throw  new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), "密码错误",e);
+        }
+
+        AccessToken accessToken = AccessTokenUtil.accessToken(user);
+        if (accessToken == null || accessToken.getAccessToken() == null) {
+            logger.error(String.format("Encrypt user info for accessToken fail, uid[%s]", user.getId()));
+            throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "系统异常");
+        }
+        return accessToken;
+    }
+
+    /**
+     * @param phone
+     * @param code
+     * @return
+     */
+    @Override
+    public AccessToken loginForAccessTokenWithCode(String phone, String code) {
+        return null;
     }
 
     /**
@@ -266,4 +403,112 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    /**
+     * 更新
+     *
+     * @param user
+     * @return
+     */
+    @Override
+    public Integer update(User user, String accessToken) {
+        BaseUser currentUser = getUser(accessToken);
+        if (currentUser == null) {
+            throw new OndayException(ErrorCodeEnum.USER_DECRYPT_FAIL.getCode(), "更新失败，请重新登录");
+        }
+        user.setId(currentUser.getId());
+        _safeUpdateUser(user, false);
+        int res = userDao.update(user);
+        return res;
+    }
+
+    /**
+     * 更新用户图片
+     *
+     * @param images
+     * @param baseUser
+     * @return
+     */
+    @Override
+    public Integer updateImage(String[] images, BaseUser baseUser) {
+        if (baseUser == null || baseUser.getId() == null || images == null || images.length ==0) {
+            return 0;
+        }
+        User user = userDao.getImagesById(baseUser.getId());
+        if (user == null) {
+            return 0;
+        }
+        List<ImageVo> imageVos = null;
+        if (!StringUtils.isEmpty(user.getImages())) {
+            imageVos = JSONObject.parseArray(user.getImages(), ImageVo.class);
+        } else {
+            imageVos = new ArrayList<>();
+        }
+        for (String image : images) {
+            ImageVo imageVo = new ImageVo();
+            imageVo.setUrl(image);
+            imageVos.add(imageVo);
+        }
+
+        user.setImages(JSONObject.toJSONString(imageVos));
+        user.setUpdate(new Date());
+
+        return userDao.update(user);
+    }
+
+    protected void _safeUpdateUser(User user, boolean needPhone) {
+        if (user == null) return;
+        if (user.getIdcard() != null) {
+            user.setIdcard(null);
+        }
+        if (user.getPassword() != null) {
+            user.setPassword(null);
+        }
+        if (user.getSex() != null) {
+            user.setSex(null);
+        }
+        if (!needPhone && user.getPhone() != null) {
+            user.setPhone(null);
+        }
+        if (user.getLevel() != null) {
+            user.setLevel(null);
+        }
+    }
+
+    /**
+     * 从http请求头里获取用户信息
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public BaseUser getUserFromHttpRequst(HttpServletRequest request) {
+        if (request == null) return null;
+        String accessToken = request.getHeader("accessToken");
+
+        if (StringUtils.isEmpty(accessToken)) {
+            return null;
+        }
+
+        return getUser(accessToken);
+    }
+
+    /**
+     * 上传文件到静态服务，返回文件链接
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public String uploadUserImage(HttpServletRequest request) {
+        BaseUser baseUser = getUserFromHttpRequst(request);
+        if (baseUser == null || baseUser.getId() == null) {
+            throw new OndayException(ErrorCodeEnum.FILE_UPLOAD_FAIL.getCode(), "没有登录");
+        }
+        String res = localStaticResourceService.upload(request);
+        int updateRes = updateImage(new String[]{res}, baseUser);
+        return res;
+    }
+
+
 }

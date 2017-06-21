@@ -16,12 +16,15 @@
 	<typeAliases>
 		<typeAlias type="com.oneday.domain.po.User" alias="User"/>
 		<typeAlias type="com.oneday.domain.po.HunterReceiver" alias="HunterReceiver"/>
+		<typeAlias type="com.oneday.domain.po.Topic" alias="Topic"/>
 		<typeAlias type="com.oneday.domain.vo.HunterReceiverParam" alias="HunterReceiverParam"/>
 		<typeAlias type="com.oneday.domain.vo.UserParam" alias="UserParam"/>
+		<typeAlias type="com.oneday.domain.vo.TopicParam" alias="TopicParam"/>
 	</typeAliases>
 	<!-- 映射文件路径 -->
 	<mappers>
 		<mapper resource="sqlmap/User.xml" />
 		<mapper resource="sqlmap/HunterReceiver.xml" />
+		<mapper resource="sqlmap/Topic.xml" />
 	</mappers>
 </configuration>

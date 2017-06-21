@@ -4,8 +4,10 @@ import com.oneday.common.domain.Result;
 import com.oneday.common.util.DateUtil;
 import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.domain.po.User;
+import com.oneday.domain.vo.BaseRequest;
 import com.oneday.domain.vo.Location;
 import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.request.RecommendRequest;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.SearchService;
 import com.oneday.vo.UserVo;
@@ -30,19 +32,23 @@ public class SearchController extends BaseController {
     private SearchService searchService;
     /**
      * 推荐
-     * @param user
+     * @param request
      * @return
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result recommend(@RequestBody User user) {
+    public Result recommend(@RequestBody RecommendRequest request) {
         Result result = new Result();
         try {
-            if (user == null || user.getId() == null) {
-                throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "request user not found");
+            if (request == null || request.getAccessToken() == null) {
+//                throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "");
+                // 推荐附近？
+            } else {
+                Page<User> page = searchService.nearBy(0, request.getAccessToken());
+                result.setData(page);
             }
-            Page<User> page = searchService.nearBy(0, user.getId());
-            result.setData(page);
+
+
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
