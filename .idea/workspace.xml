@@ -1,31 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69859f3e-f82f-40f8-87f0-9627047dac64" name="Default" comment="添加用户相关api&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/Relation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/utils/ConvertUtil.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/vo/RelationRequestVo.java" />
+    <list default="true" id="69859f3e-f82f-40f8-87f0-9627047dac64" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/HunterReceiverDao.java" afterPath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/HunterReceiverDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/HunterReceiverDaoImpl.java" afterPath="$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/HunterReceiverDaoImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/HunterReceiver.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/HunterReceiver.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/User.xml" afterPath="$PROJECT_DIR$/dao/src/main/resources/sqlmap/User.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/target/classes/sqlmap/HunterReceiver.xml" afterPath="$PROJECT_DIR$/dao/target/classes/sqlmap/HunterReceiver.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dao/target/classes/sqlmap/User.xml" afterPath="$PROJECT_DIR$/dao/target/classes/sqlmap/User.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/HunterReceiverParam.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/HunterReceiverParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginResult.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/UserDisplay.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/UserDisplay.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/UserParam.java" afterPath="$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/UserParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/AssociateService.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/AssociateService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/SearchService.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/SearchService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/AssociateServiceImpl.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/AssociateServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/SearchServiceImp.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/SearchServiceImp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterHoldState.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterHoldState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterSingleState.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterSingleState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/utils/VoConvertor.java" afterPath="$PROJECT_DIR$/service/src/main/java/com/oneday/service/utils/VoConvertor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/SearchController.java" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/SearchController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/UserController.java" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/UserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/WillowController.java" afterPath="$PROJECT_DIR$/web/src/main/java/com/oneday/controller/WillowController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/web.iml" afterPath="$PROJECT_DIR$/web/web.iml" />
     </list>
     <ignored path="oneday.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -54,11 +32,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AssociateServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AssociateServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/AssociateServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="454">
-              <caret line="231" column="9" selection-start-line="231" selection-start-column="9" selection-end-line="231" selection-end-column="9" />
+            <state relative-caret-position="587">
+              <caret line="238" column="83" selection-start-line="238" selection-start-column="83" selection-end-line="238" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="domain.iml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/domain/domain.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -67,7 +55,7 @@
       <file leaf-file-name="HunterReceiverParam.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/HunterReceiverParam.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
+            <state relative-caret-position="399">
               <caret line="21" column="36" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="36" />
               <folding>
                 <element signature="e#911#912#0" expanded="true" />
@@ -84,7 +72,7 @@
       <file leaf-file-name="HunterReceiverDaoImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/HunterReceiverDaoImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
+            <state relative-caret-position="1558">
               <caret line="87" column="86" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="86" />
               <folding />
             </state>
@@ -94,7 +82,7 @@
       <file leaf-file-name="HunterReceiver.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/src/main/resources/sqlmap/HunterReceiver.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="469">
+            <state relative-caret-position="3268">
               <caret line="172" column="13" selection-start-line="172" selection-start-column="13" selection-end-line="172" selection-end-column="13" />
               <folding>
                 <marker date="1494930851384" expanded="true" signature="2818:3032" placeholder="INSERT INTO " />
@@ -116,7 +104,7 @@
       <file leaf-file-name="HunterHoldState.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterHoldState.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="475">
               <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
               <folding>
                 <element signature="e#1046#1047#0" expanded="true" />
@@ -136,21 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VoConvertor.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/utils/VoConvertor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="WillowController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/controller/WillowController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="159" column="54" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
+            <state relative-caret-position="2736">
+              <caret line="159" column="14" selection-start-line="159" selection-start-column="14" selection-end-line="159" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -159,7 +137,7 @@
       <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
+            <state relative-caret-position="2090">
               <caret line="136" column="27" selection-start-line="136" selection-start-column="27" selection-end-line="136" selection-end-column="27" />
               <folding />
             </state>
@@ -773,112 +751,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="state" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="service" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1239,8 +1111,18 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
+              <option name="myItemId" value="oneday" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oneday" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1254,7 +1136,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
+              <option name="myItemId" value="common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oneday" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oneday" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1263,50 +1163,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="oneday" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1329,6 +1185,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1402,9 +1262,9 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2146,6 +2006,7 @@
       <workItem from="1493021124403" duration="8513000" />
       <workItem from="1493866877986" duration="9415000" />
       <workItem from="1494818770741" duration="10490000" />
+      <workItem from="1499425388146" duration="384000" />
     </task>
     <task id="LOCAL-00001" summary="update">
       <created>1476009873492</created>
@@ -2217,11 +2078,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488537733420</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="添加用户相关api&#10;">
+      <created>1499425590727</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1499425590727</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="383526000" />
+    <option name="totallyTimeSpent" value="383910000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -2237,25 +2105,25 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1652452" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37931034" sideWeight="0.48933902" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20735608" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20735608" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3218391" sideWeight="0.57462686" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3218391" sideWeight="0.57462686" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37931034" sideWeight="0.48933902" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -2299,14 +2167,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2964">
-          <caret line="156" column="25" selection-start-line="156" selection-start-column="25" selection-end-line="156" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/web.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
@@ -2350,13 +2210,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/oneday/common/util/EncryptUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="703">
-          <caret line="46" column="31" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/common/src/main/java/com/oneday/common/util/EncryptUtil.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.4/servlet-api-2.4.jar!/javax/servlet/http/Cookie.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -2397,16 +2251,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="758">
           <caret line="129" column="33" selection-start-line="129" selection-start-column="33" selection-end-line="129" selection-end-column="33" />
-          <folding>
-            <marker date="1492593729703" expanded="true" signature="4633:5107" placeholder="INSERT INTO " />
-            <marker date="1492593729703" expanded="true" signature="5239:5389" placeholder="SELECT FROM WHERE" />
-            <marker date="1492593729703" expanded="true" signature="5524:5687" placeholder="SELECT FROM WHERE" />
-            <marker date="1492593729703" expanded="true" signature="5524:5706" placeholder="SELECT FROM WHERE" />
-            <marker date="1492593729703" expanded="true" signature="6561:6717" placeholder="SELECT FROM WHERE" />
-            <marker date="1492593729703" expanded="true" signature="7091:7212" placeholder="UPDATE WHERE... " />
-            <marker date="1492593729703" expanded="true" signature="7323:7450" placeholder="UPDATE WHERE... " />
-            <marker date="1492593729703" expanded="true" signature="7663:9142" placeholder="UPDATE `name... " />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2422,7 +2267,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
           <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2454,13 +2298,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/vo/AcceptRequestVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/vo/AcceptRequestVo.java" />
     <entry file="file://$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/HunterReceiverDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
@@ -2472,7 +2310,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="12" column="24" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2488,10 +2325,7 @@
         <state relative-caret-position="532">
           <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
           <folding>
-            <element signature="e#1245#1246#0" expanded="false" />
-            <element signature="e#1272#1273#0" expanded="false" />
             <element signature="e#1304#1305#0" expanded="false" />
-            <element signature="e#1332#1333#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2500,7 +2334,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="11" column="26" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2529,17 +2362,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="251" column="44" selection-start-line="251" selection-start-column="44" selection-end-line="251" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/vo/RelationRequestVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/vo/RelationRequestVo.java" />
     <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/UserInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -2554,138 +2380,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding>
-            <element signature="e#482#483#0" expanded="false" />
-            <element signature="e#509#510#0" expanded="false" />
-            <element signature="e#550#551#0" expanded="false" />
-            <element signature="e#582#583#0" expanded="false" />
-            <element signature="e#609#610#0" expanded="false" />
-            <element signature="e#634#635#0" expanded="false" />
-            <element signature="e#668#669#0" expanded="false" />
-            <element signature="e#696#697#0" expanded="false" />
-            <element signature="e#726#727#0" expanded="false" />
-            <element signature="e#752#753#0" expanded="false" />
-            <element signature="e#790#791#0" expanded="false" />
-            <element signature="e#820#821#0" expanded="false" />
-            <element signature="e#855#856#0" expanded="false" />
-            <element signature="e#886#887#0" expanded="false" />
-            <element signature="e#934#935#0" expanded="false" />
-            <element signature="e#974#975#0" expanded="false" />
-            <element signature="e#1005#1006#0" expanded="false" />
-            <element signature="e#1032#1033#0" expanded="false" />
-            <element signature="e#1072#1073#0" expanded="false" />
-            <element signature="e#1104#1105#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/LoginResult.java" />
     <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/po/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="608">
           <caret line="35" column="4" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2581#2582#0" expanded="false" />
-            <element signature="e#2606#2607#0" expanded="false" />
-            <element signature="e#2640#2641#0" expanded="false" />
-            <element signature="e#2668#2669#0" expanded="false" />
-            <element signature="e#2699#2700#0" expanded="false" />
-            <element signature="e#2726#2727#0" expanded="false" />
-            <element signature="e#2766#2767#0" expanded="false" />
-            <element signature="e#2798#2799#0" expanded="false" />
-            <element signature="e#2833#2834#0" expanded="false" />
-            <element signature="e#2864#2865#0" expanded="false" />
-            <element signature="e#2912#2913#0" expanded="false" />
-            <element signature="e#2952#2953#0" expanded="false" />
-            <element signature="e#2984#2985#0" expanded="false" />
-            <element signature="e#3012#3013#0" expanded="false" />
-            <element signature="e#3054#3055#0" expanded="false" />
-            <element signature="e#3088#3089#0" expanded="false" />
-            <element signature="e#3119#3120#0" expanded="false" />
-            <element signature="e#3145#3146#0" expanded="false" />
-            <element signature="e#3184#3185#0" expanded="false" />
-            <element signature="e#3214#3215#0" expanded="false" />
-            <element signature="e#3244#3245#0" expanded="false" />
-            <element signature="e#3272#3273#0" expanded="false" />
-            <element signature="e#3312#3313#0" expanded="false" />
-            <element signature="e#3346#3347#0" expanded="false" />
-            <element signature="e#3382#3383#0" expanded="false" />
-            <element signature="e#3414#3415#0" expanded="false" />
-            <element signature="e#3464#3465#0" expanded="false" />
-            <element signature="e#3506#3507#0" expanded="false" />
-            <element signature="e#3537#3538#0" expanded="false" />
-            <element signature="e#3564#3565#0" expanded="false" />
-            <element signature="e#3604#3605#0" expanded="false" />
-            <element signature="e#3636#3637#0" expanded="false" />
-            <element signature="e#3666#3667#0" expanded="false" />
-            <element signature="e#3692#3693#0" expanded="false" />
-            <element signature="e#3730#3731#0" expanded="false" />
-            <element signature="e#3760#3761#0" expanded="false" />
-            <element signature="e#3790#3791#0" expanded="false" />
-            <element signature="e#3816#3817#0" expanded="false" />
-            <element signature="e#3854#3855#0" expanded="false" />
-            <element signature="e#3884#3885#0" expanded="false" />
-            <element signature="e#3919#3920#0" expanded="false" />
-            <element signature="e#3950#3951#0" expanded="false" />
-            <element signature="e#3998#3999#0" expanded="false" />
-            <element signature="e#4038#4039#0" expanded="false" />
-            <element signature="e#4075#4076#0" expanded="false" />
-            <element signature="e#4107#4108#0" expanded="false" />
-            <element signature="e#4158#4159#0" expanded="false" />
-            <element signature="e#4200#4201#0" expanded="false" />
-            <element signature="e#4234#4235#0" expanded="false" />
-            <element signature="e#4263#4264#0" expanded="false" />
-            <element signature="e#4308#4309#0" expanded="false" />
-            <element signature="e#4344#4345#0" expanded="false" />
-            <element signature="e#4378#4379#0" expanded="false" />
-            <element signature="e#4407#4408#0" expanded="false" />
-            <element signature="e#4452#4453#0" expanded="false" />
-            <element signature="e#4488#4489#0" expanded="false" />
-            <element signature="e#4519#4520#0" expanded="false" />
-            <element signature="e#4546#4547#0" expanded="false" />
-            <element signature="e#4586#4587#0" expanded="false" />
-            <element signature="e#4618#4619#0" expanded="false" />
-            <element signature="e#4651#4652#0" expanded="false" />
-            <element signature="e#4680#4681#0" expanded="false" />
-            <element signature="e#4724#4725#0" expanded="false" />
-            <element signature="e#4760#4761#0" expanded="false" />
-            <element signature="e#4791#4792#0" expanded="false" />
-            <element signature="e#4820#4821#0" expanded="false" />
-            <element signature="e#4862#4863#0" expanded="false" />
-            <element signature="e#4898#4899#0" expanded="false" />
-            <element signature="e#4929#4930#0" expanded="false" />
-            <element signature="e#4958#4959#0" expanded="false" />
-            <element signature="e#5000#5001#0" expanded="false" />
-            <element signature="e#5036#5037#0" expanded="false" />
-            <element signature="e#5066#5067#0" expanded="false" />
-            <element signature="e#5091#5092#0" expanded="false" />
-            <element signature="e#5128#5129#0" expanded="false" />
-            <element signature="e#5156#5157#0" expanded="false" />
-            <element signature="e#5190#5191#0" expanded="false" />
-            <element signature="e#5219#5220#0" expanded="false" />
-            <element signature="e#5264#5265#0" expanded="false" />
-            <element signature="e#5300#5301#0" expanded="false" />
-            <element signature="e#5333#5334#0" expanded="false" />
-            <element signature="e#5361#5362#0" expanded="false" />
-            <element signature="e#5404#5405#0" expanded="false" />
-            <element signature="e#5438#5439#0" expanded="false" />
-            <element signature="e#5469#5470#0" expanded="false" />
-            <element signature="e#5524#5525#0" expanded="false" />
-            <element signature="e#5557#5558#0" expanded="false" />
-            <element signature="e#5615#5616#0" expanded="false" />
-            <element signature="e#5648#5649#0" expanded="false" />
-            <element signature="e#5677#5678#0" expanded="false" />
-            <element signature="e#5721#5722#0" expanded="false" />
-            <element signature="e#5757#5758#0" expanded="false" />
-            <element signature="e#5793#5794#0" expanded="false" />
-            <element signature="e#5824#5825#0" expanded="false" />
-            <element signature="e#5873#5874#0" expanded="false" />
-            <element signature="e#5913#5914#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2693,64 +2392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
-          <folding>
-            <element signature="e#1079#1080#0" expanded="false" />
-            <element signature="e#1106#1107#0" expanded="false" />
-            <element signature="e#1146#1147#0" expanded="false" />
-            <element signature="e#1178#1179#0" expanded="false" />
-            <element signature="e#1210#1211#0" expanded="false" />
-            <element signature="e#1238#1239#0" expanded="false" />
-            <element signature="e#1280#1281#0" expanded="false" />
-            <element signature="e#1314#1315#0" expanded="false" />
-            <element signature="e#1345#1346#0" expanded="false" />
-            <element signature="e#1371#1372#0" expanded="false" />
-            <element signature="e#1410#1411#0" expanded="false" />
-            <element signature="e#1440#1441#0" expanded="false" />
-            <element signature="e#1471#1472#0" expanded="false" />
-            <element signature="e#1497#1498#0" expanded="false" />
-            <element signature="e#1536#1537#0" expanded="false" />
-            <element signature="e#1566#1567#0" expanded="false" />
-            <element signature="e#1602#1603#0" expanded="false" />
-            <element signature="e#1634#1635#0" expanded="false" />
-            <element signature="e#1684#1685#0" expanded="false" />
-            <element signature="e#1726#1727#0" expanded="false" />
-            <element signature="e#1761#1762#0" expanded="false" />
-            <element signature="e#1792#1793#0" expanded="false" />
-            <element signature="e#1840#1841#0" expanded="false" />
-            <element signature="e#1880#1881#0" expanded="false" />
-            <element signature="e#1913#1914#0" expanded="false" />
-            <element signature="e#1942#1943#0" expanded="false" />
-            <element signature="e#1986#1987#0" expanded="false" />
-            <element signature="e#2022#2023#0" expanded="false" />
-            <element signature="e#2058#2059#0" expanded="false" />
-            <element signature="e#2090#2091#0" expanded="false" />
-            <element signature="e#2140#2141#0" expanded="false" />
-            <element signature="e#2182#2183#0" expanded="false" />
-            <element signature="e#2213#2214#0" expanded="false" />
-            <element signature="e#2240#2241#0" expanded="false" />
-            <element signature="e#2280#2281#0" expanded="false" />
-            <element signature="e#2312#2313#0" expanded="false" />
-            <element signature="e#2345#2346#0" expanded="false" />
-            <element signature="e#2374#2375#0" expanded="false" />
-            <element signature="e#2418#2419#0" expanded="false" />
-            <element signature="e#2454#2455#0" expanded="false" />
-            <element signature="e#2489#2490#0" expanded="false" />
-            <element signature="e#2520#2521#0" expanded="false" />
-            <element signature="e#2568#2569#0" expanded="false" />
-            <element signature="e#2608#2609#0" expanded="false" />
-            <element signature="e#2642#2643#0" expanded="false" />
-            <element signature="e#2671#2672#0" expanded="false" />
-            <element signature="e#2716#2717#0" expanded="false" />
-            <element signature="e#2752#2753#0" expanded="false" />
-            <element signature="e#2787#2788#0" expanded="false" />
-            <element signature="e#2818#2819#0" expanded="false" />
-            <element signature="e#2866#2867#0" expanded="false" />
-            <element signature="e#2906#2907#0" expanded="false" />
-            <element signature="e#2933#2934#0" expanded="false" />
-            <element signature="e#2958#2959#0" expanded="false" />
-            <element signature="e#2992#2993#0" expanded="false" />
-            <element signature="e#3020#3021#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2758,9 +2399,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1216">
           <caret line="70" column="55" selection-start-line="70" selection-start-column="55" selection-end-line="70" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2768,14 +2406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="627">
           <caret line="38" column="27" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#667#679#0" expanded="false" />
-            <element signature="e#1508#1509#0" expanded="false" />
-            <element signature="e#1547#1548#0" expanded="false" />
-            <element signature="e#1604#1605#0" expanded="false" />
-            <element signature="e#1689#1690#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2783,7 +2413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2828,26 +2457,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
+        <state relative-caret-position="2090">
           <caret line="136" column="27" selection-start-line="136" selection-start-column="27" selection-end-line="136" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/utils/VoConvertor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/utils/VoConvertor.java" />
     <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/constant/HunterEnum.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -2858,7 +2479,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/state/HunterHoldState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="475">
           <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
           <folding>
             <element signature="e#1046#1047#0" expanded="true" />
@@ -2869,7 +2490,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/domain/src/main/java/com/oneday/domain/vo/HunterReceiverParam.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
+        <state relative-caret-position="399">
           <caret line="21" column="36" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="36" />
           <folding>
             <element signature="e#911#912#0" expanded="true" />
@@ -2892,15 +2513,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/src/main/java/com/oneday/controller/WillowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="159" column="54" selection-start-line="159" selection-start-column="54" selection-end-line="159" selection-end-column="54" />
+        <state relative-caret-position="2736">
+          <caret line="159" column="14" selection-start-line="159" selection-start-column="14" selection-end-line="159" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dao/src/main/java/com/oneday/dao/impl/HunterReceiverDaoImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="1558">
           <caret line="87" column="86" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="86" />
           <folding />
         </state>
@@ -2908,7 +2529,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dao/src/main/resources/sqlmap/HunterReceiver.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
+        <state relative-caret-position="3268">
           <caret line="172" column="13" selection-start-line="172" selection-start-column="13" selection-end-line="172" selection-end-column="13" />
           <folding>
             <marker date="1494930851384" expanded="true" signature="2818:3032" placeholder="INSERT INTO " />
@@ -2928,8 +2549,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/service/src/main/java/com/oneday/service/impl/AssociateServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="231" column="9" selection-start-line="231" selection-start-column="9" selection-end-line="231" selection-end-column="9" />
+        <state relative-caret-position="587">
+          <caret line="238" column="83" selection-start-line="238" selection-start-column="83" selection-end-line="238" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domain/domain.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
           <folding />
         </state>
       </provider>
