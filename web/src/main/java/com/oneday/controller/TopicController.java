@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ConfigConstant;
 import com.oneday.constant.ErrorCodeEnum;
-import com.oneday.domain.po.User;
-import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.ImageVo;
 import com.oneday.domain.vo.request.CreateTopicRequest;
 import com.oneday.domain.vo.request.GetTopicRequest;
-import com.oneday.domain.vo.request.RecommendRequest;
 import com.oneday.domain.vo.request.RecommendTopicRequest;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.TopicService;
@@ -22,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -78,7 +78,19 @@ public class TopicController extends BaseController {
         if (request.getCategory() == null || request.getCategory() <= 0 ) {
             throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "category is empty or invalid");
         }
-
+        if (!StringUtils.isEmpty(request.getImages())) {
+            String[] imgArr = request.getImages().split(",");
+            List<ImageVo> imageVos =  new ArrayList<>();
+            for (String url: imgArr) {
+                if (StringUtils.isEmpty(url)) {
+                    continue;
+                }
+                ImageVo imageVo = new ImageVo();
+                imageVo.setUrl(url);
+                imageVos.add(imageVo);
+            }
+            request.setImages(JSONObject.toJSONString(imageVos));
+        }
         return true;
     }
 

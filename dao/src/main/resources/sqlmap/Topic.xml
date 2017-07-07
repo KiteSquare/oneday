@@ -6,7 +6,7 @@
     <!-- -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,uid,category,head,title,content,images,uname,weight,sex,`create`,`update`,yn
+        id,uid,category,head,title,content,images,uname,weight,sex,lon,lat,geocode,city,citycode,`count`,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -28,6 +28,12 @@
             <if test="uname != null " ><![CDATA[AND `uname` = #{uname}]]></if>
             <if test="weight != null " ><![CDATA[AND `weight` = #{weight}]]></if>
             <if test="sex != null " ><![CDATA[AND `sex` = #{sex}]]></if>
+            <if test="lon != null " ><![CDATA[AND `lon` = #{lon}]]></if>
+            <if test="lat != null " ><![CDATA[AND `lat` = #{lat}]]></if>
+            <if test="geocode != null " ><![CDATA[AND `geocode` = #{geocode}]]></if>
+            <if test="city != null " ><![CDATA[AND `city` = #{city}]]></if>
+            <if test="cityCode != null " ><![CDATA[AND `citycode` = #{cityCode}]]></if>
+            <if test="count != null " ><![CDATA[AND `count` = #{count}]]></if>
             <if test="create != null " ><![CDATA[AND `create` = #{create}]]></if>
             <if test="update != null " ><![CDATA[AND `update` = #{update}]]></if>
             <if test="startUpdated != null " ><![CDATA[AND `update` >= #{startUpdated}]]></if>
@@ -35,6 +41,13 @@
             <if test="startWeight != null " ><![CDATA[AND `weight` >= #{startWeight}]]></if>
             <if test="endWeight != null " ><![CDATA[AND `weight` <= #{endWeight}]]></if>
             <if test="yn != null " ><![CDATA[AND `yn` = #{yn}]]></if>
+            <if test="adjacentGeocodes != null " >
+
+                <![CDATA[AND `geocode` IN ]]>
+                <foreach collection="adjacentGeocodes"  item="id" index="ind" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
         </where>
     </sql>
 
@@ -51,9 +64,17 @@
             <if test="uname != null " ><![CDATA[`uname` = #{uname},]]></if>
             <if test="weight != null " ><![CDATA[`weight` = #{weight},]]></if>
             <if test="sex != null " ><![CDATA[`sex` = #{sex},]]></if>
+            <if test="lon != null " ><![CDATA[`lon` = #{lon},]]></if>
+            <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
+            <if test="geocode != null " ><![CDATA[`geocode` = #{geocode},]]></if>
+            <if test="city != null " ><![CDATA[`city` = #{city},]]></if>
+            <if test="cityCode != null " ><![CDATA[`citycode` = #{cityCode},]]></if>
+            <if test="count != null " ><![CDATA[`count` = #{count},]]></if>
             <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
             <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
             <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
+
+
         </set>
     </sql>
 
@@ -64,8 +85,8 @@
         ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[
-         ( uid,category,head,title,content,images,uname,weight,sex,`create`,`update`,yn)  VALUES
-         (#{uid},#{category},#{head},#{title},#{content},#{images},#{uname},#{weight},#{sex},#{create},#{update},#{yn})
+         ( uid,category,head,title,content,images,uname,weight,sex,lon,lat,geocode,city,citycode,`count`,`create`,`update`,yn)  VALUES
+         (#{uid},#{category},#{head},#{title},#{content},#{images},#{uname},#{weight},#{sex},#{lon},#{lat},#{geocode},#{city},#{cityCode},#{count},#{create},#{update},#{yn})
         ]]>
     </insert>
 
@@ -73,6 +94,13 @@
     <select id="getById" parameterType="long" resultType="Topic">
         <![CDATA[SELECT ]]>
         <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[WHERE id = #{pk}]]>
+    </select>
+    <!-- 根据ID查询评论数量 -->
+    <select id="getCountById" parameterType="long" resultType="Topic">
+        <![CDATA[SELECT id,`count` ]]>
         <![CDATA[ FROM ]]>
         <include refid="TABLE_NAME" />
         <![CDATA[WHERE id = #{pk}]]>

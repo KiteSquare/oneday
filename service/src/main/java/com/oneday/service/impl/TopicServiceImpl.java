@@ -1,10 +1,14 @@
 package com.oneday.service.impl;
 
+import com.oneday.common.util.GeocodeUtil;
+import com.oneday.common.util.Validator;
+import com.oneday.constant.ConfigConstant;
 import com.oneday.constant.ErrorCodeEnum;
 import com.oneday.domain.po.Topic;
 import com.oneday.domain.po.User;
 import com.oneday.domain.vo.BaseUser;
 import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.TopicDetail;
 import com.oneday.domain.vo.TopicParam;
 import com.oneday.domain.vo.request.CreateTopicRequest;
 import com.oneday.domain.vo.request.GetTopicRequest;
@@ -14,6 +18,7 @@ import com.oneday.mapper.TopicDao;
 import com.oneday.service.TopicService;
 import com.oneday.service.UserService;
 import com.oneday.utils.VoConvertor;
+import com.spatial4j.core.io.GeohashUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -44,13 +49,23 @@ public class TopicServiceImpl implements TopicService {
         topic.setUpdate(now);
         topic.setYn(0);
         topic.setWeight(0);
+        topic.setCount(0);
+        topic.setLat(request.getLat());
+        topic.setLon(request.getLon());
+        topic.setCityCode(request.getCityCode());
+        topic.setCity(request.getCity());
+        if (request.getLat() != null && request.getLon() != null) {
+            topic.setGeocode(GeohashUtils.encodeLatLon( request.getLat(),request.getLon(),ConfigConstant.GEOCODE_LENGTH_MAX));
+        }
+        //html转码处理
+        topic.setContent(Validator.escapContentString(topic.getContent()));
         Integer res = topicDao.add(topic);
         return res;
     }
 
     @Override
-    public Topic get(GetTopicRequest request) {
-        return topicDao.getById(request.getId());
+    public TopicDetail get(GetTopicRequest request) {
+        return VoConvertor.convert(topicDao.getById(request.getId()), request.getLat(), request.getLon());
     }
 
     @Override
@@ -64,7 +79,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Page<Topic> recommend(RecommendTopicRequest request) {
+    public Page<TopicDetail> recommend(RecommendTopicRequest request) {
         BaseUser user = null;
         if (!StringUtils.isEmpty(request.getAccessToken())) {
             user = userService.getUser(request.getAccessToken());
@@ -72,15 +87,20 @@ public class TopicServiceImpl implements TopicService {
                 throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "请登录");
             }
         }
-        Page<Topic> result = new Page<>(request.getCurrentPage(), request.getPageNum());
+        Page<TopicDetail> result = new Page<>(request.getCurrentPage(), request.getPageNum());
         TopicParam param = new TopicParam();
         param.setIndex(result.getIndex());
         param.setPageNum(request.getPageNum());
         param.setOrderBy("weight desc,`update` desc");
         param.setStartWeight(0);
         param.setEndUpdated(new Date());
+        param.setAdjacentGeocodes(GeocodeUtil.adjacentGeocodes(request.getLat(), request.getLon(), ConfigConstant.GEOCODE_LENGTH_MAX));
+        if (!StringUtils.isEmpty(request.getCityCode())) {
+            param.setCityCode(request.getCityCode());
+        }
         List<Topic> data = topicDao.getByWhere(param);
-        result.setData(data);
+
+        result.setData(VoConvertor.convert(data, request.getLat(), request.getLon()));
         result.setTotal(topicDao.getCount(param));
         return result;
     }

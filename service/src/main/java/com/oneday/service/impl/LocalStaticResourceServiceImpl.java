@@ -30,6 +30,10 @@ public class LocalStaticResourceServiceImpl implements StaticResourceService {
      */
     @Override
     public String upload(HttpServletRequest request) {
+        BaseUser baseUser = userService.getUserFromHttpRequst(request);
+        if (baseUser == null || baseUser.getId() == null) {
+            throw new OndayException(ErrorCodeEnum.FILE_UPLOAD_FAIL.getCode(), "没有登录");
+        }
         Uploader uploader = new Uploader(request);
         uploader.setBasePath(PropertyPlaceholder.getProperty("path.file.upload.prefix"));
         String res = null;

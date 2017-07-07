@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oneday.mapper.CommentDao">
+    <!-- -->
+    <sql id="ALL_COLUMNS">
+        <![CDATA[
+        id,topicid,uid,floor,replyfloor,replyuid,uname,head,sex,content,images,lat,lon,`create`,`update`,yn
+        ]]>
+    </sql>
+    <sql id="TABLE_NAME">
+        <![CDATA[
+        `comment`
+        ]]>
+    </sql>
+
+    <!-- where字段 -->
+    <sql id="WHERE_CLAUSE">
+        <where>
+            <if test="id != null and id &gt; 0 " ><![CDATA[AND id = #{id}]]></if>
+            <if test="topicId != null and topicId &gt; 0 " ><![CDATA[AND `topicid` = #{topicId}]]></if>
+            <if test="uid != null and uid &gt; 0 " ><![CDATA[AND `uid` = #{uid}]]></if>
+            <if test="floor != null and floor &gt; 0 " ><![CDATA[AND `floor` = #{floor}]]></if>
+            <if test="replyfloor != null and replyfloor &gt; 0 " ><![CDATA[AND `replyfloor` = #{replyfloor}]]></if>
+            <if test="replyUid != null and replyUid &gt; 0 " ><![CDATA[AND `replyuid` = #{replyUid}]]></if>
+            <if test="uname != null " ><![CDATA[AND `uname` = #{uname}]]></if>
+            <if test="head != null " ><![CDATA[AND `head` = #{head}]]></if>
+            <if test="sex != null " ><![CDATA[AND `sex` = #{sex}]]></if>
+
+            <if test="content != null " ><![CDATA[AND `content` = #{content}]]></if>
+            <if test="images != null " ><![CDATA[AND `images` = #{images}]]></if>
+            <if test="lat != null " ><![CDATA[AND `lat` = #{lat}]]></if>
+            <if test="lon != null " ><![CDATA[AND `lon` = #{lon}]]></if>
+            <if test="create != null " ><![CDATA[AND `create` = #{create}]]></if>
+            <if test="update != null " ><![CDATA[AND `update` = #{update}]]></if>
+            <if test="yn != null " ><![CDATA[AND `yn` = #{yn}]]></if>
+        </where>
+    </sql>
+
+
+    <!-- update字段 -->
+    <sql id="UPDATE_SET">
+        <set>
+            <if test="topicId != null and topicId &gt; 0 " ><![CDATA[ `topicid` = #{topicId},]]></if>
+
+            <if test="uid != null and uid &gt; 0  " ><![CDATA[`uid` = #{uid},]]></if>
+            <if test="floor != null and floor &gt; 0  " ><![CDATA[`floor` = #{floor},]]></if>
+            <if test="replyfloor != null and replyfloor &gt; 0  " ><![CDATA[`replyfloor` = #{replyfloor},]]></if>
+            <if test="replyUid != null and replyUid &gt; 0 " ><![CDATA[ `replyuid` = #{replyUid},]]></if>
+            <if test="uname != null " ><![CDATA[`uname` = #{uname},]]></if>
+            <if test="head != null  " ><![CDATA[`head` = #{head},]]></if>
+            <if test="sex != null " ><![CDATA[`sex` = #{sex},]]></if>
+            <if test="content != null  " ><![CDATA[`content` = #{content},]]></if>
+            <if test="images != null " ><![CDATA[`images` = #{images},]]></if>
+            <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
+            <if test="lon != null " ><![CDATA[`lon` = #{lon},]]></if>
+            <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
+            <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
+            <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
+        </set>
+    </sql>
+
+    <!-- 整体新增 -->
+    <insert id="add" parameterType="Comment">
+        <![CDATA[
+         INSERT INTO
+        ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[
+         ( topicid,uid,floor,replyfloor,replyuid,uname,head,sex,content,images,lat,lon,`create`,`update`,yn)  VALUES
+         (#{topicId},#{uid},#{floor},#{replyfloor},#{replyUid},#{uname},#{head},#{sex},#{content},#{images},#{lat},#{lon},#{create},#{update},#{yn})
+        ]]>
+    </insert>
+
+    <!-- 根据ID查询单个 -->
+    <select id="getById" parameterType="long" resultType="Comment">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <![CDATA[WHERE id = #{pk}]]>
+    </select>
+
+    <!-- 条件查询-->
+    <select id="getOneByWhere" parameterType="CommentParam" resultType="Comment">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+    <select id="getByWhere" parameterType="CommentParam" resultType="Comment">
+        <![CDATA[SELECT ]]>
+        <include refid="ALL_COLUMNS" />
+        <![CDATA[ FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+        <if test="orderBy != null " >
+            <![CDATA[ ORDER BY ${orderBy} ]]>
+        </if>
+        <if test="index != null " >
+            <![CDATA[ LIMIT #{index},#{pageNum} ]]>
+        </if>
+
+    </select>
+
+    <select id="getCount" parameterType="CommentParam" resultType="Integer">
+        <![CDATA[SELECT COUNT(1) FROM ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="WHERE_CLAUSE" />
+    </select>
+
+    <!-- 更新-->
+    <update id="update" parameterType="Comment" >
+        <![CDATA[UPDATE ]]>
+        <include refid="TABLE_NAME" />
+        <include refid="UPDATE_SET" />
+        <![CDATA[WHERE id = #{id}]]>
+    </update>
+
+</mapper>

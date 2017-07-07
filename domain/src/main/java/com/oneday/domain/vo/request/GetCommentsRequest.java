@@ -7,16 +7,14 @@ import com.oneday.domain.vo.BaseRequest;
  * @version 1.0
  *          2017/6/21 15:08
  */
-public class RecommendTopicRequest extends BaseRequest {
+public class GetCommentsRequest extends BaseRequest {
+    protected Long topicId;
     protected Double lat;
     protected Double lon;
     protected Integer distance;
+    protected Integer index;
     protected Integer pageNum;
     protected Integer currentPage;
-    /**
-     * 城市code
-     */
-    protected String cityCode;
 
     public Double getLat() {
         return lat;
@@ -58,11 +56,19 @@ public class RecommendTopicRequest extends BaseRequest {
         this.currentPage = currentPage;
     }
 
-    public String getCityCode() {
-        return cityCode;
+    public Long getTopicId() {
+        return topicId;
     }
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
+    public void setTopicId(Long topicId) {
+        this.topicId = topicId;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 }

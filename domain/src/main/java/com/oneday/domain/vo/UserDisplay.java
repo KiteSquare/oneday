@@ -47,6 +47,16 @@ public class UserDisplay implements Serializable {
     protected String ageDisplay;
 
     /**
+     * 生肖
+     */
+    protected String zodica;
+
+    /**
+     * 星座
+     */
+    protected String constellation;
+
+    /**
      *
      * 身高 cm
      */
@@ -371,5 +381,21 @@ public class UserDisplay implements Serializable {
 
     public void setRequirement(String requirement) {
         this.requirement = requirement;
+    }
+
+    public String getZodica() {
+        return zodica;
+    }
+
+    public void setZodica(String zodica) {
+        this.zodica = zodica;
+    }
+
+    public String getConstellation() {
+        return constellation;
+    }
+
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
     }
 }

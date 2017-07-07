@@ -1,5 +1,6 @@
 package com.oneday.domain.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,8 @@ import java.util.Date;
  * @version 1.0
  *          2017/6/21 11:44
  */
-public class Topic {
+public class Topic implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 帖子id
      */
@@ -49,6 +51,30 @@ public class Topic {
      * 性别
      */
     protected Integer sex;
+    /**
+     * 纬度
+     */
+    protected Double lat;
+    /**
+     * 经度
+     */
+    protected Double lon;
+    /**
+     * 经纬度hash
+     */
+    protected String geocode;
+    /**
+     * 城市c
+     */
+    protected String city;
+    /**
+     * 城市code
+     */
+    protected String cityCode;
+    /**
+     * 回复数
+     */
+    protected Integer  count;
     /**
      * 创建时间
      */
@@ -162,5 +188,53 @@ public class Topic {
 
     public void setHead(String head) {
         this.head = head;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public String getGeocode() {
+        return geocode;
+    }
+
+    public void setGeocode(String geocode) {
+        this.geocode = geocode;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

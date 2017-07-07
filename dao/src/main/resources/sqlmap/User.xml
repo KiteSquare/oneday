@@ -6,7 +6,7 @@
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,industry,education,income,height, weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn
+        id,`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height, weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -32,6 +32,7 @@
             <if test="city != null " ><![CDATA[AND `city` = #{city}]]></if>
             <if test="lon != null " ><![CDATA[AND `lon` = #{lon}]]></if>
             <if test="lat != null " ><![CDATA[AND `lat` = #{lat}]]></if>
+            <if test="geocode != null " ><![CDATA[AND `geocode` = #{geocode}]]></if>
             <if test="industry != null " ><![CDATA[AND `industry` = #{industry}]]></if>
             <if test="education != null " ><![CDATA[AND `education` = #{education}]]></if>
             <if test="income != null " ><![CDATA[AND `income` = #{income}]]></if>
@@ -55,6 +56,13 @@
                     #{id}
                 </foreach>
             </if>
+            <if test="adjacentGeocodes != null " >
+
+                <![CDATA[AND `geocode` IN ]]>
+                <foreach collection="adjacentGeocodes"  item="id" index="ind" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
         </where>
     </sql>
 
@@ -75,6 +83,7 @@
             <if test="city != null " ><![CDATA[`city` = #{city},]]></if>
             <if test="lon != null " ><![CDATA[`lon` = #{lon},]]></if>
             <if test="lat != null " ><![CDATA[`lat` = #{lat},]]></if>
+            <if test="geocode != null " ><![CDATA[`geocode` = #{geocode},]]></if>
             <if test="industry != null " ><![CDATA[`industry` = #{industry},]]></if>
             <if test="education != null " ><![CDATA[`education` = #{education},]]></if>
             <if test="income != null " ><![CDATA[`income` = #{income},]]></if>
@@ -99,10 +108,10 @@
     <insert id="add" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
-        (`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,industry,education,income,height,weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn)
+        (`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height,weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn)
         VALUES
         <![CDATA[
-        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{provinceCode},#{province},#{cityCode},#{city},#{lon},#{lat},#{industry},#{education},#{income},#{height},#{weight},#{marriage},#{head},#{detail},#{status},#{count},#{deviceId},#{images},#{requirement},#{level},#{create}
+        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{provinceCode},#{province},#{cityCode},#{city},#{lon},#{lat},#{geocode},#{industry},#{education},#{income},#{height},#{weight},#{marriage},#{head},#{detail},#{status},#{count},#{deviceId},#{images},#{requirement},#{level},#{create}
         ,#{update},#{yn})
         ]]>
     </insert>

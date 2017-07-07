@@ -1,5 +1,7 @@
 package com.oneday.common.util;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.util.regex.Pattern;
 
 /**
@@ -127,5 +129,18 @@ public class Validator {
      */
     public static boolean isIPAddr(String ipAddr) {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);
+    }
+
+    /**
+     * 处理textarea 里的换行符和空格
+     * @param str
+     * @return
+     */
+    public static String escapContentString(String str) {
+        if (str == null) return str;
+        str = StringEscapeUtils.escapeHtml(str);
+        str = str.replaceAll("\\n", "<br/>");
+        str = str.replaceAll(" ", "&nbsp");
+        return str;
     }
 }

@@ -2,6 +2,7 @@ package com.oneday.service;
 
 import com.oneday.domain.po.Topic;
 import com.oneday.domain.vo.Page;
+import com.oneday.domain.vo.TopicDetail;
 import com.oneday.domain.vo.request.CreateTopicRequest;
 import com.oneday.domain.vo.request.GetTopicRequest;
 import com.oneday.domain.vo.request.RecommendTopicRequest;
@@ -13,8 +14,8 @@ import com.oneday.domain.vo.request.RecommendTopicRequest;
  */
 public interface TopicService {
     Integer create(CreateTopicRequest request);
-    Topic get(GetTopicRequest request);
-    Page<Topic> recommend(RecommendTopicRequest request);
+    TopicDetail get(GetTopicRequest request);
+    Page<TopicDetail> recommend(RecommendTopicRequest request);
     Topic getByWhere(Topic param);
     Integer update(Topic topic);
 }

@@ -107,6 +107,10 @@ public class User implements Serializable {
      * 初始经度
      */
     protected Double lat;
+    /**
+     * 经纬度hash code
+     */
+    protected String geocode;
 
     /**
      * 行业
@@ -422,5 +426,13 @@ public class User implements Serializable {
 
     public void setRequirement(String requirement) {
         this.requirement = requirement;
+    }
+
+    public String getGeocode() {
+        return geocode;
+    }
+
+    public void setGeocode(String geocode) {
+        this.geocode = geocode;
     }
 }

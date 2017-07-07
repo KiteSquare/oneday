@@ -1,5 +1,6 @@
 package com.oneday.utils;
 
+import ch.hsr.geohash.GeoHash;
 import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.util.AESEncrypter;
 import com.oneday.constant.ErrorCodeEnum;
@@ -7,6 +8,8 @@ import com.oneday.domain.po.User;
 import com.oneday.domain.vo.AccessToken;
 import com.oneday.domain.vo.BaseUser;
 import com.oneday.exceptions.OndayException;
+import com.spatial4j.core.io.GeohashUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -70,9 +73,24 @@ public class AccessTokenUtil {
     }
 
     public static void main(String[] s) {
-        Calendar calendar = Calendar.getInstance();
-        System.out.println(calendar.getTime());
-        calendar.add(Calendar.SECOND, 5184000);
-        System.out.println(calendar.getTime());
+//        Calendar calendar = Calendar.getInstance();
+//        System.out.println(calendar.getTime());
+//        calendar.add(Calendar.SECOND, 5184000);
+//        System.out.println(calendar.getTime());
+
+//        System.out.println( StringEscapeUtils.escapeHtml("<font>chen磊  xing</font>"));
+//        StringEscapeUtils.escapeSql("select * from");
+        System.out.println(GeohashUtils.encodeLatLon( 30.548356,104.074397,12));
+
+// 移动设备经纬度
+        double lon = 104.074397, lat = 30.548356;
+        GeoHash geoHash = GeoHash.withCharacterPrecision(lat, lon, 10);
+// 当前
+        System.out.println(geoHash.toBase32());
+// N, NE, E, SE, S, SW, W, NW
+        GeoHash[] adjacent = geoHash.getAdjacent();
+        for (GeoHash hash : adjacent) {
+            System.out.println(hash.toBase32());
+        }
     }
 }

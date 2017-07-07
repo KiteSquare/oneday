@@ -41,10 +41,20 @@ public class Page<T> {
         this.count = count;
         this.index = (getCurrentPage() - 1) * this.count;
     }
+    public Page(Integer currentPage, Integer count, Integer index){
+        this.currentPage = currentPage;
+        this.count = count;
+        if (index == null) {
+            this.index = (getCurrentPage() - 1) * this.count;
+        } else {
+            this.index = index;
+        }
+
+    }
 
     public int getEndIndex()
     {
-        return getCurrentPage() * getCount();
+        return getIndex() + getCount();
     }
 
     public boolean isFirstPage()

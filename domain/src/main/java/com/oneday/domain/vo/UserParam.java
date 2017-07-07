@@ -16,6 +16,8 @@ public class UserParam extends User {
 
     protected Integer pageNum;
 
+    protected List<String> adjacentGeocodes;
+
     public List<Long> getBlackIds() {
         return blackIds;
     }
@@ -38,5 +40,13 @@ public class UserParam extends User {
 
     public void setPageNum(Integer pageNum) {
         this.pageNum = pageNum;
+    }
+
+    public List<String> getAdjacentGeocodes() {
+        return adjacentGeocodes;
+    }
+
+    public void setAdjacentGeocodes(List<String> adjacentGeocodes) {
+        this.adjacentGeocodes = adjacentGeocodes;
     }
 }

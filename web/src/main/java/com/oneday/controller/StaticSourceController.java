@@ -33,7 +33,7 @@ public class StaticSourceController extends BaseController {
     public  Result upload(HttpServletRequest request) {
         Result result = new Result();
         try {
-//            result.setData(localStaticResourceService.uploadUserImage(request));
+            result.setData(localStaticResourceService.upload(request));
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());

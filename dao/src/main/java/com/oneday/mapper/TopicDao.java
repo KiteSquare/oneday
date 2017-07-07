@@ -13,6 +13,7 @@ import java.util.List;
 public interface TopicDao {
     Integer add(Topic topic);
     Topic getById(Long id);
+    Topic getCountById(Long id);
     Topic getOneByWhere(TopicParam param);
     List<Topic> getByWhere(TopicParam param);
     Integer getCount(TopicParam topic);

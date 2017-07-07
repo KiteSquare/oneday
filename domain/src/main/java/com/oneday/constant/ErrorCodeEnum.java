@@ -36,6 +36,10 @@ public enum ErrorCodeEnum {
     STATE_ACCEPT_DUPLICATED_ERROR("0107", "重复接受。"),
 
     FILE_UPLOAD_FAIL("0201", "文件上传失败"),
+
+
+    //主题相关
+    TOPIC_NOT_FOUND("0301","主题不存在"),
     ;
 
     private String code;

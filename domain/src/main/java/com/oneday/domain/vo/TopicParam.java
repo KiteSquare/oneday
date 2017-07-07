@@ -3,6 +3,7 @@ package com.oneday.domain.vo;
 import com.oneday.domain.po.Topic;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -23,6 +24,8 @@ public class TopicParam extends Topic {
     protected Integer startWeight;
 
     protected Integer endWeight;
+
+    protected List<String> adjacentGeocodes;
 
     public Integer getIndex() {
         return index;
@@ -78,5 +81,13 @@ public class TopicParam extends Topic {
 
     public void setEndWeight(Integer endWeight) {
         this.endWeight = endWeight;
+    }
+
+    public List<String> getAdjacentGeocodes() {
+        return adjacentGeocodes;
+    }
+
+    public void setAdjacentGeocodes(List<String> adjacentGeocodes) {
+        this.adjacentGeocodes = adjacentGeocodes;
     }
 }

@@ -15,6 +15,7 @@ import com.oneday.exceptions.OndayException;
 import com.oneday.service.StaticResourceService;
 import com.oneday.service.UserService;
 import com.oneday.utils.*;
+import com.spatial4j.core.io.GeohashUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,12 @@ public class UserServiceImpl implements UserService {
                 u.setCreate(now);
                 u.setUpdate(now);
                 u.setCount(0);
+                if (SexEnum.isMale(u.getSex())) {
+                    u.setStatus(HunterEnum.NOTHING.getStatus());
+                } else {
+                    u.setStatus(ReceiverEnum.NOTHING.getStatus());
+                }
+
                 int addRes = userDao.add(u);
                 if (addRes <= 0) {
                     throw new OndayException(ErrorCodeEnum.USER_REGIST_FAIL.getCode(), "注册失败");
@@ -89,6 +96,11 @@ public class UserServiceImpl implements UserService {
                 Date now1 = new Date();
                 u1.setUpdate(now1);
                 u1.setSex(user.getSex());
+                if (SexEnum.isMale(user.getSex())) {
+                    u1.setStatus(HunterEnum.NOTHING.getStatus());
+                } else {
+                    u1.setStatus(ReceiverEnum.NOTHING.getStatus());
+                }
                 u1.setName(user.getName());
                 u1.setBirth(user.getBirth());
                 u1.setProvinceCode(user.getProvinceCode());
@@ -97,8 +109,12 @@ public class UserServiceImpl implements UserService {
                 u1.setCity(user.getCity());
                 u1.setLat(user.getLat());
                 u1.setLon(user.getLon());
+                if (user.getLat() != null && user.getLon() != null) {
+                    u1.setGeocode(GeohashUtils.encodeLatLon( user.getLat(),user.getLon(),ConfigConstant.USER_GEOCODE_LENGTH_MAX));
+                }
                 u1.setHead(user.getHead());
                 u1.setDeviceId(user.getDeviceId());
+
                 int updateRes = userDao.updateByPhone(u1);
                 if (updateRes <= 0) {
                     throw new OndayException(ErrorCodeEnum.USER_REGIST_FAIL.getCode(), "更新失败");
