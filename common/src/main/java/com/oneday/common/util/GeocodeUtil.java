@@ -3,7 +3,6 @@ package com.oneday.common.util;
 import ch.hsr.geohash.GeoHash;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
-import com.spatial4j.core.io.GeohashUtils;
 
 import java.util.ArrayList;
 import java.util.List;

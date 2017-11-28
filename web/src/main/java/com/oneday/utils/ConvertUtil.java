@@ -16,6 +16,7 @@ public class ConvertUtil {
         loginResponse.setType(requst.getType());
         loginResponse.setUrl(requst.getUrl());
         loginResponse.setSdktoken(ConfigConstant.SDKTOKEN);
+        loginResponse.setAppkey(PropertyPlaceholder.getProperty("netease.app.key"));
         return loginResponse;
     }
     public static LoginResponse convert(User requst) {

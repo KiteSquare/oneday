@@ -6,7 +6,7 @@
     <!-- wm_order 所有查询列 -->
     <sql id="ALL_COLUMNS">
         <![CDATA[
-        id,`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height, weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn
+        id,`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height, weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,imtoken,`create`,`update`,yn
         ]]>
     </sql>
     <sql id="TABLE_NAME">
@@ -47,6 +47,7 @@
             <if test="images != null " ><![CDATA[AND `images` = #{images}]]></if>
             <if test="requirement != null " ><![CDATA[AND `requirement` = #{requirement}]]></if>
             <if test="level != null " ><![CDATA[AND `level` = #{level}]]></if>
+            <if test="imtoken != null " ><![CDATA[AND `imtoken` = #{imtoken}]]></if>
             <if test="create != null " ><![CDATA[AND `create` = #{create}]]></if>
             <if test="update != null " ><![CDATA[AND `update` = #{update}]]></if>
             <if test="yn != null " ><![CDATA[AND `yn` = #{yn}]]></if>
@@ -98,6 +99,7 @@
             <if test="images != null " ><![CDATA[ `images` = #{images},]]></if>
             <if test="requirement != null " ><![CDATA[ `requirement` = #{requirement},]]></if>
             <if test="level != null " ><![CDATA[ `level` = #{level},]]></if>
+            <if test="imtoken != null " ><![CDATA[ `imtoken` = #{imtoken},]]></if>
             <if test="create != null " ><![CDATA[`create` = #{create},]]></if>
             <if test="update != null " ><![CDATA[`update` = #{update},]]></if>
             <if test="yn != null " ><![CDATA[`yn` = #{yn},]]></if>
@@ -108,10 +110,10 @@
     <insert id="add" parameterType="User" >
         INSERT INTO
         <include refid="TABLE_NAME" />
-        (`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height,weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,`create`,`update`,yn)
+        (`name`,password,sex,birth,phone,idcard,signature,provinceCode,province,cityCode,city,lon,lat,geocode,industry,education,income,height,weight,marriage,head,detail,status,`count`,deviceId,images,requirement,`level`,imtoken,`create`,`update`,yn)
         VALUES
         <![CDATA[
-        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{provinceCode},#{province},#{cityCode},#{city},#{lon},#{lat},#{geocode},#{industry},#{education},#{income},#{height},#{weight},#{marriage},#{head},#{detail},#{status},#{count},#{deviceId},#{images},#{requirement},#{level},#{create}
+        (#{name},#{password},#{sex},#{birth},#{phone},#{idcard},#{signature},#{provinceCode},#{province},#{cityCode},#{city},#{lon},#{lat},#{geocode},#{industry},#{education},#{income},#{height},#{weight},#{marriage},#{head},#{detail},#{status},#{count},#{deviceId},#{images},#{requirement},#{level},#{imtoken},#{create}
         ,#{update},#{yn})
         ]]>
     </insert>

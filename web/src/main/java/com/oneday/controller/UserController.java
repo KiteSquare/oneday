@@ -277,32 +277,30 @@ public class UserController {
         Result result = new Result();
         try {
             _checkLoginParam(user);
-            AccessToken token = null;
+            LoginResponse loginResponse = null;
             switch (user.getType()) {
                 case 1:
-                    token = userService.loginForAccessToken(user.getPhone(), user.getPassword());
-                    if (token == null) {
+                    loginResponse = userService.loginForAccessToken(user.getPhone(), user.getPassword());
+                    if (loginResponse == null) {
                         throw new OndayException(ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getCode(),
                                 ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getValue());
                     }
                     break;
 
                 case 2:
-                    token = userService.loginForAccessTokenWithCode(user.getPhone(), user.getCode());
-                    if (token == null) {
+                    loginResponse = userService.loginForAccessTokenWithCode(user.getPhone(), user.getCode());
+                    if (loginResponse == null) {
                         throw new OndayException(ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getCode(),
                                 ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getValue());
                     }
                     break;
                 default:
-
             }
-            if (token == null) {
+            if (loginResponse == null) {
                 throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "登录失败");
             }
-
-            LoginResponse loginResponse = ConvertUtil.convert(user);
-            loginResponse.setAccessToken(token.getAccessToken());
+            loginResponse.setType(user.getType());
+            loginResponse.setUrl(user.getUrl());
             result.setData(loginResponse);
         } catch (OndayException e) {
             result.setCode(e.getCode());

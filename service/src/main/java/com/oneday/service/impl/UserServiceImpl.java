@@ -12,6 +12,7 @@ import com.oneday.domain.po.User;
 import com.oneday.domain.vo.*;
 import com.oneday.domain.vo.response.LoginResponse;
 import com.oneday.exceptions.OndayException;
+import com.oneday.service.IMService;
 import com.oneday.service.StaticResourceService;
 import com.oneday.service.UserService;
 import com.oneday.utils.*;
@@ -37,6 +38,8 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
     @Resource
     HunterReceiverDao hunterReceiverDao;
+    @Resource
+    IMService imService;
     @Resource
     private StaticResourceService localStaticResourceService;
     public Integer add(User user) {
@@ -115,6 +118,19 @@ public class UserServiceImpl implements UserService {
                 u1.setHead(user.getHead());
                 u1.setDeviceId(user.getDeviceId());
 
+
+                boolean needIM = false;
+                if (needIM) {
+                    try {
+                        JSONObject imresult = imService.create(user);
+                        JSONObject info = imresult.getJSONObject("info");
+                        if (info != null ) {
+                            u1.setImtoken(info.getString("token"));
+                        }
+                    } catch (Throwable e) {
+                        logger.warn(e.getMessage(), e);
+                    }
+                }
                 int updateRes = userDao.updateByPhone(u1);
                 if (updateRes <= 0) {
                     throw new OndayException(ErrorCodeEnum.USER_REGIST_FAIL.getCode(), "更新失败");
@@ -360,7 +376,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public AccessToken loginForAccessToken(String phone, String password) {
+    public LoginResponse loginForAccessToken(String phone, String password) {
         User user = userDao.getByPhone(phone);
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), ErrorCodeEnum.USER_LOGIN_FAIL.getValue());
@@ -369,6 +385,7 @@ public class UserServiceImpl implements UserService {
             if (!MD5Util.verify(password, user.getPassword())) {
                 throw new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), ErrorCodeEnum.USER_LOGIN_FAIL.getValue());
             }
+
         } catch (Throwable e) {
             throw  new OndayException(ErrorCodeEnum.USER_LOGIN_FAIL.getCode(), "密码错误",e);
         }
@@ -378,7 +395,11 @@ public class UserServiceImpl implements UserService {
             logger.error(String.format("Encrypt user info for accessToken fail, uid[%s]", user.getId()));
             throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "系统异常");
         }
-        return accessToken;
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setSdktoken(user.getImtoken());
+        loginResponse.setAppkey(PropertyPlaceholder.getProperty("netease.app.key"));
+        loginResponse.setAccessToken(accessToken.getAccessToken());
+        return loginResponse;
     }
 
     /**
@@ -387,7 +408,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public AccessToken loginForAccessTokenWithCode(String phone, String code) {
+    public LoginResponse loginForAccessTokenWithCode(String phone, String code) {
         return null;
     }
 

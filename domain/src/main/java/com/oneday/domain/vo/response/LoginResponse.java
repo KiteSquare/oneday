@@ -14,6 +14,7 @@ public class LoginResponse implements Serializable {
     private String url;
     private String sdktoken;
     private String accessToken;
+    private String appkey;
     /**
      * 登录类型
      * 1 为phone+password
@@ -52,5 +53,13 @@ public class LoginResponse implements Serializable {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getAppkey() {
+        return appkey;
+    }
+
+    public void setAppkey(String appkey) {
+        this.appkey = appkey;
     }
 }

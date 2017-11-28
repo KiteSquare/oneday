@@ -13,7 +13,7 @@
 	<context:component-scan base-package="com.oneday.service" />
 	<bean id="propertyConfigurer" class="com.oneday.utils.PropertyPlaceholder">
 		<property name="location">
-			<value>classpath:${path.system.properties}</value>
+			<value>classpath:development_system.properties</value>
 		</property>
 	</bean>
 </beans>

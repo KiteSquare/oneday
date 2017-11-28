@@ -37,9 +37,10 @@ public enum ErrorCodeEnum {
 
     FILE_UPLOAD_FAIL("0201", "文件上传失败"),
 
-
     //主题相关
     TOPIC_NOT_FOUND("0301","主题不存在"),
+    //第三方服务相关
+    THIRD_SERVICE_FAIL("0401", "第三方服务调用失败")
     ;
 
     private String code;

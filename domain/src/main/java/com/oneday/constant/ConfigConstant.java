@@ -12,6 +12,12 @@ public class ConfigConstant {
     public static final Integer PAGE_NUM_DEFAULT = 20;//默认每页条数
     public static final Integer PAGE_NUM_MAX = 1000;//每页数量最大值
     public static final Integer PAGE_MAX = 2000;//页码查询最大值
+    public static final Integer PAGE_INDEX_MAX = 5000;//最大条数
     public static final Integer GEOCODE_LENGTH_MAX = 5;//geohash 的最大长度
     public static final Integer USER_GEOCODE_LENGTH_MAX = 4;//geohash 的最大长度
+    public static final Integer IM_CONNCET_TIMEOUT = 1000;
+    public static final Integer IM_CONNCET_REQUEST_TIMEOUT = 1000;
+    public static final Integer IM_SOCKET_TIMEOUT = 1000;
+
+
 }

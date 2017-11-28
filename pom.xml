@@ -83,6 +83,13 @@
                 <version>${spring.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <!-- mybatis核心包 -->
             <dependency>
                 <groupId>org.mybatis</groupId>
@@ -134,6 +141,12 @@
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
                 <version>1.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.2</version>
             </dependency>
 
             <dependency>

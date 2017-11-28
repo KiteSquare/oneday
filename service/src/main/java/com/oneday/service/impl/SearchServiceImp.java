@@ -9,9 +9,11 @@ import com.oneday.domain.vo.BaseUser;
 import com.oneday.domain.vo.Location;
 import com.oneday.domain.vo.Page;
 import com.oneday.domain.vo.UserParam;
+import com.oneday.domain.vo.request.SearchRequest;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.SearchService;
 import com.oneday.service.UserService;
+import com.oneday.utils.VoConvertor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -81,5 +83,24 @@ public class SearchServiceImp implements SearchService {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户未登录");
         }
         return nearBy(distance, baseUser);
+    }
+
+    @Override
+    public Page<User> search(SearchRequest request) {
+        BaseUser baseUser = userService.getUser(request.getAccessToken());
+        List<Long> relatedUids = null;
+        if (baseUser != null) {
+            relatedUids = hunterReceiverDao.getAllRelatedUids(baseUser.getId(), SexEnum.isMale(baseUser.getSex()));
+        }
+        UserParam userParam = new UserParam();
+        if (relatedUids != null && !relatedUids.isEmpty()) {
+            userParam.setBlackIds(relatedUids);
+        }
+        VoConvertor.convertSearchToParam(request, userParam);
+        Page<User> res = new Page<>(request.getCurrentPage(), request.getPageNum(), request.getIndex());
+        userParam.setIndex(res.getIndex());
+        userParam.setPageNum(res.getCount());
+
+        return null;
     }
 }

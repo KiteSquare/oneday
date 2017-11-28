@@ -14,6 +14,7 @@ import com.oneday.domain.po.User;
 import com.oneday.domain.vo.*;
 import com.oneday.domain.vo.request.AddCommentRequest;
 import com.oneday.domain.vo.request.CreateTopicRequest;
+import com.oneday.domain.vo.request.SearchRequest;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import org.apache.commons.lang.StringUtils;
@@ -281,6 +282,26 @@ public class VoConvertor {
             }
         }
         return commentDetail;
+    }
+
+    public static UserParam convertSearchToParam(SearchRequest request, UserParam param) {
+        if (param == null) {
+            param = new UserParam();
+        }
+        if (request == null) {
+            return param;
+        }
+        if (request.getSex() != null) {
+            param.setSex(request.getSex());
+        }
+
+        param.setCityCode(request.getCityCode());
+        param.setProvinceCode(request.getProvinceCode());
+        param.setIncome(request.getIncome());
+        param.setEducation(request.getEducation());
+        param.setMarriage(request.getMarriage());
+
+        return param;
     }
 
 }

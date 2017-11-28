@@ -98,14 +98,14 @@ public interface UserService {
      * @param password
      * @return
      */
-    AccessToken loginForAccessToken(String phone, String password);
+    LoginResponse loginForAccessToken(String phone, String password);
     /**
      *
      * @param phone
      * @param code
      * @return
      */
-    AccessToken loginForAccessTokenWithCode(String phone, String code);
+    LoginResponse loginForAccessTokenWithCode(String phone, String code);
 
     /**
      * 从http请求头里获取用户信息

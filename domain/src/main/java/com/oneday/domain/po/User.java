@@ -162,6 +162,10 @@ public class User implements Serializable {
      */
     protected Integer level;
     /**
+     * 聊天token
+     */
+    protected String imtoken;
+    /**
      * 创建时间
      */
     protected Date create;
@@ -434,5 +438,13 @@ public class User implements Serializable {
 
     public void setGeocode(String geocode) {
         this.geocode = geocode;
+    }
+
+    public String getImtoken() {
+        return imtoken;
+    }
+
+    public void setImtoken(String imtoken) {
+        this.imtoken = imtoken;
     }
 }
