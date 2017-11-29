@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>$Title$</title>
+    <style>
+      html, body {
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+        height: 100%;
+        position: relative;
+      }
+
+      .running-man {
+        width: 20%;
+        position: absolute;
+        left: -5%;
+        top:30%;
+      }
+
+      .rush{
+        animation: gogogo 45s linear 1;
+      }
+
+      @keyframes gogogo {
+        0% {
+          left: -5%;
+          top:30%;
+          transform: rotate(20deg);
+        }
+        5% {
+          left: 40%;
+          transform: rotate(20deg) scale(1.3,1.3);
+        }
+        10% {
+          left: 50%;
+          transform: rotate(10deg) scale(1.4,1.4);
+        }
+        13% {
+          left: 65%;
+          transform: rotate(0deg) scale(1.3,1.3);
+        }
+        16% {
+          left: 85%;
+          top:30%;
+          transform: rotate(0deg);
+        }
+        17% {
+          left: 85%;
+          transform: rotate(-90deg);
+        }
+        23% {
+          left: 85%;
+          top:-5%;
+          transform: rotate(-90deg);
+        }
+        24% {
+          transform: rotate(-180deg);
+        }
+        31% {
+          transform: rotate(-180deg) scale(1.4,1.4);
+          top:-2%;
+        }
+        38% {
+          left: -5%;
+          top:-5%;
+          transform: rotate(-180deg);
+        }
+        39% {
+          transform: rotate(-270deg);
+        }
+        51% {
+          left: -5%;
+          top:75%;
+          transform: rotate(-270deg);
+        }
+        52% {
+          left: -5%;
+          transform: rotate(-340deg);
+        }
+        60% {
+          transform: rotate(-350deg) scale(1.4,1.4);
+          top:72%;
+        }
+        67% {
+          transform: rotate(-360deg);
+          left:85%;
+          top:75%;
+        }
+        68% {
+          transform: rotate(-450deg);
+        }
+        79% {
+          transform: rotate(-450deg);
+          top:-5%;
+          left:85%;
+        }
+        80% {
+          transform: rotate(-540deg);
+        }
+        87% {
+          transform: rotate(-540deg) scale(1.4,1.4);
+          top:-2%;
+        }
+        94% {
+          transform: rotate(-540deg);
+          top:-5%;
+          left:-5%;
+        }
+        95% {
+          transform: rotate(-630deg);
+        }
+        99% {
+          left: -5%;
+          top:30%;
+          transform: rotate(-630deg);
+        }
+        100% {
+          transform: rotate(-720deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+  <div style="height: 100%;background-color: #d2d2d2;">
+    <div id="runningMan" class="running-man rush">
+      <div style="text-align: center;position:absolute;top:10%;width:100%;margin-left:-10px">System</div>
+      <img src="img/man.gif" style="width:100%;">
+    </div>
+  </div>
+
+  <script type="text/javascript">
+      document.title="Look~";
+      bindEvent();
+      function bindEvent(){
+          var runningMan=document.getElementById("runningMan");
+          runningMan.addEventListener("webkitAnimationEnd",function(){
+              this.classList.remove("rush");
+              this.classList.add("rush");
+              runningMan.parentNode.innerHTML=runningMan.parentNode.innerHTML;
+              bindEvent();
+          })
+      };
+  </script>
+  </body>
+</html>
