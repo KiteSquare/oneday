@@ -1,5 +1,6 @@
 package com.oneday.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.common.util.DateUtil;
 import com.oneday.constant.ConfigConstant;
@@ -12,6 +13,7 @@ import com.oneday.domain.vo.request.RecommendRequest;
 import com.oneday.domain.vo.request.SearchRequest;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.SearchService;
+import com.oneday.utils.LogHelper;
 import com.oneday.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -29,7 +31,6 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/oneday/search")
 public class SearchController extends BaseController {
-    private static Logger logger = LoggerFactory.getLogger(SearchController.class);
     @Resource
     private SearchService searchService;
     /**
@@ -54,12 +55,14 @@ public class SearchController extends BaseController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("recommend failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("recommend failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("recommend failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("recommend failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/search/recommend, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
     @RequestMapping(value = "/search", method = {RequestMethod.GET,RequestMethod.POST })
@@ -73,12 +76,14 @@ public class SearchController extends BaseController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("search failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("search failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("search failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("search failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/search/search, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
 

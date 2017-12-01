@@ -1,5 +1,6 @@
 package com.oneday.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.common.util.DateUtil;
 import com.oneday.common.util.Uploader;
@@ -55,12 +56,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/regist, request %s, result : %s", JSONObject.toJSONString(userVo), JSONObject.toJSONString(result)));
+
         return result;
     }
     protected boolean _checkRegistParam(UserRegistVo request) {
@@ -173,12 +176,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/update, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -207,12 +212,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/verifyRegistCode, request %s, result : %s", JSONObject.toJSONString(userVo), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -234,12 +241,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("sendCode failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("sendCode failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/sendCode, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -257,12 +266,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("sendCode failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("sendCode failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("sendCode failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/getUserInfo, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -305,13 +316,15 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("login failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("login failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(e.getMessage());
             e.printStackTrace();
-            logger.info(String.format("login failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("login failed, %s", e.getMessage()), e);
         }
+        user.setPassword(null);
+        LogHelper.USER_LOG.info(String.format("oneday/user/login, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
         return result;
     }
     private void _checkLoginParam(LoginUserVo user) {
@@ -360,12 +373,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("get user info failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("get user info failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("get user info failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("get user info failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/get, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -381,12 +396,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/uploadHead, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
     @RequestMapping(value = "/uploadUserImg", method = {RequestMethod.GET,RequestMethod.POST })
@@ -398,12 +415,14 @@ public class UserController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("upload failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("upload failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("oneday/user/uploadUserImg, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+
         return result;
     }
 }

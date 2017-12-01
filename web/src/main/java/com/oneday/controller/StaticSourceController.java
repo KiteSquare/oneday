@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(value = "/sr")
 public class StaticSourceController extends BaseController {
-    private static final Logger logger = LogHelper.SR_LOG;
     @Resource
     private StaticResourceService localStaticResourceService;
 
@@ -37,11 +36,11 @@ public class StaticSourceController extends BaseController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("upload failed, %s", e.getMessage()), e);
+            LogHelper.SR_LOG.warn(String.format("upload failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.SR_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
         return result;
     }
