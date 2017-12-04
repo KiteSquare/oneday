@@ -2,19 +2,35 @@ package com.oneday.common.domain;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Map;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
  * @version 1.0 2016/9/13 17:25
  */
 public class Result {
+    public static final String STATUS_OK = "0";
+    public static final String CODE_OK = "0";
+
+    public static final String STATUS_EXCEPTION="-1";
+    public static final String STATUS_NOTLOGIN="-2";
+
+    private String status;
     private String code;
     private String message;
     private Object data;
-    public Result() {
-        this("0", "成功!");
+
+    private Result() {
     }
-    public Result(String code, String message) {
+
+    private Result(String code) {
+        this.status = STATUS_OK;
+        this.code = code;
+        this.message="操作成功";
+    }
+
+    private Result(String code, String message) {
+        this.status = STATUS_OK;
         this.code = code;
         this.message = message;
     }
@@ -43,45 +59,55 @@ public class Result {
         this.data = data;
     }
 
-    public static Result create(String code, String result) {
-        return new Result(code, result);
+    /**
+     * 构造带提示消息的响应结果
+     * 适用于前段需要显示后端提供的message的场景
+     * @param data
+     * @param message
+     * @return
+     */
+    public static Result success(Object data,String message) {
+        Result result = new Result(CODE_OK,message);
+        result.setData(data);
+        return result;
     }
 
-    public static Result success() {
-        return success("操作成功!");
+    public static Result success(Object data) {
+        Result result = new Result(CODE_OK);
+        result.setData(data);
+        return result;
     }
 
-    public static Result success(String msg) {
-        return create("success", msg);
+    /**
+     * 业务层失败
+     *
+     * @param code
+     * @param message
+     * @return
+     */
+    public static Result bizFailure(String code, String message) {
+        return new Result(code, message);
     }
 
-    public static Result failure() {
-        return failure("操作失败!");
+    /**
+     * 系统层失败
+     *
+     * @param status
+     * @param message
+     * @return
+     */
+    public static Result systemFailure(String status, String message) {
+        Result result=new Result();
+        result.setStatus(status);
+        result.setMessage(message);
+        return result;
     }
 
-    public static Result failure(String msg) {
-        return create("failure", msg);
+    public String getStatus() {
+        return status;
     }
 
-    public static Result failure(Exception ex) {
-        return failure("系统异常:" + ex.getMessage(), ex);
-    }
-
-    public static Result failure(String message, Exception ex) {
-        if(ex == null) {
-            return failure();
-        } else {
-            Result msg = failure(message);
-
-            try {
-                StringWriter e = new StringWriter();
-                ex.printStackTrace(new PrintWriter(e));
-                msg.setData(e.toString());
-            } catch (Exception var4) {
-                ;
-            }
-
-            return msg;
-        }
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

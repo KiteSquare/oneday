@@ -24,4 +24,5 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
 	<mvc:resources mapping="/upload/**" location="file:${local.path}/"></mvc:resources>
+	<bean id="commonExceptionResover" class="com.oneday.filter.CommonExceptionResover"></bean>
 </beans>
