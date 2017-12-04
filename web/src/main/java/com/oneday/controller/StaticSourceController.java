@@ -29,19 +29,8 @@ public class StaticSourceController extends BaseController {
 
     @RequestMapping(value = "/upload", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public  Result upload(HttpServletRequest request) {
-        Result result = new Result();
-        try {
-            result.setData(localStaticResourceService.upload(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.SR_LOG.warn(String.format("upload failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.SR_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
+    public  Object upload(HttpServletRequest request) {
+        Object result = Result.success(localStaticResourceService.upload(request));
         return result;
     }
 }

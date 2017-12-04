@@ -31,7 +31,6 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/topic")
 public class TopicController extends BaseController {
-    private static Logger logger = LogHelper.TOPIC_LOG;
     @Resource
     private TopicService topicService;
 
@@ -42,23 +41,11 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result create(@RequestBody CreateTopicRequest request) {
-        Result result = new Result();
-        String log = String.format("/topic/create request: %s ", JSONObject.toJSONString(request));
-        try {
-            _checkParam(request);
-            topicService.create(request);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.TOPIC_LOG.warn(String.format("create topic failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.TOPIC_LOG.error(String.format("create topic failed, %s", e.getMessage()), e);
-        }
-        log += String.format(" result: %s", JSONObject.toJSONString(result));
-        LogHelper.TOPIC_LOG.info(log);
+    public Object create(@RequestBody CreateTopicRequest request) {
+        LogHelper.TOPIC_LOG.info(String.format("/topic/create request: %s ", JSONObject.toJSONString(request)));
+        _checkParam(request);
+        Object result = Result.success(topicService.create(request));
+        LogHelper.TOPIC_LOG.info(String.format("/topic/create result: %s ", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -101,23 +88,11 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/get", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result get(@RequestBody GetTopicRequest request) {
-        Result result = new Result();
-        String log = String.format("/topic/get request: %s ", JSONObject.toJSONString(request));
-        try {
-            _checkParam(request);
-            result.setData(topicService.get(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.TOPIC_LOG.warn(String.format("get topic failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.TOPIC_LOG.error(String.format("get topic failed, %s", e.getMessage()), e);
-        }
-        log += String.format(" result: %s", JSONObject.toJSONString(result));
-        LogHelper.TOPIC_LOG.info(log);
+    public Object get(@RequestBody GetTopicRequest request) {
+        LogHelper.TOPIC_LOG.info(String.format("/topic/get request: %s ", JSONObject.toJSONString(request)));
+        _checkParam(request);
+        Object result = Result.success(topicService.get(request));
+        LogHelper.TOPIC_LOG.info(String.format("/topic/get result: %s ", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -139,23 +114,12 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST }, consumes = "application/json")
     @ResponseBody
-    public Result recommend(@RequestBody RecommendTopicRequest request) {
-        Result result = new Result();
-        String log = String.format("/topic/recommend request: %s ", JSONObject.toJSONString(request));
-        try {
-            _checkParam(request);
-            result.setData(topicService.recommend(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.TOPIC_LOG.warn(String.format("recommend topic failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.TOPIC_LOG.error(String.format("recommend topic failed, %s", e.getMessage()), e);
-        }
-        log += String.format(" result: %s", JSONObject.toJSONString(result));
-        LogHelper.TOPIC_LOG.info(log);
+    public Object recommend(@RequestBody RecommendTopicRequest request) {
+        LogHelper.TOPIC_LOG.info(String.format("/topic/recommend request: %s ", JSONObject.toJSONString(request)));
+        _checkParam(request);
+
+        Object result = Result.success(topicService.recommend(request));
+        LogHelper.TOPIC_LOG.info(String.format("/topic/recommend result: %s ", JSONObject.toJSONString(result)));
         return result;
     }
 

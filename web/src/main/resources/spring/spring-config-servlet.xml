@@ -29,6 +29,12 @@
 		<property name="ignore">
 			<list>
 				<value>/oneday/user/login</value>
+				<value>/oneday/user/regist</value>
+				<value>/topic/recommend</value>
+				<value>/oneday/user/verifyRegistCode</value>
+				<value>/comment/add</value>
+				<value>/topic/get</value>
+				<value>/comment/get</value>
 			</list>
 		</property>
 	</bean>
