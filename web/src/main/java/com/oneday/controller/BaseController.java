@@ -1,5 +1,7 @@
 package com.oneday.controller;
 
+import com.oneday.constant.HttpKeyEnum;
+import com.oneday.domain.vo.BaseUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -18,6 +20,10 @@ public abstract class BaseController {
     protected HttpServletRequest getRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return request;
+    }
+
+    public BaseUser getUser(HttpServletRequest request){
+        return (BaseUser)request.getAttribute(HttpKeyEnum.REQUESTATTIBUTERUSER.getKey());
     }
 
     protected String getRemoteIp() {

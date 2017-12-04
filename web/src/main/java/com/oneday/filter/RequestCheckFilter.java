@@ -14,8 +14,12 @@ import com.alibaba.fastjson.JSON;
 import com.oneday.common.domain.Result;
 import com.oneday.common.util.ResponseUtil;
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.constant.HttpKeyEnum;
+import com.oneday.constant.StatusEnum;
+import com.oneday.domain.vo.BaseUser;
 import com.oneday.exceptions.OndayException;
 import com.oneday.exceptions.OnedaySystmException;
+import com.oneday.utils.AccessTokenUtil;
 import com.oneday.utils.LogHelper;
 import org.slf4j.Logger;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -26,6 +30,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * Created by chender on 2017/12/04.
  */
 public final class RequestCheckFilter extends OncePerRequestFilter {
+
 
     private static final Logger errorLogger = LogHelper.ERROR_LOG;
 
@@ -72,15 +77,15 @@ public final class RequestCheckFilter extends OncePerRequestFilter {
         } catch (OnedaySystmException e) {
             Result result = Result.systemFailure(e.getCode(), e.getMessage());
             ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            errorLogger.error(e.getMessage(),e);
+            errorLogger.error(e.getMessage(), e);
         } catch (OndayException e) {
             Result result = Result.bizFailure(e.getCode(), e.getMessage());
             ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            warnLogger.warn(e.getMessage(),e);
+            warnLogger.warn(e.getMessage(), e);
         } catch (Exception e) {
             Result result = Result.bizFailure(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
             ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            errorLogger.error("未知异常",e);
+            errorLogger.error("未知异常", e);
         }
     }
 
@@ -91,7 +96,18 @@ public final class RequestCheckFilter extends OncePerRequestFilter {
      * @return 校验通过时返回null，不通过时返回对应的Result
      */
     private Result checkRequest(HttpServletRequest request) {
-        return null;//TODO
+        //检查是否登录
+        String token = request.getHeader(HttpKeyEnum.HTTPHEADTOKEN.getKey());
+        if (token == null) {
+            return Result.systemFailure(StatusEnum.NEEDLOGIN.getCode(), ErrorCodeEnum.USER_NOT_LOGIN_ERROR.getValue());
+        }
+        try {
+            BaseUser user = AccessTokenUtil.decryptAccessToken(token);
+            request.setAttribute(HttpKeyEnum.REQUESTATTIBUTERUSER.getKey(), user);
+        } catch (OndayException e) {
+            return Result.systemFailure(StatusEnum.NEEDLOGIN.getCode(), e.getMessage());
+        }
+        return null;
     }
 
     public List<String> getIgnore() {
