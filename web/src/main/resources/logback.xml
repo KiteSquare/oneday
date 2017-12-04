@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="false">
+<configuration scan="false" debug="true">
 
 	<!-- <property name="outPattern" value="[%p] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t][%c{0}] [%C:%L] - %m %n" /> -->
 	<!-- 缩短日志格式 -->
@@ -91,16 +91,8 @@
 		<appender-ref ref="STATIC_RESOURCE_LOG_FILE" />
 	</logger>
 
-
-	<logger name="com.oneday" additivity="false">
-		<level value="debug" />
-		<appender-ref ref="FILE" />
-		<appender-ref ref="CONSOLE" />
-	</logger>
 	<!-- 日志级别 -->
 	<root level="${log.level}">
-		<level value="error" />
-		<level value="info" />
 		<if condition='"${devMode}".equals("true")'>
 			<then>
 				<appender-ref ref="CONSOLE" />

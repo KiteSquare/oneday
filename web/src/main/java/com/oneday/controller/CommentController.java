@@ -46,14 +46,14 @@ public class CommentController extends BaseController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("add comment to topic failed, %s", e.getMessage()), e);
+            LogHelper.TOPIC_LOG.warn(String.format("add comment to topic failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("add comment to topic failed, %s", e.getMessage()), e);
+            LogHelper.TOPIC_LOG.error(String.format("add comment to topic failed, %s", e.getMessage()), e);
         }
         log += String.format(" result: %s", JSONObject.toJSONString(result));
-        logger.info(log);
+        LogHelper.TOPIC_LOG.info(log);
         return result;
     }
     protected boolean _checkParam(AddCommentRequest request) {
@@ -83,14 +83,14 @@ public class CommentController extends BaseController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("get comment of topic failed, %s", e.getMessage()), e);
+            LogHelper.TOPIC_LOG.warn(String.format("get comment of topic failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            logger.info(String.format("get comment of topic failed, %s", e.getMessage()), e);
+            LogHelper.TOPIC_LOG.error(String.format("get comment of topic failed, %s", e.getMessage()), e);
         }
         log += String.format(" result: %s", JSONObject.toJSONString(result));
-        logger.info(log);
+        LogHelper.TOPIC_LOG.info(log);
         return result;
     }
 

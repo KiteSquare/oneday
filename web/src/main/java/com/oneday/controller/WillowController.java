@@ -8,9 +8,8 @@ import com.oneday.domain.vo.UserInfo;
 import com.oneday.domain.vo.request.*;
 import com.oneday.exceptions.OndayException;
 import com.oneday.service.AssociateService;
+import com.oneday.utils.LogHelper;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,6 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/oneday/willow")
 public class WillowController {
-    private static Logger logger = LoggerFactory.getLogger(WillowController.class);
     @Resource
     AssociateService associateService;
 
@@ -45,16 +43,18 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (DuplicateKeyException e) {
             result.setCode(ErrorCodeEnum.STATE_ERROR.getCode());
             result.setMessage("已经发送过啦~~");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("willow/send, request %s, result : %s", JSONObject.toJSONString(sendRequest), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -74,12 +74,13 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("willow/accept, request %s, result : %s", JSONObject.toJSONString(acceptRequest), JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -99,12 +100,13 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("reject failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("reject failed, %s", e.getMessage()), e);
         }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("reject failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("reject failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("willow/reject, request %s, result : %s", JSONObject.toJSONString(rejectRequest), JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -123,12 +125,14 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("admit failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("admit failed, %s", e.getMessage()), e);
         }  catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("admit failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("admit failed, %s", e.getMessage()), e);
         }
+        LogHelper.USER_LOG.info(String.format("willow/admit, request %s, result : %s", JSONObject.toJSONString(admitRequest), JSONObject.toJSONString(result)));
+
         return result;
     }
 
@@ -142,13 +146,13 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
-
+        LogHelper.USER_LOG.info(String.format("willow/history, id %s, result : %s", id, JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -181,13 +185,13 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
-        logger.info(String.format("willow/candidates, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(result)));
+        LogHelper.USER_LOG.info(String.format("willow/candidates, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -214,13 +218,13 @@ public class WillowController {
         } catch (OndayException e) {
             result.setCode(e.getCode());
             result.setMessage(e.getMessage());
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
         } catch (Throwable e) {
             result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
             result.setMessage("操作失败");
-            logger.info(String.format("regist failed, %s", e.getMessage()), e);
+            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
         }
-
+        LogHelper.USER_LOG.info(String.format("willow/relation, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(result)));
         return result;
     }
 
