@@ -5,7 +5,7 @@ package com.oneday.constant;
  * @author fanyongpeng [15104723@qq.com]
  * @version 1.0 2017/2/8 16:12
  */
-public enum  EducationEnum {
+public  enum  EducationEnum {
     OTHER(0,"小学以下"),
     PRIMARYSCHOOL(1,"小学"),
     MIDDLESCHOOL(2, "初中"),

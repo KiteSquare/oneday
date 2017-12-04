@@ -12,24 +12,23 @@ public class Result {
     public static final String STATUS_OK = "0";
     public static final String CODE_OK = "0";
 
-    public static final String STATUS_EXCEPTION="-1";
-    public static final String STATUS_NOTLOGIN="-2";
-
     private String status;
     private String code;
     private String message;
     private Object data;
 
-    private Result() {
+    public Result() {
+        this.status = STATUS_OK;
+        this.code = CODE_OK;
     }
 
-    private Result(String code) {
+    public Result(String code) {
         this.status = STATUS_OK;
         this.code = code;
         this.message="操作成功";
     }
 
-    private Result(String code, String message) {
+    public Result(String code, String message) {
         this.status = STATUS_OK;
         this.code = code;
         this.message = message;

@@ -16,9 +16,9 @@
 	<bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<!-- 数据库基本信息配置 -->
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:MySql://127.0.0.1:3307/fanyongpeng?characterEncoding=UTF-8" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="url" value="jdbc:MySql://114.55.9.252:3306/oneday?characterEncoding=UTF-8" />
+		<property name="username" value="oneday" />
+		<property name="password" value="oneday" />
 		<!-- 初始化连接数量 -->
 		<property name="initialSize" value="0" />
 		<!-- 最大并发连接数 -->

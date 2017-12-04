@@ -91,6 +91,49 @@
 		<appender-ref ref="STATIC_RESOURCE_LOG_FILE" />
 	</logger>
 
+
+	<appender name="WARN_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/warn.log</file>
+		<prudent>false</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/warn.log%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="WARN" level="${log.level}" additivity="false">
+		<if condition='"${devMode}".equals("true")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		<appender-ref ref="WARN_LOG_FILE" />
+	</logger>
+
+	<appender name="ERROR_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/error.log</file>
+		<prudent>false</prudent>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/error.log%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="ERROR" level="${log.level}" additivity="false">
+		<if condition='"${devMode}".equals("true")'>
+			<then>
+				<appender-ref ref="CONSOLE" />
+			</then>
+		</if>
+		<appender-ref ref="ERROR_LOG_FILE" />
+	</logger>
+
 	<!-- 日志级别 -->
 	<root level="${log.level}">
 		<if condition='"${devMode}".equals("true")'>
