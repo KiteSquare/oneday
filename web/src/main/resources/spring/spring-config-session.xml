@@ -29,6 +29,7 @@
         <property name="ignore">
             <list>
                 <value>/oneday/user/login</value>
+                <value>/oneday/user/session</value>
                 <value>/oneday/user/regist</value>
                 <value>/topic/recommend</value>
                 <value>/oneday/user/verifyRegistCode</value>
