@@ -80,7 +80,8 @@ public final class RequestCheckFilter extends SessionRepositoryFilter {
      */
     private void exceptionResove(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
         try {
-            String url = request.getRequestURI();
+            String cp=request.getContextPath();
+            String url = request.getRequestURI().substring(cp.length());
             if (ignoreMap.containsKey(url)) {
                 filterChain.doFilter(request,response);
                 return;
