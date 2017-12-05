@@ -264,17 +264,17 @@ public class UserController  extends BaseController  {
 
     /**
      * 创建会话
+     * @param accessToken
      * @param request
      * @return
      */
     @RequestMapping(value = "/session", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Object session(HttpServletRequest request) {
-        String accessToken=request.getHeader(HttpKeyEnum.HTTPHEADTOKEN.getKey());
+    public  Object session(@RequestBody String accessToken, HttpServletRequest request) {
         LogHelper.USER_LOG.info(String.format("oneday/user/session, accessToken %s", accessToken));
         BaseUser baseUser = userService.getUser(accessToken);
         request.getSession().setAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey(),baseUser);
-        return Result.success("欢迎回来");//TODO 根据不同因素，设置不同的提示语
+        return Result.success(null,"欢迎回来");//TODO 根据不同因素，设置不同的提示语
     }
 
 

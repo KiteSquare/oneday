@@ -61,8 +61,14 @@ public final class RequestCheckFilter extends SessionRepositoryFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        exceptionResove(request, response, filterChain);
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,final FilterChain filterChain) throws ServletException, IOException {
+       //父类会做会话代理，所以需要通过这种方式拿到代理后的request
+        super.doFilterInternal(request, response, new FilterChain() {
+           @Override
+           public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse) throws IOException, ServletException {
+               exceptionResove((HttpServletRequest)servletRequest, (HttpServletResponse)servletResponse, filterChain);
+           }
+       });
     }
 
     /**
@@ -76,12 +82,12 @@ public final class RequestCheckFilter extends SessionRepositoryFilter {
         try {
             String url = request.getRequestURI();
             if (ignoreMap.containsKey(url)) {
-                filterChain.doFilter(request, response);
+                filterChain.doFilter(request,response);
                 return;
             }
             Result result = checkRequest(request);
             if (result == null) {
-                filterChain.doFilter(request, response);
+                filterChain.doFilter(request,response);
             } else {
                 ResponseUtil.responseJson(response, JSON.toJSONString(result));
             }
