@@ -155,10 +155,10 @@ public class UserController  extends BaseController  {
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST,RequestMethod.GET })
     @ResponseBody
-    public  Object update(@RequestBody UserUpdateRequest user, HttpServletRequest httpServletRequest) {
+    public  Object update(@RequestBody UserUpdateRequest user) {
         LogHelper.USER_LOG.info(String.format("oneday/user/update, request %s", JSONObject.toJSONString(user)));//TODO 干掉敏感信息
         _checkUpdateParam(user);
-        int res = userService.update(user, user.getAccessToken(), getUser(httpServletRequest));
+        int res = userService.update(user, user.getAccessToken(), getUser());
         LogHelper.USER_LOG.info("oneday/user/update, result : success");
 
         return Result.success("");
@@ -227,12 +227,12 @@ public class UserController  extends BaseController  {
      */
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Object login(@RequestBody LoginUserVo user, HttpServletResponse response) {
+    public  Object login(@RequestBody LoginUserVo user) {
         LogHelper.USER_LOG.info(String.format("oneday/user/login, request phone %s", user.getPhone()));
         _checkLoginParam(user);
         LoginResponse loginResponse = null;
         switch (user.getType()) {
-            case 1:
+            case 1://账号密码
                 loginResponse = userService.loginForAccessToken(user.getPhone(), user.getPassword());
                 if (loginResponse == null) {
                     throw new OndayException(ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getCode(),
@@ -240,7 +240,7 @@ public class UserController  extends BaseController  {
                 }
                 break;
 
-            case 2:
+            case 2://手机短信码
                 loginResponse = userService.loginForAccessTokenWithCode(user.getPhone(), user.getCode());
                 if (loginResponse == null) {
                     throw new OndayException(ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getCode(),
@@ -305,16 +305,13 @@ public class UserController  extends BaseController  {
 
     @RequestMapping(value = "/get", method = { RequestMethod.POST })
     @ResponseBody
-    public Object info(@RequestBody GetUserRequest request, HttpServletRequest httpServletRequest) {
+    public Object info(@RequestBody GetUserRequest request) {
         LogHelper.USER_LOG.info(String.format("oneday/user/get, request %s", JSONObject.toJSONString(request)));
-        if (request == null || StringUtils.isEmpty(request.getAccessToken())) {
-            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "参数错误");
-        }
         Object tuser = null;
-        if (request.getUid() != null && request.getUid() >= 0) {
-            tuser = userService.getUserDetail(getUser(httpServletRequest), request.getUid());
+        if (request != null && request.getUid() != null && request.getUid() >= 0) {
+            tuser = userService.getUserDetail(getUser(), request.getUid());
         } else {
-            tuser = userService.getUser(request.getAccessToken());
+            tuser = getUser();
         }
         if (tuser == null) {
             throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "获取用户失败");
@@ -327,8 +324,8 @@ public class UserController  extends BaseController  {
 
     @RequestMapping(value = "/uploadHead", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object uploadHead(HttpServletRequest request) {
-        Uploader uploader = new Uploader(request);
+    public  Object uploadHead() {
+        Uploader uploader = new Uploader(getRequest());
         uploader.setBasePath(PropertyPlaceholder.getProperty("path.file.upload.prefix"));
         uploader.uploadBase64("data");
         Object result = Result.success(uploader.getUrl());

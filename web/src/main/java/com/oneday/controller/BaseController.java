@@ -24,6 +24,10 @@ public abstract class BaseController {
         return (BaseUser)request.getSession().getAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey());
     }
 
+    public BaseUser getUser(){
+        return (BaseUser)getRequest().getSession().getAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey());
+    }
+
     protected String getRemoteIp() {
         HttpServletRequest request = this.getRequest();
 

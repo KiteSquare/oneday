@@ -130,6 +130,8 @@ public class UserServiceImpl implements UserService {
                     } catch (Throwable e) {
                         logger.warn(e.getMessage(), e);
                     }
+                } else {
+                    u1.setImtoken(ConfigConstant.SDKTOKEN);
                 }
                 int updateRes = userDao.updateByPhone(u1);
                 if (updateRes <= 0) {
@@ -138,7 +140,7 @@ public class UserServiceImpl implements UserService {
                 AccessToken accessToken = AccessTokenUtil.accessToken(u1);
                 LoginResponse loginResponse = new LoginResponse();
                 loginResponse.setAccessToken(accessToken.getAccessToken());
-                loginResponse.setSdktoken(ConfigConstant.SDKTOKEN);
+                loginResponse.setSdktoken(u1.getImtoken());
                 return loginResponse;
             default:
         }

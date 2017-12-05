@@ -36,11 +36,11 @@ public class WillowController extends BaseController {
      */
     @RequestMapping(value = "/send", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object send(@RequestBody SendRequest sendRequest, HttpServletRequest httpServletRequest) {
+    public  Object send(@RequestBody SendRequest sendRequest) {
         LogHelper.USER_LOG.info(String.format("willow/send, request %s", JSONObject.toJSONString(sendRequest)));
 
         _validateRequest(sendRequest);
-        associateService.send(getUser(httpServletRequest),sendRequest.getReceiverId());
+        associateService.send(getUser(),sendRequest.getReceiverId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/send,  result : %s", JSONObject.toJSONString(result)));
         return result;
@@ -53,10 +53,10 @@ public class WillowController extends BaseController {
      */
     @RequestMapping(value = "/accept", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object accept(@RequestBody AcceptRequest acceptRequest,HttpServletRequest httpServletRequest) {
+    public  Object accept(@RequestBody AcceptRequest acceptRequest) {
         LogHelper.USER_LOG.info(String.format("willow/accept, request %s ", JSONObject.toJSONString(acceptRequest)));
         _validateRequest(acceptRequest);
-        associateService.accept(getUser(httpServletRequest),acceptRequest.getTargetUserId());
+        associateService.accept(getUser(),acceptRequest.getTargetUserId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/accept,  result : %s",  JSONObject.toJSONString(result)));
         return result;
@@ -69,11 +69,11 @@ public class WillowController extends BaseController {
      */
     @RequestMapping(value = "/reject", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object reject(@RequestBody RejectRequest rejectRequest, HttpServletRequest httpServletRequest) {
+    public  Object reject(@RequestBody RejectRequest rejectRequest) {
         LogHelper.USER_LOG.info(String.format("willow/reject, request %s", JSONObject.toJSONString(rejectRequest)));
 
         _validateRequest(rejectRequest);
-        associateService.reject(getUser(httpServletRequest),rejectRequest.getTargetUserId());
+        associateService.reject(getUser(),rejectRequest.getTargetUserId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/reject, result : %s", JSONObject.toJSONString(result)));
         return result;
@@ -86,10 +86,10 @@ public class WillowController extends BaseController {
      */
     @RequestMapping(value = "/admit", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object admit(@RequestBody AdmitRequest admitRequest, HttpServletRequest httpServletRequest) {
+    public  Object admit(@RequestBody AdmitRequest admitRequest) {
         LogHelper.USER_LOG.info(String.format("willow/admit, request %s", JSONObject.toJSONString(admitRequest)));
         _validateRequest(admitRequest);
-        associateService.admit(getUser(httpServletRequest));
+        associateService.admit(getUser());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/admit, result : %s", JSONObject.toJSONString(result)));
 
@@ -116,7 +116,7 @@ public class WillowController extends BaseController {
     @RequestMapping(value = "/candidates", method = {RequestMethod.POST })
     @ResponseBody
     public Object candidates(@RequestBody CandidatesRequest request, @RequestParam(value = "currentPage", required = false)Integer currentPage,
-                             @RequestParam(value = "count", required = false)Integer count, HttpServletRequest httpServletRequest) {
+                             @RequestParam(value = "count", required = false)Integer count) {
         LogHelper.USER_LOG.info(String.format("willow/candidates, request %s", JSONObject.toJSONString(request)));
 
         _checkCandidatesRequest(request);
@@ -128,7 +128,7 @@ public class WillowController extends BaseController {
         } else if (count > 1000) {
             count = 1000;
         }
-        UserInfo userInfo = associateService.getUserInfo(getUser(httpServletRequest), currentPage, count);
+        UserInfo userInfo = associateService.getUserInfo(getUser(), currentPage, count);
         Object result = Result.success(userInfo);
         LogHelper.USER_LOG.info(String.format("willow/candidates,  result : %s",  JSONObject.toJSONString(result)));
         return result;
@@ -137,9 +137,6 @@ public class WillowController extends BaseController {
     protected boolean _checkCandidatesRequest(CandidatesRequest request) {
         if (request == null) {
             throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "请求异常");
-        }
-        if (StringUtils.isEmpty(request.getAccessToken())) {
-            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户未登录");
         }
         return true;
     }
