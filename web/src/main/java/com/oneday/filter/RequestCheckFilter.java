@@ -22,23 +22,33 @@ import com.oneday.exceptions.OnedaySystmException;
 import com.oneday.utils.AccessTokenUtil;
 import com.oneday.utils.LogHelper;
 import org.slf4j.Logger;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.SessionRepository;
+import org.springframework.session.web.http.CookieHttpSessionStrategy;
+import org.springframework.session.web.http.CookieSerializer;
+import org.springframework.session.web.http.SessionRepositoryFilter;
 
 /**
  * 请求合法性检查入口
  * //TODO 目前只校验是否登录，后续如有更多的校验逻辑，可做扩展，
  * Created by chender on 2017/12/04.
  */
-public final class RequestCheckFilter extends OncePerRequestFilter {
+public final class RequestCheckFilter extends SessionRepositoryFilter {
 
 
     private static final Logger errorLogger = LogHelper.ERROR_LOG;
 
     private static final Logger warnLogger = LogHelper.WARN_LOG;
 
+    private CookieSerializer cookieSerializer;
+
     private List<String> ignore;
 
     private Map<String, Integer> ignoreMap;
+
+    public RequestCheckFilter(SessionRepository sessionRepository) {
+        super(sessionRepository);
+    }
 
     @PostConstruct
     public void init() {
@@ -96,16 +106,9 @@ public final class RequestCheckFilter extends OncePerRequestFilter {
      * @return 校验通过时返回null，不通过时返回对应的Result
      */
     private Result checkRequest(HttpServletRequest request) {
-        //检查是否登录
-        String token = request.getHeader(HttpKeyEnum.HTTPHEADTOKEN.getKey());
-        if (token == null) {
-            return Result.systemFailure(StatusEnum.NEEDLOGIN.getCode(), ErrorCodeEnum.USER_NOT_LOGIN_ERROR.getValue());
-        }
-        try {
-            BaseUser user = AccessTokenUtil.decryptAccessToken(token);
-            request.setAttribute(HttpKeyEnum.REQUESTATTIBUTERUSER.getKey(), user);
-        } catch (OndayException e) {
-            return Result.systemFailure(StatusEnum.NEEDLOGIN.getCode(), e.getMessage());
+        BaseUser user=(BaseUser)request.getSession().getAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey());
+        if(user==null){
+            return Result.systemFailure(StatusEnum.NEEDLOGIN.getCode(),StatusEnum.NEEDLOGIN.getName());
         }
         return null;
     }
@@ -116,5 +119,12 @@ public final class RequestCheckFilter extends OncePerRequestFilter {
 
     public void setIgnore(List<String> ignore) {
         this.ignore = ignore;
+    }
+
+    public void setCookieSerializer(CookieSerializer cookieSerializer) {
+        this.cookieSerializer = cookieSerializer;
+        CookieHttpSessionStrategy strategy=new CookieHttpSessionStrategy();
+        strategy.setCookieSerializer(cookieSerializer);
+        super.setHttpSessionStrategy(strategy);
     }
 }

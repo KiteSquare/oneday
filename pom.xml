@@ -17,7 +17,7 @@
     </modules>
     <properties>
         <!-- spring版本号 -->
-        <spring.version>4.2.0.RELEASE</spring.version>
+        <spring.version>4.3.3.RELEASE</spring.version>
         <org.aspectj.version>1.7.3</org.aspectj.version>
         <!-- mybatis版本号 -->
         <mybatis.version>3.2.4</mybatis.version>

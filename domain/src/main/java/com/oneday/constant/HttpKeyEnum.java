@@ -6,7 +6,7 @@ package com.oneday.constant;
  */
 public enum HttpKeyEnum {
     HTTPHEADTOKEN("accessToken"),
-    REQUESTATTIBUTERUSER("oneday_user");
+    SESSIONTATTIBUTERUSER("oneday_user");
 
     private String key;
 
