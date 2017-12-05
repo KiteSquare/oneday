@@ -77,6 +77,7 @@ public final class RequestCheckFilter extends SessionRepositoryFilter {
             String url = request.getRequestURI();
             if (ignoreMap.containsKey(url)) {
                 filterChain.doFilter(request, response);
+                return;
             }
             Result result = checkRequest(request);
             if (result == null) {
@@ -84,18 +85,22 @@ public final class RequestCheckFilter extends SessionRepositoryFilter {
             } else {
                 ResponseUtil.responseJson(response, JSON.toJSONString(result));
             }
-        } catch (OnedaySystmException e) {
-            Result result = Result.systemFailure(e.getCode(), e.getMessage());
-            ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            errorLogger.error(e.getMessage(), e);
-        } catch (OndayException e) {
-            Result result = Result.bizFailure(e.getCode(), e.getMessage());
-            ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            warnLogger.warn(e.getMessage(), e);
-        } catch (Exception e) {
-            Result result = Result.bizFailure(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            ResponseUtil.responseJson(response, JSON.toJSONString(result));
-            errorLogger.error("未知异常", e);
+        } catch (Throwable e) {
+            if (e.getCause() instanceof OnedaySystmException) {
+                OnedaySystmException onedaySystmException = (OnedaySystmException)e.getCause();
+                Result result = Result.systemFailure(onedaySystmException.getCode(), onedaySystmException.getMessage());
+                ResponseUtil.responseJson(response, JSON.toJSONString(result));
+                LogHelper.ERROR_LOG.error(e.getMessage(), e);
+            } else if (e.getCause() instanceof OndayException) {
+                OndayException ondayException = (OndayException) e.getCause();
+                Result result = Result.bizFailure(ondayException.getCode(), ondayException.getMessage());
+                ResponseUtil.responseJson(response, JSON.toJSONString(result));
+                LogHelper.WARN_LOG.warn(e.getMessage(), e);
+            } else {
+                Result result = Result.systemFailure(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
+                ResponseUtil.responseJson(response, JSON.toJSONString(result));
+                LogHelper.ERROR_LOG.error("未知异常", e);
+            }
         }
     }
 

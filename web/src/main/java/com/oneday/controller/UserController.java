@@ -6,6 +6,7 @@ import com.oneday.common.util.DateUtil;
 import com.oneday.common.util.Uploader;
 import com.oneday.common.util.Validator;
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.constant.HttpKeyEnum;
 import com.oneday.constant.SexEnum;
 import com.oneday.domain.po.User;
 import com.oneday.domain.vo.*;
@@ -258,6 +259,26 @@ public class UserController  extends BaseController  {
         LogHelper.USER_LOG.info(String.format("oneday/user/login,  result : %s",  JSONObject.toJSONString(result)));
         return result;
     }
+
+
+
+    /**
+     * 创建会话
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/session", method = {RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public  Object session(HttpServletRequest request) {
+        String accessToken=request.getHeader(HttpKeyEnum.HTTPHEADTOKEN.getKey());
+        LogHelper.USER_LOG.info(String.format("oneday/user/session, accessToken %s", accessToken));
+        BaseUser baseUser = userService.getUser(accessToken);
+        request.getSession().setAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey(),baseUser);
+        return Result.success("欢迎回来");//TODO 根据不同因素，设置不同的提示语
+    }
+
+
+
     private void _checkLoginParam(LoginUserVo user) {
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "request is empty");
