@@ -11,7 +11,7 @@
     </listener>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:spring-config*.xml</param-value>
+        <param-value>classpath*:spring/*</param-value>
     </context-param>
     <!-- Log4j配置 -->
     <context-param>
@@ -31,7 +31,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-config.xml</param-value>
+            <param-value>classpath:dispatcherServlet.xml</param-value>
         </init-param>
         <init-param>
             <param-name>dispatchOptionsRequest</param-name>

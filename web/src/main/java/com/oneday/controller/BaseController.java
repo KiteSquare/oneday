@@ -7,9 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -23,7 +21,7 @@ public abstract class BaseController {
     }
 
     public BaseUser getUser(HttpServletRequest request){
-        return (BaseUser)request.getAttribute(HttpKeyEnum.REQUESTATTIBUTERUSER.getKey());
+        return (BaseUser)request.getSession().getAttribute(HttpKeyEnum.SESSIONTATTIBUTERUSER.getKey());
     }
 
     protected String getRemoteIp() {
