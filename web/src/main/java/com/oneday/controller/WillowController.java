@@ -3,6 +3,7 @@ package com.oneday.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.domain.vo.BaseUser;
 import com.oneday.domain.vo.Relation;
 import com.oneday.domain.vo.UserInfo;
 import com.oneday.domain.vo.request.*;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author fanyongpeng [15104723@qq.com]
@@ -23,7 +25,7 @@ import javax.annotation.Resource;
  */
 @Controller
 @RequestMapping(value = "/oneday/willow")
-public class WillowController {
+public class WillowController extends BaseController {
     @Resource
     AssociateService associateService;
 
@@ -34,11 +36,11 @@ public class WillowController {
      */
     @RequestMapping(value = "/send", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object send(@RequestBody SendRequest sendRequest) {
+    public  Object send(@RequestBody SendRequest sendRequest, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/send, request %s", JSONObject.toJSONString(sendRequest)));
 
         _validateRequest(sendRequest);
-        associateService.send(sendRequest.getAccessToken(),sendRequest.getReceiverId());
+        associateService.send(getUser(httpServletRequest),sendRequest.getReceiverId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/send,  result : %s", JSONObject.toJSONString(result)));
         return result;
@@ -51,10 +53,10 @@ public class WillowController {
      */
     @RequestMapping(value = "/accept", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object accept(@RequestBody AcceptRequest acceptRequest) {
+    public  Object accept(@RequestBody AcceptRequest acceptRequest,HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/accept, request %s ", JSONObject.toJSONString(acceptRequest)));
         _validateRequest(acceptRequest);
-        associateService.accept(acceptRequest.getAccessToken(),acceptRequest.getTargetUserId());
+        associateService.accept(getUser(httpServletRequest),acceptRequest.getTargetUserId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/accept,  result : %s",  JSONObject.toJSONString(result)));
         return result;
@@ -67,11 +69,11 @@ public class WillowController {
      */
     @RequestMapping(value = "/reject", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object reject(@RequestBody RejectRequest rejectRequest) {
+    public  Object reject(@RequestBody RejectRequest rejectRequest, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/reject, request %s", JSONObject.toJSONString(rejectRequest)));
 
         _validateRequest(rejectRequest);
-        associateService.reject(rejectRequest.getAccessToken(),rejectRequest.getTargetUserId());
+        associateService.reject(getUser(httpServletRequest),rejectRequest.getTargetUserId());
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/reject, result : %s", JSONObject.toJSONString(result)));
         return result;
@@ -84,10 +86,10 @@ public class WillowController {
      */
     @RequestMapping(value = "/admit", method = {RequestMethod.POST })
     @ResponseBody
-    public  Object admit(@RequestBody AdmitRequest admitRequest) {
+    public  Object admit(@RequestBody AdmitRequest admitRequest, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/admit, request %s", JSONObject.toJSONString(admitRequest)));
         _validateRequest(admitRequest);
-        associateService.admit(admitRequest.getAccessToken());
+        associateService.admit(getUser(httpServletRequest));
         Object result = Result.success("ok");
         LogHelper.USER_LOG.info(String.format("willow/admit, result : %s", JSONObject.toJSONString(result)));
 
@@ -114,7 +116,7 @@ public class WillowController {
     @RequestMapping(value = "/candidates", method = {RequestMethod.POST })
     @ResponseBody
     public Object candidates(@RequestBody CandidatesRequest request, @RequestParam(value = "currentPage", required = false)Integer currentPage,
-                            @RequestParam(value = "count", required = false)Integer count) {
+                             @RequestParam(value = "count", required = false)Integer count, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/candidates, request %s", JSONObject.toJSONString(request)));
 
         _checkCandidatesRequest(request);
@@ -126,7 +128,7 @@ public class WillowController {
         } else if (count > 1000) {
             count = 1000;
         }
-        UserInfo userInfo = associateService.getUserInfo(request.getAccessToken(), currentPage, count);
+        UserInfo userInfo = associateService.getUserInfo(getUser(httpServletRequest), currentPage, count);
         Object result = Result.success(userInfo);
         LogHelper.USER_LOG.info(String.format("willow/candidates,  result : %s",  JSONObject.toJSONString(result)));
         return result;
@@ -144,10 +146,10 @@ public class WillowController {
 
     @RequestMapping(value = "/relation", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Object relation(@RequestBody RelationRequest request) {
+    public Object relation(@RequestBody RelationRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("willow/relation, id %s", request.getAccessToken()));
 
-        Relation relation = associateService.relation(request.getAccessToken(), request.getTargetUserId());
+        Relation relation = associateService.relation(getUser(httpServletRequest), request.getTargetUserId());
         Object result = Result.success(relation);
         LogHelper.USER_LOG.info(String.format("willow/relation, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(result)));
         return result;

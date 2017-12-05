@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +42,10 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/create", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Object create(@RequestBody CreateTopicRequest request) {
+    public Object create(@RequestBody CreateTopicRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.TOPIC_LOG.info(String.format("/topic/create request: %s ", JSONObject.toJSONString(request)));
         _checkParam(request);
-        Object result = Result.success(topicService.create(request));
+        Object result = Result.success(topicService.create(request, getUser(httpServletRequest)));
         LogHelper.TOPIC_LOG.info(String.format("/topic/create result: %s ", JSONObject.toJSONString(result)));
         return result;
     }
@@ -114,11 +115,11 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST }, consumes = "application/json")
     @ResponseBody
-    public Object recommend(@RequestBody RecommendTopicRequest request) {
+    public Object recommend(@RequestBody RecommendTopicRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.TOPIC_LOG.info(String.format("/topic/recommend request: %s ", JSONObject.toJSONString(request)));
         _checkParam(request);
 
-        Object result = Result.success(topicService.recommend(request));
+        Object result = Result.success(topicService.recommend(request, getUser(httpServletRequest)));
         LogHelper.TOPIC_LOG.info(String.format("/topic/recommend result: %s ", JSONObject.toJSONString(result)));
         return result;
     }

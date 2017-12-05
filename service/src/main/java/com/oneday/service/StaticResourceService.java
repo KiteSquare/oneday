@@ -1,5 +1,7 @@
 package com.oneday.service;
 
+import com.oneday.domain.vo.BaseUser;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -13,6 +15,6 @@ public interface StaticResourceService {
      * @param request
      * @return
      */
-    String upload(HttpServletRequest request);
+    String upload(HttpServletRequest request, BaseUser baseUser );
 
 }

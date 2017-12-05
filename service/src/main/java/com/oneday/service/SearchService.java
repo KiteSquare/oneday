@@ -12,6 +12,6 @@ import com.oneday.domain.vo.request.SearchRequest;
  */
 public interface SearchService {
     Page<User> nearBy(Integer distance, BaseUser user);
-    Page<User> nearBy(Integer distance, String accessToken) ;
+    Page<User> nearBy(Integer distance, String accessToken,BaseUser baseUser) ;
     Page<User> search(SearchRequest request) ;
 }

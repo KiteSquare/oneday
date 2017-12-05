@@ -98,17 +98,26 @@ public class AESEncrypter {
         return encryptStr.isEmpty() ? null : decrypt(base64Decode(encryptStr), decryptKey);
     }
     public static void main(String[] args) throws Exception {
+        long st = System.currentTimeMillis();
+        System.out.println("start：" + st);
 
-        String test = "{\"code\":\"0\",\"message\":\"成功!\",\"data\":{\"id\":3,\"name\":\"呵呵哒昵称\",\"signature\":\"世界到底有多大，我到底走多远\",\"phone\":\"18244273481\",\"sex\":1,\"sexDisplay\":\"女\",\"age\":29,\"ageDisplay\":\"29岁\",\"height\":168,\"heightDisplay\":\"168cm\",\"education\":5,\"educationDisplay\":\"大专\",\"industry\":null,\"income\":3,\"incomeDisplay\":\"5万-10万\",\"head\":\"http://img2.imgtn.bdimg.com/it/u=2898232289,3380909461&fm=21&gp=0.jpg\",\"detail\":\"度假酒店开始看拒绝度假酒店,我重来都不相信命运，命运是你给的？不是你给的？命运在自己手中，生活在自己手中\",\"distance\":0.0,\"marriage\":1,\"marriageDisplay\":\"未婚\",\"birth\":\"1988-01-01\",\"city\":\"石家庄市\",\"provinceCode\":\"130000\",\"province\":\"河北省\",\"cityCode\":\"130100\",\"weight\":60,\"weightDisplay\":\"60kg\"}}";
-        System.out.println("加密前：" + test);
+        for (int i=0; i< 1000000; i++) {
+            String test = "{\"code\":\"0\",\"message\":\"成功!\",\"data\":{\"id\":3,\"name\":\"呵呵哒昵称\",\"signature\":\"世界到底有多大，我到底走多远\",\"phone\":\"18244273481\",\"sex\":1,\"sexDisplay\":\"女\",\"age\":29,\"ageDisplay\":\"29岁\",\"height\":168,\"heightDisplay\":\"168cm\",\"education\":5,\"educationDisplay\":\"大专\",\"industry\":null,\"income\":3,\"incomeDisplay\":\"5万-10万\",\"head\":\"http://img2.imgtn.bdimg.com/it/u=2898232289,3380909461&fm=21&gp=0.jpg\",\"detail\":\"度假酒店开始看拒绝度假酒店,我重来都不相信命运，命运是你给的？不是你给的？命运在自己手中，生活在自己手中\",\"distance\":0.0,\"marriage\":1,\"marriageDisplay\":\"未婚\",\"birth\":\"1988-01-01\",\"city\":\"石家庄市\",\"provinceCode\":\"130000\",\"province\":\"河北省\",\"cityCode\":\"130100\",\"weight\":60,\"weightDisplay\":\"60kg\"}}";
+//            System.out.println("加密前：" + test);
+            test += i;
+            String key = "17e393859e7241bc23d43269d2408615e157e5235204d301";
+//            System.out.println("密钥：" + key);
 
-        String key = "17e393859e7241bc23d43269d2408615e157e5235204d301";
-        System.out.println("密钥：" + key);
+            String encrypt = aesEncrypt(test, key);
+//            System.out.println("加密后：" + encrypt);
 
-        String encrypt = aesEncrypt(test, key);
-        System.out.println("加密后：" + encrypt);
+            String decrypt = aesDecrypt(encrypt, key);
+//            System.out.println("解密后：" + decrypt);
+        }
+        long et = System.currentTimeMillis();
+        System.out.println("et：" + et);
+        System.out.println("all cost：" + (et-st)/1000 +"s");
 
-        String decrypt = aesDecrypt(encrypt, key);
-        System.out.println("解密后：" + decrypt);
+        System.out.println("per cost：" + (float)(et-st)/1000000 +"ms");
     }
 }

@@ -321,18 +321,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 获取用户详情
-     *
-     * @param accessToken
+     * @param user
      * @param uid
      * @return
      */
     @Override
-    public UserDisplay getUserDetail(String accessToken, Long uid) {
-        if (accessToken == null || uid == null) return null;
-        BaseUser user = AccessTokenUtil.decryptAccessToken(accessToken);
-        if (user == null || user.getId() == null) {
-            throw new OndayException(ErrorCodeEnum.USER_DECRYPT_FAIL.getCode(), "验证失败，请重新登录");
-        }
+    public UserDisplay getUserDetail(BaseUser user, Long uid) {
         if (uid == 0) {
             uid = user.getId();
         }
@@ -448,11 +442,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Integer update(User user, String accessToken) {
-        BaseUser currentUser = getUser(accessToken);
-        if (currentUser == null) {
-            throw new OndayException(ErrorCodeEnum.USER_DECRYPT_FAIL.getCode(), "更新失败，请重新登录");
-        }
+    public Integer update(User user, String accessToken,BaseUser currentUser) {
         user.setId(currentUser.getId());
         _safeUpdateUser(user, false);
         int res = userDao.update(user);
@@ -532,17 +522,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 上传文件到静态服务，返回文件链接
-     *
      * @param request
+     * @param baseUser
      * @return
      */
     @Override
-    public String uploadUserImage(HttpServletRequest request) {
-        BaseUser baseUser = getUserFromHttpRequst(request);
-        if (baseUser == null || baseUser.getId() == null) {
-            throw new OndayException(ErrorCodeEnum.FILE_UPLOAD_FAIL.getCode(), "没有登录");
-        }
-        String res = localStaticResourceService.upload(request);
+    public String uploadUserImage(HttpServletRequest request,BaseUser baseUser) {
+        String res = localStaticResourceService.upload(request, baseUser);
         int updateRes = updateImage(new String[]{res}, baseUser);
         return res;
     }

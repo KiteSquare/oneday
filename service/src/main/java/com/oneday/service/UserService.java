@@ -23,9 +23,10 @@ public interface UserService {
      * 更新
      * @param user
      * @param accessToken
+     * @param currentUser
      * @return
      */
-    Integer update(User user, String accessToken);
+    Integer update(User user, String accessToken,BaseUser currentUser);
 
     /**
      * 更新用户图片
@@ -72,10 +73,11 @@ public interface UserService {
 
     /**
      * 获取用户详情
-     * @param accessToken
+     * @param user
+     * @param uid
      * @return
      */
-    UserDisplay getUserDetail(String accessToken, Long uid);
+    UserDisplay getUserDetail(BaseUser user, Long uid);
 
     /**
      * 获取用户Map
@@ -119,5 +121,5 @@ public interface UserService {
      * @param request
      * @return
      */
-    String uploadUserImage(HttpServletRequest request);
+    String uploadUserImage(HttpServletRequest request,BaseUser baseUser);
 }

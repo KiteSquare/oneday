@@ -38,11 +38,7 @@ public class TopicServiceImpl implements TopicService {
     @Resource
     protected TopicDao topicDao;
     @Override
-    public Integer create(CreateTopicRequest request) {
-        BaseUser user = userService.getUser(request.getAccessToken());
-        if (user == null || user.getId() == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "请登录");
-        }
+    public Integer create(CreateTopicRequest request, BaseUser user) {
         Topic topic = VoConvertor.convert(request, user);
         Date now = new Date();
         topic.setCreate(now);
@@ -79,14 +75,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Page<TopicDetail> recommend(RecommendTopicRequest request) {
-        BaseUser user = null;
-        if (!StringUtils.isEmpty(request.getAccessToken())) {
-            user = userService.getUser(request.getAccessToken());
-            if (user == null || user.getId() == null) {
-                throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "请登录");
-            }
-        }
+    public Page<TopicDetail> recommend(RecommendTopicRequest request, BaseUser user) {
         Page<TopicDetail> result = new Page<>(request.getCurrentPage(), request.getPageNum());
         TopicParam param = new TopicParam();
         param.setIndex(result.getIndex());

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 搜索相关
@@ -39,10 +40,10 @@ public class CommentController extends BaseController {
      */
     @RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Object add(@RequestBody AddCommentRequest request) {
+    public Object add(@RequestBody AddCommentRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.TOPIC_LOG.info(String.format("/comment/add request: %s ",JSONObject.toJSONString(request)));
         _checkParam(request);
-        Object result = Result.success(commentService.add(request));
+        Object result = Result.success(commentService.add(request, getUser(httpServletRequest)));
         LogHelper.TOPIC_LOG.info(String.format("/comment/add response: %s ",JSONObject.toJSONString(result)));
         return result;
     }
@@ -64,10 +65,10 @@ public class CommentController extends BaseController {
 
     @RequestMapping(value = "/get", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Object get(@RequestBody GetCommentsRequest request) {
+    public Object get(@RequestBody GetCommentsRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.TOPIC_LOG.info(String.format("/comment/get request: %s ",JSONObject.toJSONString(request)));
         _checkParam(request);
-        Object result = Result.success(commentService.get(request));
+        Object result = Result.success(commentService.get(request, getUser(httpServletRequest)));
         LogHelper.TOPIC_LOG.info(String.format("/comment/get response: %s ",JSONObject.toJSONString(result)));
         return result;
     }

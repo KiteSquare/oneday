@@ -18,7 +18,7 @@ public interface CommentService {
      * @param request
      * @return
      */
-    Comment add(AddCommentRequest request);
+    Comment add(AddCommentRequest request,BaseUser user);
 
     /**
      *
@@ -33,7 +33,7 @@ public interface CommentService {
      * @param request
      * @return
      */
-    Page<CommentDetail> get(GetCommentsRequest request);
+    Page<CommentDetail> get(GetCommentsRequest request, BaseUser user);
 
     /**
      * 查询单条评论

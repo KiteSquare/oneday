@@ -45,11 +45,7 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    public Comment add(AddCommentRequest request) {
-        BaseUser user = userService.getUser(request.getAccessToken());
-        if (user == null || user.getId() == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "请登录");
-        }
+    public Comment add(AddCommentRequest request, BaseUser user) {
         return checkTopicAndAdd(request, user);
     }
     @Transactional
@@ -81,17 +77,7 @@ public class CommentServiceImpl implements CommentService {
      * @return
      */
     @Override
-    public Page<CommentDetail> get(GetCommentsRequest request) {
-        BaseUser user = null;
-
-        if (!StringUtils.isEmpty(request.getAccessToken())) {
-            user = userService.getUser(request.getAccessToken());
-            CommentParam param = new CommentParam();
-            if (user == null || user.getId() == null) {
-                throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "请登录");
-            }
-
-        }
+    public Page<CommentDetail> get(GetCommentsRequest request,BaseUser user ) {
 
         Page<CommentDetail> result = new Page<>(request.getCurrentPage(), request.getPageNum(), request.getIndex());
         CommentParam param = new CommentParam();

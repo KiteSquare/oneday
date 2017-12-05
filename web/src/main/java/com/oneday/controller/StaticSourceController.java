@@ -30,7 +30,7 @@ public class StaticSourceController extends BaseController {
     @RequestMapping(value = "/upload", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
     public  Object upload(HttpServletRequest request) {
-        Object result = Result.success(localStaticResourceService.upload(request));
+        Object result = Result.success(localStaticResourceService.upload(request,getUser(request)));
         return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.oneday.service;
 
 import com.oneday.domain.po.Topic;
+import com.oneday.domain.vo.BaseUser;
 import com.oneday.domain.vo.Page;
 import com.oneday.domain.vo.TopicDetail;
 import com.oneday.domain.vo.request.CreateTopicRequest;
@@ -13,9 +14,9 @@ import com.oneday.domain.vo.request.RecommendTopicRequest;
  *          2017/6/21 14:57
  */
 public interface TopicService {
-    Integer create(CreateTopicRequest request);
+    Integer create(CreateTopicRequest request, BaseUser user);
     TopicDetail get(GetTopicRequest request);
-    Page<TopicDetail> recommend(RecommendTopicRequest request);
+    Page<TopicDetail> recommend(RecommendTopicRequest request, BaseUser user);
     Topic getByWhere(Topic param);
     Integer update(Topic topic);
 }

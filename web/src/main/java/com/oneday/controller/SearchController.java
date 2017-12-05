@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 搜索相关
@@ -40,7 +41,7 @@ public class SearchController extends BaseController {
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Object recommend(@RequestBody RecommendRequest request) {
+    public Object recommend(@RequestBody RecommendRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("oneday/search/recommend, request %s", JSONObject.toJSONString(request)));
 
         Object result = null;
@@ -48,7 +49,7 @@ public class SearchController extends BaseController {
 //                throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "");
             // 推荐附近？
         } else {
-            result = Result.success(searchService.nearBy(0, request.getAccessToken()));
+            result = Result.success(searchService.nearBy(0, request.getAccessToken(), getUser(httpServletRequest)));
         }
         LogHelper.USER_LOG.info(String.format("oneday/search/recommend,  result : %s",  JSONObject.toJSONString(result)));
 

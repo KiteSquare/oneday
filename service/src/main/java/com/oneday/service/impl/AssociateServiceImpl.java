@@ -42,15 +42,11 @@ public class AssociateServiceImpl implements AssociateService{
     /**
      * 发送
      *
-     * @param accessToken
+     * @param senderBase
      * @param targetUserId
      */
     @Transactional
-    public void send(String accessToken, Long targetUserId) {
-        BaseUser senderBase = userService.getUser(accessToken);
-        if (senderBase == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"请登录后再操作");
-        }
+    public void send(BaseUser senderBase, Long targetUserId) {
 
         Map<Long, User> relateUserMap = userDao.getMapByIds(senderBase.getId(), targetUserId);
         User user = relateUserMap.get(senderBase.getId());
@@ -96,15 +92,11 @@ public class AssociateServiceImpl implements AssociateService{
     /**
      * 接受
      *
-     * @param accessToken
+     * @param senderBase
      * @param targetUserId
      */
     @Transactional
-    public void accept(String accessToken, Long targetUserId) {
-        BaseUser senderBase = userService.getUser(accessToken);
-        if (senderBase == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"请登录后再操作");
-        }
+    public void accept(BaseUser senderBase, Long targetUserId) {
         Map<Long, User> relateUserMap = userDao.getMapByIds(senderBase.getId(), targetUserId);
         User user = relateUserMap.get(senderBase.getId());
         User targetUser = relateUserMap.get(targetUserId);
@@ -197,15 +189,11 @@ public class AssociateServiceImpl implements AssociateService{
     /**
      * 拒绝
      *
-     * @param accessToken 用户token
+     * @param senderBase 用户
      * @param targetUserId 拒绝的对象id
      */
     @Transactional
-    public void reject(String accessToken, Long targetUserId) {
-        BaseUser senderBase = userService.getUser(accessToken);
-        if (senderBase == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"请登录后再操作");
-        }
+    public void reject(BaseUser senderBase, Long targetUserId) {
 
         Map<Long, User> relateUserMap = userDao.getMapByIds(senderBase.getId(), targetUserId);
         User user = relateUserMap.get(senderBase.getId());
@@ -251,14 +239,10 @@ public class AssociateServiceImpl implements AssociateService{
     /**
      * 承认
      *
-     * @param accessToken
+     * @param baseUser
      */
     @Transactional
-    public void admit(String accessToken) {
-        BaseUser baseUser = userService.getUser(accessToken);
-        if (baseUser == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"请登录后再操作");
-        }
+    public void admit(BaseUser baseUser) {
         User user = userDao.get(baseUser.getId());
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户不存在");
@@ -283,17 +267,14 @@ public class AssociateServiceImpl implements AssociateService{
 
     /**
      *
-     * @param accessToken
+     * @param baseUser
      * @param currentPage
      * @param count
      * @return
      */
-    public UserInfo getUserInfo(String accessToken , Integer currentPage, Integer count) {
-        if (StringUtils.isEmpty(accessToken)) {
-            throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "user id is invalid");
-        }
+    public UserInfo getUserInfo(BaseUser baseUser , Integer currentPage, Integer count) {
         UserInfo result = new UserInfo();
-        UserDisplay user = userService.getUserDetail(accessToken, 0L);
+        UserDisplay user = userService.getUserDetail(baseUser, 0L);
         if (user == null) {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"用户不存在");
         }
@@ -392,21 +373,17 @@ public class AssociateServiceImpl implements AssociateService{
     /**
      * 查询用户之间关系
      *
-     * @param accessToken
+     * @param baseUser
      * @param targetUserId
      * @return
      */
     @Override
-    public Relation relation(String accessToken, Long targetUserId) {
+    public Relation relation(BaseUser baseUser, Long targetUserId) {
         Relation relation = new Relation();
-        if (StringUtils.isEmpty(accessToken)) {
+        if (baseUser == null) {
             User targetUser = userDao.get(targetUserId);
             relation.setTargetUser(VoConvertor.convertUserToUserDisplay(targetUser));
         } else {
-            BaseUser baseUser = userService.getUser(accessToken);
-            if (baseUser == null) {
-                throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(),"请登录后再操作");
-            }
             Map<Long, User> userMap = userDao.getMapByIds(baseUser.getId(),targetUserId);
             User user = userMap.get(baseUser.getId());
             User targetUser = userMap.get(targetUserId);

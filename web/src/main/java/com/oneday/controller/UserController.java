@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping(value = "/oneday/user")
-public class UserController {
+public class UserController  extends BaseController  {
     @Resource
     UserService userService;
 
@@ -154,10 +154,10 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST,RequestMethod.GET })
     @ResponseBody
-    public  Object update(@RequestBody UserUpdateRequest user) {
+    public  Object update(@RequestBody UserUpdateRequest user, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("oneday/user/update, request %s", JSONObject.toJSONString(user)));//TODO 干掉敏感信息
         _checkUpdateParam(user);
-        int res = userService.update(user, user.getAccessToken());
+        int res = userService.update(user, user.getAccessToken(), getUser(httpServletRequest));
         LogHelper.USER_LOG.info("oneday/user/update, result : success");
 
         return Result.success("");
@@ -211,7 +211,7 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserInfo", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Object getUserInfo(HttpServletRequest request) {
+    public  Object getUserDetail(HttpServletRequest request) {
         LogHelper.USER_LOG.info(String.format("oneday/user/getUserInfo, request %s", JSONObject.toJSONString(request)));
 //        int num = userService.sendCode(user);
         Object result = Result.success("ok");
@@ -284,14 +284,14 @@ public class UserController {
 
     @RequestMapping(value = "/get", method = { RequestMethod.POST })
     @ResponseBody
-    public Object info(@RequestBody GetUserRequest request) {
+    public Object info(@RequestBody GetUserRequest request, HttpServletRequest httpServletRequest) {
         LogHelper.USER_LOG.info(String.format("oneday/user/get, request %s", JSONObject.toJSONString(request)));
         if (request == null || StringUtils.isEmpty(request.getAccessToken())) {
             throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "参数错误");
         }
         Object tuser = null;
         if (request.getUid() != null && request.getUid() >= 0) {
-            tuser = userService.getUserDetail(request.getAccessToken(), request.getUid());
+            tuser = userService.getUserDetail(getUser(httpServletRequest), request.getUid());
         } else {
             tuser = userService.getUser(request.getAccessToken());
         }
@@ -318,7 +318,7 @@ public class UserController {
     @RequestMapping(value = "/uploadUserImg", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
     public  Object uploadUserImg(HttpServletRequest request) {
-        Object result = Result.success(userService.uploadUserImage(request));
+        Object result = Result.success(userService.uploadUserImage(request, getUser(request)));
         LogHelper.USER_LOG.info(String.format("oneday/user/uploadUserImg, result : %s", JSONObject.toJSONString(result)));
 
         return result;

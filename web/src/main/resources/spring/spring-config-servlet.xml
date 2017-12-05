@@ -35,6 +35,7 @@
 				<value>/comment/add</value>
 				<value>/topic/get</value>
 				<value>/comment/get</value>
+				<value>/willow/relation</value>
 			</list>
 		</property>
 	</bean>

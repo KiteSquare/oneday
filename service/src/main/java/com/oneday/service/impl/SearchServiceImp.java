@@ -73,13 +73,9 @@ public class SearchServiceImp implements SearchService {
      * @return
      */
     @Override
-    public Page<User> nearBy(Integer distance, String accessToken) {
+    public Page<User> nearBy(Integer distance, String accessToken, BaseUser baseUser) {
         Location location = new Location(0d,0d);
         if (accessToken == null) {
-            throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户未登录");
-        }
-        BaseUser baseUser = userService.getUser(accessToken);
-        if (baseUser == null) {
             throw new OndayException(ErrorCodeEnum.USER_NOT_FOUND.getCode(), "用户未登录");
         }
         return nearBy(distance, baseUser);
