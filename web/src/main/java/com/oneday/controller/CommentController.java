@@ -4,6 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.oneday.common.domain.Result;
 import com.oneday.constant.ConfigConstant;
 import com.oneday.constant.ErrorCodeEnum;
+import com.oneday.domain.po.Comment;
+import com.oneday.domain.vo.CommentDetail;
+import com.oneday.domain.vo.Page;
 import com.oneday.domain.vo.request.AddCommentRequest;
 import com.oneday.domain.vo.request.GetCommentsRequest;
 import com.oneday.exceptions.OndayException;
@@ -27,7 +30,6 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping(value = "/comment")
 public class CommentController extends BaseController {
-    private static Logger logger = LogHelper.TOPIC_LOG;
     @Resource
     private CommentService commentService;
     /**
@@ -37,23 +39,11 @@ public class CommentController extends BaseController {
      */
     @RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result add(@RequestBody AddCommentRequest request) {
-        Result result = new Result();
-        String log = String.format("/comment/add request: %s ", JSONObject.toJSONString(request));
-        try {
-            _checkParam(request);
-            result.setData(commentService.add(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.TOPIC_LOG.warn(String.format("add comment to topic failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.TOPIC_LOG.error(String.format("add comment to topic failed, %s", e.getMessage()), e);
-        }
-        log += String.format(" result: %s", JSONObject.toJSONString(result));
-        LogHelper.TOPIC_LOG.info(log);
+    public Object add(@RequestBody AddCommentRequest request) {
+        LogHelper.TOPIC_LOG.info(String.format("/comment/add request: %s ",JSONObject.toJSONString(request)));
+        _checkParam(request);
+        Object result = Result.success(commentService.add(request));
+        LogHelper.TOPIC_LOG.info(String.format("/comment/add response: %s ",JSONObject.toJSONString(result)));
         return result;
     }
     protected boolean _checkParam(AddCommentRequest request) {
@@ -74,23 +64,11 @@ public class CommentController extends BaseController {
 
     @RequestMapping(value = "/get", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result get(@RequestBody GetCommentsRequest request) {
-        Result result = new Result();
-        String log = String.format("/comment/get request: %s ", JSONObject.toJSONString(request));
-        try {
-            _checkParam(request);
-            result.setData(commentService.get(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.TOPIC_LOG.warn(String.format("get comment of topic failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.TOPIC_LOG.error(String.format("get comment of topic failed, %s", e.getMessage()), e);
-        }
-        log += String.format(" result: %s", JSONObject.toJSONString(result));
-        LogHelper.TOPIC_LOG.info(log);
+    public Object get(@RequestBody GetCommentsRequest request) {
+        LogHelper.TOPIC_LOG.info(String.format("/comment/get request: %s ",JSONObject.toJSONString(request)));
+        _checkParam(request);
+        Object result = Result.success(commentService.get(request));
+        LogHelper.TOPIC_LOG.info(String.format("/comment/get response: %s ",JSONObject.toJSONString(result)));
         return result;
     }
 

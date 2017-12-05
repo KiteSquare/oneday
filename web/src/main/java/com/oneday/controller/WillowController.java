@@ -34,27 +34,13 @@ public class WillowController {
      */
     @RequestMapping(value = "/send", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result send(@RequestBody SendRequest sendRequest) {
-        Result result = new Result();
-        try {
-            _validateRequest(sendRequest);
-             associateService.send(sendRequest.getAccessToken(),sendRequest.getReceiverId());
+    public  Object send(@RequestBody SendRequest sendRequest) {
+        LogHelper.USER_LOG.info(String.format("willow/send, request %s", JSONObject.toJSONString(sendRequest)));
 
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (DuplicateKeyException e) {
-            result.setCode(ErrorCodeEnum.STATE_ERROR.getCode());
-            result.setMessage("已经发送过啦~~");
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("willow/send, request %s, result : %s", JSONObject.toJSONString(sendRequest), JSONObject.toJSONString(result)));
-
+        _validateRequest(sendRequest);
+        associateService.send(sendRequest.getAccessToken(),sendRequest.getReceiverId());
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("willow/send,  result : %s", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -65,22 +51,12 @@ public class WillowController {
      */
     @RequestMapping(value = "/accept", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result accept(@RequestBody AcceptRequest acceptRequest) {
-        Result result = new Result();
-        try {
-            _validateRequest(acceptRequest);
-            associateService.accept(acceptRequest.getAccessToken(),acceptRequest.getTargetUserId());
-
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        }  catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("willow/accept, request %s, result : %s", JSONObject.toJSONString(acceptRequest), JSONObject.toJSONString(result)));
+    public  Object accept(@RequestBody AcceptRequest acceptRequest) {
+        LogHelper.USER_LOG.info(String.format("willow/accept, request %s ", JSONObject.toJSONString(acceptRequest)));
+        _validateRequest(acceptRequest);
+        associateService.accept(acceptRequest.getAccessToken(),acceptRequest.getTargetUserId());
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("willow/accept,  result : %s",  JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -91,22 +67,13 @@ public class WillowController {
      */
     @RequestMapping(value = "/reject", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result reject(@RequestBody RejectRequest rejectRequest) {
-        Result result = new Result();
-        try {
-            _validateRequest(rejectRequest);
-            associateService.reject(rejectRequest.getAccessToken(),rejectRequest.getTargetUserId());
+    public  Object reject(@RequestBody RejectRequest rejectRequest) {
+        LogHelper.USER_LOG.info(String.format("willow/reject, request %s", JSONObject.toJSONString(rejectRequest)));
 
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("reject failed, %s", e.getMessage()), e);
-        }  catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("reject failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("willow/reject, request %s, result : %s", JSONObject.toJSONString(rejectRequest), JSONObject.toJSONString(result)));
+        _validateRequest(rejectRequest);
+        associateService.reject(rejectRequest.getAccessToken(),rejectRequest.getTargetUserId());
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("willow/reject, result : %s", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -117,41 +84,22 @@ public class WillowController {
      */
     @RequestMapping(value = "/admit", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result admit(@RequestBody AdmitRequest admitRequest) {
-        Result result = new Result();
-        try {
-            _validateRequest(admitRequest);
-            associateService.admit(admitRequest.getAccessToken());
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("admit failed, %s", e.getMessage()), e);
-        }  catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("admit failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("willow/admit, request %s, result : %s", JSONObject.toJSONString(admitRequest), JSONObject.toJSONString(result)));
+    public  Object admit(@RequestBody AdmitRequest admitRequest) {
+        LogHelper.USER_LOG.info(String.format("willow/admit, request %s", JSONObject.toJSONString(admitRequest)));
+        _validateRequest(admitRequest);
+        associateService.admit(admitRequest.getAccessToken());
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("willow/admit, result : %s", JSONObject.toJSONString(result)));
 
         return result;
     }
 
     @RequestMapping(value = "/history/{id}", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Result history(@PathVariable long id) {
-        Result result = new Result();
-        try {
-            result.setData(associateService.candidates(id, null, 0, 100));
+    public Object history(@PathVariable long id) {
+        LogHelper.USER_LOG.info(String.format("willow/history, id %s", id));
+        Object result = Result.success(associateService.candidates(id, null, 0, 100));
 
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
         LogHelper.USER_LOG.info(String.format("willow/history, id %s, result : %s", id, JSONObject.toJSONString(result)));
         return result;
     }
@@ -165,33 +113,22 @@ public class WillowController {
      */
     @RequestMapping(value = "/candidates", method = {RequestMethod.POST })
     @ResponseBody
-    public Result candidates(@RequestBody CandidatesRequest request, @RequestParam(value = "currentPage", required = false)Integer currentPage,
+    public Object candidates(@RequestBody CandidatesRequest request, @RequestParam(value = "currentPage", required = false)Integer currentPage,
                             @RequestParam(value = "count", required = false)Integer count) {
-        Result result = new Result();
+        LogHelper.USER_LOG.info(String.format("willow/candidates, request %s", JSONObject.toJSONString(request)));
 
-        try {
-            _checkCandidatesRequest(request);
-            if (currentPage == null || currentPage < 0) {
-                currentPage = 0;
-            }
-            if (count == null || count <0 ) {
-                count = 10;
-            } else if (count > 1000) {
-                count = 1000;
-            }
-            UserInfo userInfo = associateService.getUserInfo(request.getAccessToken(), currentPage, count);
-            result.setData(userInfo);
-            System.out.println(String.format("/info/{id}, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(userInfo)));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
+        _checkCandidatesRequest(request);
+        if (currentPage == null || currentPage < 0) {
+            currentPage = 0;
         }
-        LogHelper.USER_LOG.info(String.format("willow/candidates, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+        if (count == null || count <0 ) {
+            count = 10;
+        } else if (count > 1000) {
+            count = 1000;
+        }
+        UserInfo userInfo = associateService.getUserInfo(request.getAccessToken(), currentPage, count);
+        Object result = Result.success(userInfo);
+        LogHelper.USER_LOG.info(String.format("willow/candidates,  result : %s",  JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -207,23 +144,11 @@ public class WillowController {
 
     @RequestMapping(value = "/relation", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public Result relation(@RequestBody RelationRequest request) {
-        Result result = new Result();
-        try {
+    public Object relation(@RequestBody RelationRequest request) {
+        LogHelper.USER_LOG.info(String.format("willow/relation, id %s", request.getAccessToken()));
 
-            Relation relation = associateService.relation(request.getAccessToken(), request.getTargetUserId());
-            result.setData(relation);
-            System.out.println(String.format("/relation, param %s, result : %s", JSONObject.toJSONString(request),
-                    JSONObject.toJSONString(result)));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage("操作失败");
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
+        Relation relation = associateService.relation(request.getAccessToken(), request.getTargetUserId());
+        Object result = Result.success(relation);
         LogHelper.USER_LOG.info(String.format("willow/relation, id %s, result : %s", request.getAccessToken(), JSONObject.toJSONString(result)));
         return result;
     }

@@ -40,49 +40,26 @@ public class SearchController extends BaseController {
      */
     @RequestMapping(value = "/recommend", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result recommend(@RequestBody RecommendRequest request) {
-        Result result = new Result();
-        try {
-            if (request == null || request.getAccessToken() == null) {
+    public Object recommend(@RequestBody RecommendRequest request) {
+        LogHelper.USER_LOG.info(String.format("oneday/search/recommend, request %s", JSONObject.toJSONString(request)));
+
+        Object result = null;
+        if (request == null || request.getAccessToken() == null) {
 //                throw new OndayException(ErrorCodeEnum.INVALID_PARAM.getCode(), "");
-                // 推荐附近？
-            } else {
-                Page<User> page = searchService.nearBy(0, request.getAccessToken());
-                result.setData(page);
-            }
-
-
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("recommend failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("recommend failed, %s", e.getMessage()), e);
+            // 推荐附近？
+        } else {
+            result = Result.success(searchService.nearBy(0, request.getAccessToken()));
         }
-        LogHelper.USER_LOG.info(String.format("oneday/search/recommend, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+        LogHelper.USER_LOG.info(String.format("oneday/search/recommend,  result : %s",  JSONObject.toJSONString(result)));
 
         return result;
     }
     @RequestMapping(value = "/search", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public Result search(@RequestBody SearchRequest request) {
-        Result result = new Result();
-        try {
-            Page<User> page = searchService.search(request);
-            result.setData(page);
-
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("search failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("search failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/search/search, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+    public Object search(@RequestBody SearchRequest request) {
+        LogHelper.USER_LOG.info(String.format("oneday/search/search, request %s", JSONObject.toJSONString(request)));
+        Object result = Result.success(searchService.search(request));
+        LogHelper.USER_LOG.info(String.format("oneday/search/search,  result : %s", JSONObject.toJSONString(result)));
 
         return result;
     }

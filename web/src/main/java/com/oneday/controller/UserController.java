@@ -35,7 +35,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping(value = "/oneday/user")
 public class UserController {
-    private static final Logger logger = LogHelper.USER_LOG;
     @Resource
     UserService userService;
 
@@ -46,23 +45,12 @@ public class UserController {
      */
     @RequestMapping(value = "/regist", method = {RequestMethod.POST,RequestMethod.OPTIONS })
     @ResponseBody
-    public  Result regist(@RequestBody UserRegistVo userVo) {
-        Result result = new Result();
-        try {
-            _checkRegistParam(userVo);
+    public  Object regist(@RequestBody UserRegistVo userVo) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/regist, request %s", JSONObject.toJSONString(userVo)));//TODO 干掉敏感信息
+        _checkRegistParam(userVo);
 
-            LoginResponse user = userService.regist(userVo);
-            result.setData(user);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/regist, request %s, result : %s", JSONObject.toJSONString(userVo), JSONObject.toJSONString(result)));
+        Object result = Result.success(userService.regist(userVo));
+        LogHelper.USER_LOG.info(String.format("oneday/user/regist, result : %s",  JSONObject.toJSONString(result)));
 
         return result;
     }
@@ -166,25 +154,13 @@ public class UserController {
      */
     @RequestMapping(value = "/update", method = {RequestMethod.POST,RequestMethod.GET })
     @ResponseBody
-    public  Result update(@RequestBody UserUpdateRequest user) {
-        Result result = new Result();
-        try {
-            _checkUpdateParam(user);
+    public  Object update(@RequestBody UserUpdateRequest user) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/update, request %s", JSONObject.toJSONString(user)));//TODO 干掉敏感信息
+        _checkUpdateParam(user);
+        int res = userService.update(user, user.getAccessToken());
+        LogHelper.USER_LOG.info("oneday/user/update, result : success");
 
-            int res = userService.update(user, user.getAccessToken());
-//            result.setData(user);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/update, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
-
-        return result;
+        return Result.success("");
     }
 
     protected boolean _checkUpdateParam(UserUpdateRequest request) {
@@ -204,22 +180,10 @@ public class UserController {
      */
     @RequestMapping(value = "/verifyRegistCode", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result verifyRegistCode(@RequestBody UserVo userVo) {
-        Result result = new Result();
-        try {
-            User user = userService.verifyRegistCode((User) userVo, userVo.getCode());
-            result.setData(user);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("verifyRegistCode failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/verifyRegistCode, request %s, result : %s", JSONObject.toJSONString(userVo), JSONObject.toJSONString(result)));
-
+    public  Object verifyRegistCode(@RequestBody UserVo userVo) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/verifyRegistCode, request %s", JSONObject.toJSONString(userVo)));
+        Object result = Result.success(userService.verifyRegistCode((User) userVo, userVo.getCode()));
+        LogHelper.USER_LOG.info(String.format("oneday/user/verifyRegistCode,  result : %s", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -230,25 +194,14 @@ public class UserController {
      */
     @RequestMapping(value = "/sendCode", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Result sendCode(@RequestBody User user) {
-        Result result = new Result();
-        try {
-            if (user == null) {
-                throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户信息为空");
-            }
-
-            int num = userService.sendCode(user);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("sendCode failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.error(String.format("sendCode failed, %s", e.getMessage()), e);
+    public  Object sendCode(@RequestBody User user) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/sendCode, request %s", JSONObject.toJSONString(user)));
+        if (user == null) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "用户信息为空");
         }
-        LogHelper.USER_LOG.info(String.format("oneday/user/sendCode, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
-
+        int num = userService.sendCode(user);
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("oneday/user/sendCode, result : %s", JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -258,22 +211,11 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserInfo", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Result getUserInfo(HttpServletRequest request) {
-        Result result = new Result();
-        try {
-
-//            int num = userService.sendCode(user);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("sendCode failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.error(String.format("sendCode failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/getUserInfo, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
-
+    public  Object getUserInfo(HttpServletRequest request) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/getUserInfo, request %s", JSONObject.toJSONString(request)));
+//        int num = userService.sendCode(user);
+        Object result = Result.success("ok");
+        LogHelper.USER_LOG.info(String.format("oneday/user/getUserInfo,  result : %s",  JSONObject.toJSONString(result)));
         return result;
     }
 
@@ -284,47 +226,36 @@ public class UserController {
      */
     @RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST })
     @ResponseBody
-    public  Result login(@RequestBody LoginUserVo user, HttpServletResponse response) {
-        Result result = new Result();
-        try {
-            _checkLoginParam(user);
-            LoginResponse loginResponse = null;
-            switch (user.getType()) {
-                case 1:
-                    loginResponse = userService.loginForAccessToken(user.getPhone(), user.getPassword());
-                    if (loginResponse == null) {
-                        throw new OndayException(ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getCode(),
-                                ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getValue());
-                    }
-                    break;
+    public  Object login(@RequestBody LoginUserVo user, HttpServletResponse response) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/login, request phone %s", user.getPhone()));
+        _checkLoginParam(user);
+        LoginResponse loginResponse = null;
+        switch (user.getType()) {
+            case 1:
+                loginResponse = userService.loginForAccessToken(user.getPhone(), user.getPassword());
+                if (loginResponse == null) {
+                    throw new OndayException(ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getCode(),
+                            ErrorCodeEnum.USER_LOGIN_PASSWORD_ERROR.getValue());
+                }
+                break;
 
-                case 2:
-                    loginResponse = userService.loginForAccessTokenWithCode(user.getPhone(), user.getCode());
-                    if (loginResponse == null) {
-                        throw new OndayException(ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getCode(),
-                                ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getValue());
-                    }
-                    break;
-                default:
-            }
-            if (loginResponse == null) {
-                throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "登录失败");
-            }
-            loginResponse.setType(user.getType());
-            loginResponse.setUrl(user.getUrl());
-            result.setData(loginResponse);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("login failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(e.getMessage());
-            e.printStackTrace();
-            LogHelper.USER_LOG.error(String.format("login failed, %s", e.getMessage()), e);
+            case 2:
+                loginResponse = userService.loginForAccessTokenWithCode(user.getPhone(), user.getCode());
+                if (loginResponse == null) {
+                    throw new OndayException(ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getCode(),
+                            ErrorCodeEnum.USER_LOGIN_CODE_ERROR.getValue());
+                }
+                break;
+            default:
         }
+        if (loginResponse == null) {
+            throw new OndayException(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode(), "登录失败");
+        }
+        loginResponse.setType(user.getType());
+        loginResponse.setUrl(user.getUrl());
         user.setPassword(null);
-        LogHelper.USER_LOG.info(String.format("oneday/user/login, request %s, result : %s", JSONObject.toJSONString(user), JSONObject.toJSONString(result)));
+        Object result = Result.success(loginResponse);
+        LogHelper.USER_LOG.info(String.format("oneday/user/login,  result : %s",  JSONObject.toJSONString(result)));
         return result;
     }
     private void _checkLoginParam(LoginUserVo user) {
@@ -353,75 +284,42 @@ public class UserController {
 
     @RequestMapping(value = "/get", method = { RequestMethod.POST })
     @ResponseBody
-    public Result info(@RequestBody GetUserRequest request) {
-        Result result = new Result();
-
-        try {
-            if (request == null || StringUtils.isEmpty(request.getAccessToken())) {
-                throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "参数错误");
-            }
-            Object tuser = null;
-            if (request.getUid() != null && request.getUid() >= 0) {
-                tuser = userService.getUserDetail(request.getAccessToken(), request.getUid());
-            } else {
-                tuser = userService.getUser(request.getAccessToken());
-            }
-            if (tuser == null) {
-                throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "获取用户失败");
-            }
-            result.setData(tuser);
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("get user info failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.error(String.format("get user info failed, %s", e.getMessage()), e);
+    public Object info(@RequestBody GetUserRequest request) {
+        LogHelper.USER_LOG.info(String.format("oneday/user/get, request %s", JSONObject.toJSONString(request)));
+        if (request == null || StringUtils.isEmpty(request.getAccessToken())) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "参数错误");
         }
-        LogHelper.USER_LOG.info(String.format("oneday/user/get, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+        Object tuser = null;
+        if (request.getUid() != null && request.getUid() >= 0) {
+            tuser = userService.getUserDetail(request.getAccessToken(), request.getUid());
+        } else {
+            tuser = userService.getUser(request.getAccessToken());
+        }
+        if (tuser == null) {
+            throw new OndayException(ErrorCodeEnum.NULL_PARAM.getCode(), "获取用户失败");
+        }
+        Object result = Result.success(tuser);
+        LogHelper.USER_LOG.info(String.format("oneday/user/get,  result : %s",  JSONObject.toJSONString(result)));
 
         return result;
     }
 
     @RequestMapping(value = "/uploadHead", method = {RequestMethod.POST })
     @ResponseBody
-    public  Result uploadHead(HttpServletRequest request) {
-        Result result = new Result();
-        try {
-            Uploader uploader = new Uploader(request);
-            uploader.setBasePath(PropertyPlaceholder.getProperty("path.file.upload.prefix"));
-            uploader.uploadBase64("data");
-            result.setData(uploader.getUrl());
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("regist failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/uploadHead, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+    public  Object uploadHead(HttpServletRequest request) {
+        Uploader uploader = new Uploader(request);
+        uploader.setBasePath(PropertyPlaceholder.getProperty("path.file.upload.prefix"));
+        uploader.uploadBase64("data");
+        Object result = Result.success(uploader.getUrl());
+        LogHelper.USER_LOG.info(String.format("oneday/user/uploadHead,  result : %s", JSONObject.toJSONString(result)));
 
         return result;
     }
     @RequestMapping(value = "/uploadUserImg", method = {RequestMethod.GET,RequestMethod.POST })
     @ResponseBody
-    public  Result uploadUserImg(HttpServletRequest request) {
-        Result result = new Result();
-        try {
-            result.setData(userService.uploadUserImage(request));
-        } catch (OndayException e) {
-            result.setCode(e.getCode());
-            result.setMessage(e.getMessage());
-            LogHelper.USER_LOG.warn(String.format("upload failed, %s", e.getMessage()), e);
-        } catch (Throwable e) {
-            result.setCode(ErrorCodeEnum.SYSTEM_EXCEPTION.getCode());
-            result.setMessage(ErrorCodeEnum.SYSTEM_EXCEPTION.getValue());
-            LogHelper.USER_LOG.error(String.format("regist failed, %s", e.getMessage()), e);
-        }
-        LogHelper.USER_LOG.info(String.format("oneday/user/uploadUserImg, request %s, result : %s", JSONObject.toJSONString(request), JSONObject.toJSONString(result)));
+    public  Object uploadUserImg(HttpServletRequest request) {
+        Object result = Result.success(userService.uploadUserImage(request));
+        LogHelper.USER_LOG.info(String.format("oneday/user/uploadUserImg, result : %s", JSONObject.toJSONString(result)));
 
         return result;
     }
